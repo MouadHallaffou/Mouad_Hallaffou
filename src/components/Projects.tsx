@@ -1,8 +1,30 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
-import { ExternalLink, Github, Calculator, Book, MessageSquare, KanbanSquare, Award, CloudSun } from "lucide-react";
+
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious
+} from "@/components/ui/carousel";
+
+import {
+  ExternalLink,
+  Github,
+  Calculator,
+  Book,
+  MessageSquare,
+  KanbanSquare,
+  Award,
+  CloudSun,
+  Users,
+  Briefcase,
+  FileText,
+  Code
+} from "lucide-react";
+
 
 const Projects = () => {
   const [hoveredId, setHoveredId] = useState<number | null>(null);
@@ -10,12 +32,57 @@ const Projects = () => {
   const projects = [
     {
       id: 1,
+      title: "EasyPrint",
+      description: "Bookstore platform for managing and selling books",
+      image: "https://images.unsplash.com/photo-1481627834876-b7833e8f5570?auto=format&fit=crop&w=800&q=80",
+      icon: <Book size={40} />,
+      technologies: ["Javascript", "Laravel", "MySQL", "Tailwind"],
+      github: "https://github.com/MoudHallaffou",
+    },
+    {
+      id: 2,
+      title: "eLearning Platform",
+      description: "Mentorship & collaborative learning platform",
+      image: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=800&q=80",
+      icon: <Users size={40} />,
+      technologies: ["React", "Laravel", "REST API"],
+      github: "https://github.com/MoudHallaffou",
+    },
+    {
+      id: 3,
+      title: "HR Management System",
+      description: "System to manage employees and departments",
+      image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=800&q=80",
+      icon: <Briefcase size={40} />,
+      technologies: ["Laravel", "Javascript", "PostgreSQL"],
+      github: "https://github.com/MoudHallaffou",
+    },
+    {
+      id: 4,
+      title: "The Weekly",
+      description: "Platform for announcements and comments",
+      image: "https://images.unsplash.com/photo-1504711434969-e33886168f5c?auto=format&fit=crop&w=800&q=80",
+      icon: <FileText size={40} />,
+      technologies: ["Laravel", "MySQL", "Tailwind"],
+      github: "https://github.com/MoudHallaffou",
+    },
+    {
+      id: 5,
+      title: "StruoCV",
+      description: "Interactive CV builder with download features",
+      image: "https://images.unsplash.com/photo-1586281380349-632531db7ed4?auto=format&fit=crop&w=800&q=80",
+      icon: <Code size={40} />,
+      technologies: ["Javascript", "Laravel", "Mysql"],
+      github: "https://github.com/MoudHallaffou",
+    },
+    {
+      id: 1,
       title: "Calculator App",
       description: "A modern calculator application",
       image: "https://images.unsplash.com/photo-1587145820266-a5951ee6f620?auto=format&fit=crop&w=800&q=80",
       icon: <Calculator size={40} />,
-      technologies: ["React", "TypeScript", "Tailwind"],
-      github: "https://github.com/YourUsername",
+      technologies: ["Javascript" , "Tailwind"],
+      github: "https://github.com/MoudHallaffou",
     },
     {
       id: 2,
@@ -23,8 +90,8 @@ const Projects = () => {
       description: "E-learning platform with courses management",
       image: "https://images.unsplash.com/photo-1516321497487-e288fb19713f?auto=format&fit=crop&w=800&q=80",
       icon: <Book size={40} />,
-      technologies: ["React", "Laravel", "MySQL", "Tailwind"],
-      github: "https://github.com/YourUsername",
+      technologies: ["PHP", "Javascript", "MySQL", "Tailwind"],
+      github: "https://github.com/MoudHallaffou",
     },
     {
       id: 3,
@@ -32,8 +99,8 @@ const Projects = () => {
       description: "Technical blogging platform",
       image: "https://images.unsplash.com/photo-1499750310107-5fef28a66643?auto=format&fit=crop&w=800&q=80",
       icon: <MessageSquare size={40} />,
-      technologies: ["Laravel", "Bootstrap", "MySQL"],
-      github: "https://github.com/YourUsername",
+      technologies: ["PHP", "Bootstrap", "MySQL"],
+      github: "https://github.com/MoudHallaffou",
     },
     {
       id: 4,
@@ -41,8 +108,8 @@ const Projects = () => {
       description: "Agile project management tool",
       image: "https://images.unsplash.com/photo-1507925921958-8a62f3d1a50d?auto=format&fit=crop&w=800&q=80",
       icon: <KanbanSquare size={40} />,
-      technologies: ["Vue.js", "Tailwind", "Firebase"],
-      github: "https://github.com/YourUsername",
+      technologies: ["Javascript", "Bootstrap", "HTML"],
+      github: "https://github.com/MoudHallaffou",
     },
     {
       id: 5,
@@ -50,8 +117,8 @@ const Projects = () => {
       description: "Football statistics and management",
       image: "https://images.unsplash.com/photo-1579952363873-27f3bade9f55?auto=format&fit=crop&w=800&q=80",
       icon: <Award size={40} />,
-      technologies: ["React", "Redux", "Chart.js"],
-      github: "https://github.com/YourUsername",
+      technologies: ["Javascript", "CSS", "HTML"],
+      github: "https://github.com/MoudHallaffou",
     },
     {
       id: 6,
@@ -59,8 +126,8 @@ const Projects = () => {
       description: "Real-time weather information",
       image: "https://images.unsplash.com/photo-1601134467661-3d775b999c8b?auto=format&fit=crop&w=800&q=80",
       icon: <CloudSun size={40} />,
-      technologies: ["React", "Node.js", "Weather API"],
-      github: "https://github.com/YourUsername",
+      technologies: ["Javascript", "Tailwind", "Weather API"],
+      github: "https://github.com/MoudHallaffou",
     }
   ];
 
@@ -94,7 +161,7 @@ const Projects = () => {
                   <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
-                    whileHover={{ 
+                    whileHover={{
                       scale: 1.05,
                       transition: {
                         type: "spring",
@@ -106,7 +173,7 @@ const Projects = () => {
                     onMouseEnter={() => setHoveredId(project.id)}
                     onMouseLeave={() => setHoveredId(null)}
                   >
-                    <motion.div 
+                    <motion.div
                       className="relative h-48 overflow-hidden"
                       whileHover={{ scale: 1.1 }}
                       transition={{ duration: 0.3 }}
@@ -116,9 +183,9 @@ const Projects = () => {
                         alt={project.title}
                         className="w-full h-full object-cover"
                       />
-                      <motion.div 
+                      <motion.div
                         initial={{ opacity: 0 }}
-                        animate={{ 
+                        animate={{
                           opacity: hoveredId === project.id ? 1 : 0,
                           backdropFilter: hoveredId === project.id ? "blur(3px)" : "blur(0px)"
                         }}
