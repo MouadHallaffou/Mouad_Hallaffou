@@ -117,7 +117,7 @@ const Hero = () => {
                       transition={{ repeat: Infinity, duration: 3 }}
                     />
                     <img 
-                      src="/public/me.jpg" 
+                      src="me.jpg" 
                       alt="Profil" 
                       className="w-full h-full object-cover rounded-full z-10" 
                     />
