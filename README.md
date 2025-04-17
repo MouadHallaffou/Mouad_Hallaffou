@@ -1,6 +1,4 @@
 ## Informations de contact
-- **Lieu de résidence**: Résidence Salwa, Tit Mellil, Casablanca
-- **Téléphone**: +212 678 634 285
 - **Email**: [mouadhallaffou@gmail.com](mailto:mouadhallaffou@gmail.com)
 - **LinkedIn**: [LinkedIn Profile](https://www.linkedin.com/in/hallaffou-mouad-763409200/)
 - **GitHub**: [GitHub Profile](https://github.com/MouadHallaffou)
