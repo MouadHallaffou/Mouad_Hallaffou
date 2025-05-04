@@ -36,7 +36,7 @@ const Contact = () => {
     {
       icon: <MapPin className="text-green-500" />,
       title: "Location",
-      details: "Meknès, Morocco"
+      details: "Casablanca, Morocco"
     },
     {
       icon: <Mail className="text-green-500" />,
@@ -46,7 +46,7 @@ const Contact = () => {
     {
       icon: <Phone className="text-green-500" />,
       title: "Phone",
-      details: "+212 6 12 34 56 78"
+      details: "+212 6 78 63 42 85"
     }
   ];
 
