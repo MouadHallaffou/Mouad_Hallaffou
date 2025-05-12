@@ -202,7 +202,7 @@ const Projects = () => {
                           <Github size={20} />
                         </motion.a>
                         <motion.a
-                          href="{projets.github}"
+                          href={projets.github}
                           className="p-2 bg-white text-green-500 rounded-full hover:bg-green-50 transition-colors"
                           whileHover={{ scale: 1.2, rotate: 360 }}
                           whileTap={{ scale: 0.9 }}
