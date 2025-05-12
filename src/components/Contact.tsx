@@ -32,23 +32,23 @@ const Contact = () => {
     }, 1500);
   };
 
-  const contactInfo = [
-    {
-      icon: <MapPin className="text-green-500" />,
-      title: "Location",
-      details: "Casablanca, Morocco"
-    },
-    {
-      icon: <Mail className="text-green-500" />,
-      title: "Email",
-      details: "mouadhallaffou@gmail.com"
-    },
-    {
-      icon: <Phone className="text-green-500" />,
-      title: "Phone",
-      details: "+212 6 78 63 42 85"
-    }
-  ];
+  // const contactInfo = [
+  //   {
+  //     icon: <MapPin className="text-green-500" />,
+  //     title: "Location",
+  //     details: "Casablanca, Morocco"
+  //   },
+  //   {
+  //     icon: <Mail className="text-green-500" />,
+  //     title: "Email",
+  //     details: "mouadhallaffou@gmail.com"
+  //   },
+  //   {
+  //     icon: <Phone className="text-green-500" />,
+  //     title: "Phone",
+  //     details: "+212 6 78 63 42 85"
+  //   }
+  // ];
 
   const formVariants = {
     hidden: { opacity: 0, y: 20 },
