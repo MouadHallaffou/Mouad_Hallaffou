@@ -29,7 +29,7 @@ import {
 const Projects = () => {
   const [hoveredId, setHoveredId] = useState<number | null>(null);
 
-  const projects = [
+   const projects = [
     {
       id: 1,
       title: "EasyPrint",
@@ -37,7 +37,7 @@ const Projects = () => {
       image: "https://images.unsplash.com/photo-1481627834876-b7833e8f5570?auto=format&fit=crop&w=800&q=80",
       icon: <Book size={40} />,
       technologies: ["Javascript", "Laravel", "MySQL", "Tailwind"],
-      github: "https://github.com/MoudHallaffou",
+      github: "https://github.com/MouadHallaffou/EasyPrint",
     },
     {
       id: 2,
@@ -46,7 +46,7 @@ const Projects = () => {
       image: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=800&q=80",
       icon: <Users size={40} />,
       technologies: ["React", "Laravel", "REST API"],
-      github: "https://github.com/MoudHallaffou",
+      github: "https://github.com/MouadHallaffou/plateforme_mentorat",
     },
     {
       id: 3,
@@ -55,7 +55,7 @@ const Projects = () => {
       image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=800&q=80",
       icon: <Briefcase size={40} />,
       technologies: ["Laravel", "Javascript", "PostgreSQL"],
-      github: "https://github.com/MoudHallaffou",
+      github: "https://github.com/MouadHallaffou/Human-Resource-Management-System",
     },
     {
       id: 4,
@@ -64,7 +64,7 @@ const Projects = () => {
       image: "https://images.unsplash.com/photo-1504711434969-e33886168f5c?auto=format&fit=crop&w=800&q=80",
       icon: <FileText size={40} />,
       technologies: ["Laravel", "MySQL", "Tailwind"],
-      github: "https://github.com/MoudHallaffou",
+      github: "https://github.com/MouadHallaffou/The_Weekly",
     },
     {
       id: 5,
@@ -73,7 +73,7 @@ const Projects = () => {
       image: "https://images.unsplash.com/photo-1586281380349-632531db7ed4?auto=format&fit=crop&w=800&q=80",
       icon: <Code size={40} />,
       technologies: ["Javascript", "Laravel", "Mysql"],
-      github: "https://github.com/MoudHallaffou",
+      github: "https://mouadhallaffou.github.io/Resume_Builder_StruoCV/",
     },
     {
       id: 1,
@@ -82,7 +82,7 @@ const Projects = () => {
       image: "https://images.unsplash.com/photo-1587145820266-a5951ee6f620?auto=format&fit=crop&w=800&q=80",
       icon: <Calculator size={40} />,
       technologies: ["Javascript" , "Tailwind"],
-      github: "https://github.com/MoudHallaffou",
+      github: "https://mouadhallaffou.github.io/Calculator/",
     },
     {
       id: 2,
@@ -91,7 +91,7 @@ const Projects = () => {
       image: "https://images.unsplash.com/photo-1516321497487-e288fb19713f?auto=format&fit=crop&w=800&q=80",
       icon: <Book size={40} />,
       technologies: ["PHP", "Javascript", "MySQL", "Tailwind"],
-      github: "https://github.com/MoudHallaffou",
+      github: "https://github.com/MouadHallaffou/Youdemy_plateform",
     },
     {
       id: 3,
@@ -100,7 +100,7 @@ const Projects = () => {
       image: "https://images.unsplash.com/photo-1499750310107-5fef28a66643?auto=format&fit=crop&w=800&q=80",
       icon: <MessageSquare size={40} />,
       technologies: ["PHP", "Bootstrap", "MySQL"],
-      github: "https://github.com/MoudHallaffou",
+      github: "https://github.com/MouadHallaffou/Dev.to_Blogging_Plateform",
     },
     {
       id: 4,
@@ -109,7 +109,7 @@ const Projects = () => {
       image: "https://images.unsplash.com/photo-1507925921958-8a62f3d1a50d?auto=format&fit=crop&w=800&q=80",
       icon: <KanbanSquare size={40} />,
       technologies: ["Javascript", "Bootstrap", "HTML"],
-      github: "https://github.com/MoudHallaffou",
+      github: "https://mouadhallaffou.github.io/YoucodeScrum-Board/",
     },
     {
       id: 5,
@@ -118,7 +118,7 @@ const Projects = () => {
       image: "https://images.unsplash.com/photo-1579952363873-27f3bade9f55?auto=format&fit=crop&w=800&q=80",
       icon: <Award size={40} />,
       technologies: ["Javascript", "CSS", "HTML"],
-      github: "https://github.com/MoudHallaffou",
+      github: "https://github.com/MouadHallaffou/FUT-Champions-Web-App-Ultimate-Team",
     },
     {
       id: 6,
@@ -127,7 +127,7 @@ const Projects = () => {
       image: "https://images.unsplash.com/photo-1601134467661-3d775b999c8b?auto=format&fit=crop&w=800&q=80",
       icon: <CloudSun size={40} />,
       technologies: ["Javascript", "Tailwind", "Weather API"],
-      github: "https://github.com/MoudHallaffou",
+      github: "https://github.com/MouadHallaffou/Weather_App",
     }
   ];
 
@@ -192,7 +192,7 @@ const Projects = () => {
                         className="absolute inset-0 bg-green-500/90 flex items-center justify-center gap-4"
                       >
                         <motion.a
-                          href={project.github}
+                          href={projects.github}
                           target="_blank"
                           rel="noopener noreferrer"
                           className="p-2 bg-white text-green-500 rounded-full hover:bg-green-50 transition-colors"
@@ -202,7 +202,7 @@ const Projects = () => {
                           <Github size={20} />
                         </motion.a>
                         <motion.a
-                          href="#"
+                          href="{projets.github}"
                           className="p-2 bg-white text-green-500 rounded-full hover:bg-green-50 transition-colors"
                           whileHover={{ scale: 1.2, rotate: 360 }}
                           whileTap={{ scale: 0.9 }}
