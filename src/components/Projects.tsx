@@ -192,7 +192,7 @@ const Projects = () => {
                         className="absolute inset-0 bg-green-500/90 flex items-center justify-center gap-4"
                       >
                         <motion.a
-                          href={projects.github}
+                          href={project.github}
                           target="_blank"
                           rel="noopener noreferrer"
                           className="p-2 bg-white text-green-500 rounded-full hover:bg-green-50 transition-colors"
@@ -202,7 +202,7 @@ const Projects = () => {
                           <Github size={20} />
                         </motion.a>
                         <motion.a
-                          href={projets.github}
+                          href={project.github}
                           className="p-2 bg-white text-green-500 rounded-full hover:bg-green-50 transition-colors"
                           whileHover={{ scale: 1.2, rotate: 360 }}
                           whileTap={{ scale: 0.9 }}
