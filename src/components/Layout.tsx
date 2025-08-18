@@ -1,42 +1,51 @@
 
 import { ReactNode, useState, useEffect } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import Header from "./Header";
 import Footer from "./Footer";
-import { AnimatePresence, motion } from "framer-motion";
 import CustomCursor from "./CustomCursor";
+import LoadingScreen from "./LoadingScreen";
 
 interface LayoutProps {
   children: ReactNode;
 }
 
 const Layout = ({ children }: LayoutProps) => {
-  const [isDarkMode, setIsDarkMode] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
   
-  // Initialize dark mode on component mount
   useEffect(() => {
-    document.documentElement.classList.add("dark");
+    // Simulate loading time
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 1500);
+
+    return () => clearTimeout(timer);
   }, []);
 
-  const toggleDarkMode = () => {
-    setIsDarkMode(!isDarkMode);
-    document.documentElement.classList.toggle("dark");
-  };
-
   return (
-    <div className={`min-h-screen flex flex-col ${isDarkMode ? "dark" : ""} bg-gray-50 dark:bg-gray-900`}>
+    <div className="min-h-screen flex flex-col bg-background text-foreground">
       <CustomCursor />
-      <Header isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />
+      
       <AnimatePresence mode="wait">
-        <motion.main
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: 20 }}
-          transition={{ duration: 0.5 }}
-          className="flex-1 pt-16" // Added padding-top to account for fixed header
-        >
-          {children}
-        </motion.main>
+        {isLoading && <LoadingScreen isLoading={isLoading} />}
       </AnimatePresence>
+      
+      <Header />
+      
+      <AnimatePresence mode="wait">
+        {!isLoading && (
+          <motion.main
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 20 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+            className="flex-1 pt-16"
+          >
+            {children}
+          </motion.main>
+        )}
+      </AnimatePresence>
+      
       <Footer />
     </div>
   );
