@@ -333,7 +333,7 @@ const Projects = () => {
                           href={project.github}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="p-3 bg-white/20 backdrop-blur-sm rounded-full text-white hover:bg-gray-800 transition-all-300"
+                          className="p-3 bg-white/20 backdrop-blur-sm rounded-full text-white hover:bg-gray-800/80 dark:hover:bg-gray-700/80 transition-all duration-300"
                           whileHover={{ scale: 1.1, rotate: 5 }}
                           whileTap={{ scale: 0.9 }}
                           title="View Code"
@@ -344,7 +344,7 @@ const Projects = () => {
                           href={project.demo}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="p-3 bg-white/20 backdrop-blur-sm rounded-full text-white hover:bg-green-500 transition-all-300"
+                          className="p-3 bg-white/20 backdrop-blur-sm rounded-full text-white hover:bg-green-500/90 transition-all duration-300"
                           whileHover={{ scale: 1.1, rotate: 5 }}
                           whileTap={{ scale: 0.9 }}
                           title="Live Demo"
@@ -411,17 +411,35 @@ const Projects = () => {
             <div className="flex items-center gap-2">
               <button
                 onClick={prevSlide}
-                className="p-2 rounded-full bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
+                className={`p-2 rounded-full transition-colors ${totalSlides <= 1
+                    ? 'bg-gray-100 dark:bg-gray-800 cursor-not-allowed opacity-50'
+                    : 'bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600'
+                  }`}
                 disabled={totalSlides <= 1}
               >
-                <ChevronLeft size={20} className="text-gray-600 dark:text-gray-300" />
+                <ChevronLeft
+                  size={20}
+                  className={`${totalSlides <= 1
+                      ? 'text-gray-400 dark:text-gray-600'
+                      : 'text-gray-600 dark:text-gray-300'
+                    }`}
+                />
               </button>
               <button
                 onClick={nextSlide}
-                className="p-2 rounded-full bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
+                className={`p-2 rounded-full transition-colors ${totalSlides <= 1
+                    ? 'bg-gray-100 dark:bg-gray-800 cursor-not-allowed opacity-50'
+                    : 'bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600'
+                  }`}
                 disabled={totalSlides <= 1}
               >
-                <ChevronRight size={20} className="text-gray-600 dark:text-gray-300" />
+                <ChevronRight
+                  size={20}
+                  className={`${totalSlides <= 1
+                      ? 'text-gray-400 dark:text-gray-600'
+                      : 'text-gray-600 dark:text-gray-300'
+                    }`}
+                />
               </button>
             </div>
           </div>
@@ -476,7 +494,7 @@ const Projects = () => {
                                     href={project.github}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="p-2 bg-white/20 backdrop-blur-sm rounded-full text-white hover:bg-gray-800 transition-all-300"
+                                    className="p-2 bg-white/20 backdrop-blur-sm rounded-full text-white hover:bg-gray-800/80 dark:hover:bg-gray-700/80 transition-all duration-300"
                                     whileHover={{ scale: 1.1, rotate: 5 }}
                                     whileTap={{ scale: 0.9 }}
                                     title="View Code"
@@ -487,7 +505,7 @@ const Projects = () => {
                                     href={project.demo}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="p-2 bg-white/20 backdrop-blur-sm rounded-full text-white hover:bg-green-500 transition-all-300"
+                                    className="p-2 bg-white/20 backdrop-blur-sm rounded-full text-white hover:bg-green-500/90 transition-all duration-300"
                                     whileHover={{ scale: 1.1, rotate: 5 }}
                                     whileTap={{ scale: 0.9 }}
                                     title="Live Demo"
@@ -547,10 +565,11 @@ const Projects = () => {
                 <button
                   key={index}
                   onClick={() => setCurrentSlide(index)}
-                  className={`w-3 h-3 rounded-full transition-colors ${index === currentSlide
-                      ? "bg-green-500"
-                      : "bg-gray-300 dark:bg-gray-600 hover:bg-gray-400 dark:hover:bg-gray-500"
+                  className={`w-3 h-3 rounded-full transition-all duration-300 ${index === currentSlide
+                    ? "bg-green-500 scale-110 shadow-lg shadow-green-500/30"
+                    : "bg-gray-300 dark:bg-gray-600 hover:bg-gray-400 dark:hover:bg-gray-500 hover:scale-105"
                     }`}
+                  aria-label={`Go to slide ${index + 1}`}
                 />
               ))}
             </div>
