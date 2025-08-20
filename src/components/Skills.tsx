@@ -1,21 +1,21 @@
 
 import React, { useState, useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { 
-  Code, Database, GitBranch, Figma, Server, Palette, Users, 
-  LayoutGrid, Command, FileCode, BrainCircuit, Globe, Cloud, 
+import {
+  Code, Database, GitBranch, Figma, Server, Palette, Users,
+  LayoutGrid, Command, FileCode, BrainCircuit, Globe, Cloud,
   Brush, Zap, Shield, Cpu, Smartphone, Monitor, Layers, Sparkles
 } from "lucide-react";
 
 const Skills = () => {
   const [activeCategory, setActiveCategory] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
-  
+
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start end", "end start"]
   });
-  
+
   const y = useTransform(scrollYProgress, [0, 1], [100, -100]);
   const opacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0, 1, 1, 0]);
 
@@ -90,8 +90,8 @@ const Skills = () => {
 
   const item = {
     hidden: { opacity: 0, y: 20 },
-    show: { 
-      opacity: 1, 
+    show: {
+      opacity: 1,
       y: 0,
       transition: {
         type: "spring",
@@ -101,22 +101,22 @@ const Skills = () => {
   };
 
   return (
-    <section 
+    <section
       ref={containerRef}
-      id="skills" 
-      className="section-padding bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 relative overflow-hidden"
+      id="skills"
+      className="section-padding bg-gradient-to-br from-gray-50 via-white to-gray-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 relative overflow-hidden"
     >
       {/* Background patterns */}
-      <motion.div 
+      <motion.div
         className="absolute inset-0 tech-pattern opacity-10"
         style={{ y }}
       />
-      <motion.div 
+      <motion.div
         className="absolute inset-0 tech-grid opacity-5"
         style={{ y: useTransform(scrollYProgress, [0, 1], [-50, 50]) }}
       />
-      
-      <motion.div 
+
+      <motion.div
         className="container mx-auto px-4 relative z-10"
         style={{ opacity }}
       >
@@ -133,20 +133,20 @@ const Skills = () => {
             whileInView={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.6, delay: 0.2 }}
             viewport={{ once: true }}
-            className="inline-flex items-center gap-2 px-4 py-2 bg-green-500/10 border border-green-500/20 rounded-full text-green-400 text-sm font-medium mb-4"
+            className="inline-flex items-center gap-2 px-4 py-2 bg-green-500/10 border border-green-500/20 rounded-full text-green-600 dark:text-green-400 text-sm font-medium mb-4"
           >
             <Sparkles size={16} />
             Technical Skills
           </motion.div>
-          
-          <h2 className="text-4xl md:text-5xl font-bold mb-6 text-white">
+
+          <h2 className="text-4xl md:text-5xl font-bold mb-6 text-gray-900 dark:text-white">
             My
             <span className="gradient-text"> Expertise</span>
           </h2>
-          
+
           <div className="w-24 h-1 bg-gradient-to-r from-green-500 to-emerald-500 mx-auto mb-8"></div>
-          
-          <p className="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
+
+          <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed">
             A comprehensive skill set built through continuous learning and hands-on experience
             with modern web technologies and development practices.
           </p>
@@ -164,11 +164,10 @@ const Skills = () => {
             <motion.button
               key={category.id}
               onClick={() => setActiveCategory(index)}
-              className={`px-6 py-3 rounded-lg font-medium transition-all-300 flex items-center gap-2 ${
-                activeCategory === index
+              className={`px-6 py-3 rounded-lg font-medium transition-all-300 flex items-center gap-2 ${activeCategory === index
                   ? 'bg-green-500 text-white shadow-lg scale-105'
-                  : 'bg-white/10 text-gray-300 hover:bg-white/20 border border-white/20'
-              }`}
+                  : 'bg-gray-100/80 dark:bg-white/10 text-gray-600 dark:text-gray-300 hover:bg-gray-200/80 dark:hover:bg-white/20 border border-gray-200/50 dark:border-white/20'
+                }`}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               initial={{ opacity: 0, y: 20 }}
@@ -197,10 +196,10 @@ const Skills = () => {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="text-center mb-12"
           >
-            <h3 className="text-3xl font-bold text-white mb-4">
+            <h3 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">
               {skillCategories[activeCategory].title}
             </h3>
-            <p className="text-gray-300 text-lg">
+            <p className="text-gray-600 dark:text-gray-300 text-lg">
               {skillCategories[activeCategory].description}
             </p>
           </motion.div>
@@ -220,21 +219,21 @@ const Skills = () => {
               >
                 <div className="flex items-center justify-between mb-4">
                   <div className="flex items-center gap-3">
-                    <motion.div 
+                    <motion.div
                       className={`w-10 h-10 rounded-lg bg-gradient-to-r ${skill.color} flex items-center justify-center text-white group-hover:scale-110 transition-transform duration-300`}
                       whileHover={{ rotate: 5 }}
                     >
                       {skill.icon}
                     </motion.div>
                     <div>
-                      <h4 className="text-lg font-semibold text-white">{skill.name}</h4>
-                      <p className="text-sm text-gray-400">{skill.level}%</p>
+                      <h4 className="text-lg font-semibold text-gray-900 dark:text-white">{skill.name}</h4>
+                      <p className="text-sm text-gray-500 dark:text-gray-400">{skill.level}%</p>
                     </div>
                   </div>
                 </div>
-                
+
                 {/* Progress Bar */}
-                <div className="w-full bg-gray-700 rounded-full h-2 mb-2 overflow-hidden">
+                <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2 mb-2 overflow-hidden">
                   <motion.div
                     className={`h-2 rounded-full bg-gradient-to-r ${skill.color}`}
                     initial={{ width: 0 }}
@@ -242,9 +241,9 @@ const Skills = () => {
                     transition={{ duration: 1.5, delay: index * 0.1, ease: "easeOut" }}
                   />
                 </div>
-                
+
                 {/* Skill Level Indicator */}
-                <div className="flex justify-between text-xs text-gray-400">
+                <div className="flex justify-between text-xs text-gray-500 dark:text-gray-400">
                   <span>Beginner</span>
                   <span>Intermediate</span>
                   <span>Advanced</span>
@@ -271,12 +270,12 @@ const Skills = () => {
             >
               <Zap size={24} className="text-white" />
             </motion.div>
-            <h3 className="text-2xl font-bold text-white mb-4">
+            <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
               Always Learning & Growing
             </h3>
-            <p className="text-gray-300 leading-relaxed">
-              I'm constantly expanding my skill set and staying updated with the latest technologies. 
-              My passion for learning drives me to explore new frameworks, tools, and methodologies 
+            <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
+              I'm constantly expanding my skill set and staying updated with the latest technologies.
+              My passion for learning drives me to explore new frameworks, tools, and methodologies
               to deliver the best possible solutions.
             </p>
           </div>

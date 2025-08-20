@@ -24,7 +24,7 @@ const Footer = () => {
   ];
 
   return (
-    <footer className="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 border-t border-white/10">
+    <footer className="bg-gradient-to-br from-gray-100 via-white to-gray-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 border-t border-gray-200/50 dark:border-white/10">
       <div className="container mx-auto px-4 py-12">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -39,11 +39,11 @@ const Footer = () => {
             whileInView={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.6, delay: 0.2 }}
             viewport={{ once: true }}
-            className="flex items-center gap-2 mb-6"
+            className="flex items-center gap-1 mb-6"
           >
-            <Terminal className="text-green-500" size={24} />
-            <span className="font-bold text-xl text-white">M</span>
-            <span className="font-semibold text-lg text-gray-300">Hallaffou</span>
+            <Terminal className="text-green-600 dark:text-green-500" size={24} />
+            <span className="font-bold text-xl text-gray-900 dark:text-white">M</span>
+            <span className="font-semibold text-md text-gray-600 dark:text-gray-300">Hallaffou</span>
           </motion.div>
 
           {/* Social Links */}
@@ -60,8 +60,8 @@ const Footer = () => {
                 href={link.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-3 bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg text-gray-300 hover:text-green-400 hover:bg-white/20 transition-all-300"
-                whileHover={{ scale: 1.1, rotate: 5 }}
+                className="p-3 bg-gray-100/80 dark:bg-white/10 backdrop-blur-sm border border-gray-200/50 dark:border-white/20 rounded-full text-gray-600 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 hover:bg-gray-200/80 dark:hover:bg-white/20 transition-all-300"
+                whileHover={{ scale: 1.1, rotate: 360 }}
                 whileTap={{ scale: 0.9 }}
                 title={link.label}
               >
@@ -76,9 +76,9 @@ const Footer = () => {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.6 }}
             viewport={{ once: true }}
-            className="text-gray-400 text-center max-w-md mb-8 leading-relaxed"
+            className="text-gray-500 dark:text-gray-400 text-center max-w-md mb-8 leading-relaxed"
           >
-            Full Stack Developer passionate about creating innovative digital experiences 
+            Full Stack Developer passionate about creating innovative digital experiences
             and building scalable web applications.
           </motion.p>
 
@@ -88,7 +88,7 @@ const Footer = () => {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.8 }}
             viewport={{ once: true }}
-            className="flex items-center gap-2 text-gray-500 text-sm"
+            className="flex items-center gap-2 text-gray-400 dark:text-gray-500 text-sm"
           >
             <span>© {currentYear} Mouad Hallaffou. All rights reserved.</span>
             <span className="flex items-center gap-1">
