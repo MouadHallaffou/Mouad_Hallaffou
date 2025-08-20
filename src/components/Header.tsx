@@ -36,8 +36,8 @@ const Header = () => {
   return (
     <header
       className={`fixed top-0 w-full z-50 transition-all-300 ${isScrolled
-          ? "bg-gray-900/95 backdrop-blur-xl shadow-lg border-b border-white/10"
-          : "bg-gray-900/80 backdrop-blur-md"
+        ? "bg-white/95 dark:bg-gray-900/95 backdrop-blur-xl shadow-lg border-b border-gray-200/50 dark:border-white/10"
+        : "bg-white/80 dark:bg-gray-900/80 backdrop-blur-md"
         }`}
     >
       <div className="container mx-auto py-4 px-4 flex-between">
@@ -49,9 +49,9 @@ const Header = () => {
               transition={{ duration: 0.5 }}
               className="flex items-center"
             >
-              <Terminal className="text-green-500 mr-2" size={24} />
-              <span className="font-bold text-xl text-white">M</span>
-              <span className="font-semibold text-lg text-gray-300">Hallaffou</span>
+              <Terminal className="text-green-600 dark:text-green-500 mr-2" size={24} />
+              <span className="font-bold text-xl text-gray-900 dark:text-white">M</span>
+              <span className="font-semibold text-sm text-gray-600 dark:text-gray-300">Hallaffou</span>
             </motion.div>
           </Link>
           <NavigationButtons />
@@ -61,7 +61,7 @@ const Header = () => {
           {/* Theme Toggle */}
           <motion.button
             onClick={toggleTheme}
-            className="p-2 rounded-full bg-gray-800 text-gray-200 hover:bg-gray-700 transition-all-300"
+            className="p-2 rounded-full bg-gray-200 dark:bg-gray-800 text-gray-700 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-700 transition-all-300"
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
           >
@@ -70,7 +70,7 @@ const Header = () => {
 
           {/* Mobile Menu Button */}
           <button
-            className="md:hidden text-gray-200 p-2 rounded-lg bg-white/10 backdrop-blur-sm border border-white/20 hover:bg-white/20 transition-all-300"
+            className="md:hidden text-gray-700 dark:text-gray-200 p-2 rounded-lg bg-gray-100/50 dark:bg-white/10 backdrop-blur-sm border border-gray-300/50 dark:border-white/20 hover:bg-gray-200/70 dark:hover:bg-white/20 transition-all-300"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           >
             {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
@@ -85,14 +85,14 @@ const Header = () => {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-gray-900/95 backdrop-blur-xl border-t border-white/10"
+            className="md:hidden bg-white/95 dark:bg-gray-900/95 backdrop-blur-xl border-t border-gray-200/50 dark:border-white/10"
           >
             <div className="container mx-auto py-4 px-4 flex flex-col gap-2">
               {navLinks.map((link, index) => (
                 <motion.a
                   key={link.name}
                   href={link.href}
-                  className="text-gray-300 hover:text-green-500 py-3 px-4 font-medium flex items-center rounded-lg hover:bg-white/10 transition-all-300"
+                  className="text-gray-600 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-500 py-3 px-4 font-medium flex items-center rounded-lg hover:bg-gray-100/70 dark:hover:bg-white/10 transition-all-300"
                   onClick={() => setIsMobileMenuOpen(false)}
                   whileHover={{ x: 10 }}
                   whileTap={{ scale: 0.95 }}
