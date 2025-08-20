@@ -1,83 +1,181 @@
 
 import { motion, useScroll, useTransform } from "framer-motion";
-import { 
-  ExternalLink, Github, Star, Calendar, Eye, Code, 
-  Database, Palette, Globe, Smartphone, Sparkles, Mail
+import {
+  ExternalLink, Github, Star, Calendar, Eye, Code,
+  Database, Palette, Globe, Smartphone, Sparkles, Mail,
+  Briefcase, Book, Users, FileText, Calculator, MessageSquare,
+  KanbanSquare, Award, CloudSun, ChevronLeft, ChevronRight
 } from "lucide-react";
 import { useState, useRef } from "react";
 
 const Projects = () => {
   const [hoveredId, setHoveredId] = useState<number | null>(null);
+  const [currentSlide, setCurrentSlide] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
-  
+
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start end", "end start"]
   });
-  
+
   const y = useTransform(scrollYProgress, [0, 1], [100, -100]);
   const opacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0, 1, 1, 0]);
 
   const projects = [
     {
-      id: 1,
-      title: "Youdemy Platform",
-      description: "Plateforme d'apprentissage en ligne interactive, garantissant une expérience utilisateur fluide pour étudiants et enseignants.",
-      image: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=500&h=300&fit=crop",
-      github: "https://github.com/MouadHallaffou/Youdemy_plateform",
-      demo: "https://github.com/MouadHallaffou/Youdemy_plateform",
-      category: "Education",
+      id: 0,
+      title: "thefoodeshow",
+      description: "B2B benchmarking platform for food industry professionals with comprehensive analytics and market insights.",
+      image: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=800&q=80",
+      github: "https://github.com/Foodeshow/V1update",
+      demo: "https://github.com/Foodeshow/V1update",
+      category: "B2B Platform",
       featured: true,
-      technologies: ["HTML", "PHP", "MySQL", "Tailwind CSS", "SASS", "JavaScript"]
+      technologies: ["Symfony", "Javascript", "MySQL", "CSS"]
+    },
+    {
+      id: 1,
+      title: "EasyPrint",
+      description: "Comprehensive bookstore platform for managing inventory, sales, and customer relationships with modern UI.",
+      image: "https://images.unsplash.com/photo-1481627834876-b7833e8f5570?auto=format&fit=crop&w=800&q=80",
+      github: "https://github.com/MouadHallaffou/EasyPrint",
+      demo: "https://github.com/MouadHallaffou/EasyPrint",
+      category: "E-commerce",
+      featured: true,
+      technologies: ["Javascript", "Laravel", "MySQL", "Tailwind"]
     },
     {
       id: 2,
-      title: "Dev.to Blogging Platform",
-      description: "Système de gestion de contenu et interface utilisateur pour la création et la découverte d'articles techniques.",
-      image: "https://images.unsplash.com/photo-1499750310107-5fef28a66643?w=500&h=300&fit=crop",
-      github: "https://github.com/MouadHallaffou/Dev.to_Blogging_Plateform",
-      demo: "https://github.com/MouadHallaffou/Dev.to_Blogging_Plateform",
-      category: "Blog",
+      title: "eLearning Platform",
+      description: "Advanced mentorship and collaborative learning platform with real-time communication features.",
+      image: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=800&q=80",
+      github: "https://github.com/MouadHallaffou/plateforme_mentorat",
+      demo: "https://github.com/MouadHallaffou/plateforme_mentorat",
+      category: "Education",
       featured: true,
-      technologies: ["HTML", "PHP", "Tailwind CSS", "SASS", "MySQL", "JavaScript"]
+      technologies: ["React", "Laravel", "REST API"]
     },
     {
       id: 3,
-      title: "Resume Builder - StrucoCV",
-      description: "Générateur de CV interactif permettant la personnalisation et le téléchargement via une interface intuitive.",
-      image: "https://images.unsplash.com/photo-1586281380349-632531db7ed4?w=500&h=300&fit=crop",
+      title: "HR Management System",
+      description: "Complete human resources management solution for employee lifecycle, payroll, and department organization.",
+      image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=800&q=80",
+      github: "https://github.com/MouadHallaffou/Human-Resource-Management-System",
+      demo: "https://github.com/MouadHallaffou/Human-Resource-Management-System",
+      category: "Enterprise",
+      featured: true,
+      technologies: ["Laravel", "Javascript", "PostgreSQL"]
+    },
+    {
+      id: 4,
+      title: "The Weekly",
+      description: "Dynamic platform for company announcements, news sharing, and team collaboration with comment system.",
+      image: "https://images.unsplash.com/photo-1504711434969-e33886168f5c?auto=format&fit=crop&w=800&q=80",
+      github: "https://github.com/MouadHallaffou/The_Weekly",
+      demo: "https://github.com/MouadHallaffou/The_Weekly",
+      category: "Communication",
+      featured: false,
+      technologies: ["Laravel", "MySQL", "Tailwind"]
+    },
+    {
+      id: 5,
+      title: "StruoCV",
+      description: "Interactive professional CV builder with customizable templates and instant PDF download functionality.",
+      image: "https://images.unsplash.com/photo-1586281380349-632531db7ed4?auto=format&fit=crop&w=800&q=80",
       github: "https://mouadhallaffou.github.io/Resume_Builder_StruoCV/",
       demo: "https://mouadhallaffou.github.io/Resume_Builder_StruoCV/",
       category: "Productivity",
       featured: false,
-      technologies: ["HTML", "Tailwind CSS", "JavaScript"]
+      technologies: ["Javascript", "Laravel", "Mysql"]
     },
     {
-      id: 4,
-      title: "FUT Champions Web App - Ultimate Team",
-      description: "Application permettant de créer et gérer des équipes FUT respectant les formations tactiques.",
-      image: "https://images.unsplash.com/photo-1579952363873-27f3bade9f55?w=500&h=300&fit=crop",
-      github: "https://github.com/MouadHallaffou/FUT-Champions-Web-App-Ultimate-Team",
-      demo: "https://github.com/MouadHallaffou/FUT-Champions-Web-App-Ultimate-Team",
-      category: "Gaming",
+      id: 6,
+      title: "Calculator App",
+      description: "Modern scientific calculator application with advanced mathematical functions and clean interface.",
+      image: "https://images.unsplash.com/photo-1587145820266-a5951ee6f620?auto=format&fit=crop&w=800&q=80",
+      github: "https://mouadhallaffou.github.io/Calculator/",
+      demo: "https://mouadhallaffou.github.io/Calculator/",
+      category: "Utility",
       featured: false,
-      technologies: ["HTML", "CSS", "JavaScript"]
+      technologies: ["Javascript", "Tailwind"]
     },
     {
-      id: 5,
-      title: "Scrumboard",
-      description: "Développement d'un gestionnaire de tâches basé sur Scrum, facilitant la collaboration au sein des équipes de projet.",
-      image: "https://images.unsplash.com/photo-1507925921958-8a62f3d1a50d?w=500&h=300&fit=crop",
+      id: 7,
+      title: "Youdemy Platform",
+      description: "Comprehensive e-learning platform with course management, student progress tracking, and instructor tools.",
+      image: "https://images.unsplash.com/photo-1516321497487-e288fb19713f?auto=format&fit=crop&w=800&q=80",
+      github: "https://github.com/MouadHallaffou/Youdemy_plateform",
+      demo: "https://github.com/MouadHallaffou/Youdemy_plateform",
+      category: "Education",
+      featured: false,
+      technologies: ["PHP", "Javascript", "MySQL", "Tailwind"]
+    },
+    {
+      id: 8,
+      title: "Dev.to Blog",
+      description: "Technical blogging platform for developers with article creation, commenting, and community features.",
+      image: "https://images.unsplash.com/photo-1499750310107-5fef28a66643?auto=format&fit=crop&w=800&q=80",
+      github: "https://github.com/MouadHallaffou/Dev.to_Blogging_Plateform",
+      demo: "https://github.com/MouadHallaffou/Dev.to_Blogging_Plateform",
+      category: "Blog",
+      featured: false,
+      technologies: ["PHP", "Bootstrap", "MySQL"]
+    },
+    {
+      id: 9,
+      title: "ScrumBoard",
+      description: "Agile project management tool with Kanban boards, sprint planning, and team collaboration features.",
+      image: "https://images.unsplash.com/photo-1507925921958-8a62f3d1a50d?auto=format&fit=crop&w=800&q=80",
       github: "https://mouadhallaffou.github.io/YoucodeScrum-Board/",
       demo: "https://mouadhallaffou.github.io/YoucodeScrum-Board/",
       category: "Productivity",
       featured: false,
-      technologies: ["HTML", "JavaScript", "CSS", "Bootstrap"]
+      technologies: ["Javascript", "Bootstrap", "HTML"]
+    },
+    {
+      id: 10,
+      title: "FUT Champions",
+      description: "Football team management application with player statistics, formation builder, and match analytics.",
+      image: "https://images.unsplash.com/photo-1579952363873-27f3bade9f55?auto=format&fit=crop&w=800&q=80",
+      github: "https://github.com/MouadHallaffou/FUT-Champions-Web-App-Ultimate-Team",
+      demo: "https://github.com/MouadHallaffou/FUT-Champions-Web-App-Ultimate-Team",
+      category: "Gaming",
+      featured: false,
+      technologies: ["Javascript", "CSS", "HTML"]
+    },
+    {
+      id: 11,
+      title: "Weather App",
+      description: "Real-time weather application with location-based forecasts, interactive maps, and detailed meteorological data.",
+      image: "https://images.unsplash.com/photo-1601134467661-3d775b999c8b?auto=format&fit=crop&w=800&q=80",
+      github: "https://github.com/MouadHallaffou/Weather_App",
+      demo: "https://github.com/MouadHallaffou/Weather_App",
+      category: "Utility",
+      featured: false,
+      technologies: ["Javascript", "Tailwind", "Weather API"]
     }
   ];
 
   const featuredProjects = projects.filter(project => project.featured);
   const otherProjects = projects.filter(project => !project.featured);
+
+  // Carousel logic
+  const itemsPerSlide = 3;
+  const totalSlides = Math.ceil(otherProjects.length / itemsPerSlide);
+
+  const nextSlide = () => {
+    setCurrentSlide((prev) => (prev + 1) % totalSlides);
+  };
+
+  const prevSlide = () => {
+    setCurrentSlide((prev) => (prev - 1 + totalSlides) % totalSlides);
+  };
+
+  const getCurrentProjects = () => {
+    const start = currentSlide * itemsPerSlide;
+    const end = start + itemsPerSlide;
+    return otherProjects.slice(start, end);
+  };
 
   const container = {
     hidden: { opacity: 0 },
@@ -91,8 +189,8 @@ const Projects = () => {
 
   const item = {
     hidden: { opacity: 0, y: 20 },
-    show: { 
-      opacity: 1, 
+    show: {
+      opacity: 1,
       y: 0,
       transition: {
         type: "spring",
@@ -114,29 +212,39 @@ const Projects = () => {
       case "Education":
         return <Sparkles size={16} />;
       case "Blog":
-        return <Mail size={16} />;
+        return <MessageSquare size={16} />;
       case "Productivity":
         return <Code size={16} />;
       case "Gaming":
+        return <Award size={16} />;
+      case "B2B Platform":
+        return <Briefcase size={16} />;
+      case "E-commerce":
         return <Globe size={16} />;
+      case "Enterprise":
+        return <Briefcase size={16} />;
+      case "Communication":
+        return <FileText size={16} />;
+      case "Utility":
+        return <Calculator size={16} />;
       default:
         return <Globe size={16} />;
     }
   };
 
   return (
-    <section 
+    <section
       ref={containerRef}
-      id="projects" 
+      id="projects"
       className="section-padding bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 relative overflow-hidden"
     >
       {/* Background patterns */}
-      <motion.div 
+      <motion.div
         className="absolute inset-0 tech-dots opacity-5"
         style={{ y }}
       />
-      
-      <motion.div 
+
+      <motion.div
         className="container mx-auto px-4 relative z-10"
         style={{ opacity }}
       >
@@ -158,14 +266,14 @@ const Projects = () => {
             <Sparkles size={16} />
             My Work
           </motion.div>
-          
+
           <h2 className="text-4xl md:text-5xl font-bold mb-6 text-gray-900 dark:text-white">
             Featured
             <span className="gradient-text"> Projects</span>
           </h2>
-          
+
           <div className="w-24 h-1 bg-gradient-to-r from-green-500 to-emerald-500 mx-auto mb-8"></div>
-          
+
           <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed">
             A collection of my best work showcasing my skills in full-stack development,
             modern web technologies, and user experience design.
@@ -184,7 +292,7 @@ const Projects = () => {
             <Star className="text-yellow-500" size={24} />
             <h3 className="text-2xl font-bold text-gray-900 dark:text-white">Featured Projects</h3>
           </div>
-          
+
           <motion.div
             variants={container}
             initial="hidden"
@@ -210,7 +318,7 @@ const Projects = () => {
                     alt={project.title}
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                   />
-                  
+
                   {/* Overlay */}
                   <motion.div
                     initial={{ opacity: 0 }}
@@ -246,7 +354,7 @@ const Projects = () => {
                       </div>
                     </div>
                   </motion.div>
-                  
+
                   {/* Category Badge */}
                   <div className="absolute top-4 left-4">
                     <div className="flex items-center gap-2 px-3 py-1 bg-white/20 backdrop-blur-sm rounded-full text-white text-sm font-medium">
@@ -255,7 +363,7 @@ const Projects = () => {
                     </div>
                   </div>
                 </motion.div>
-                
+
                 <div className="mt-4 space-y-3">
                   <h3 className="text-xl font-bold text-gray-900 dark:text-white group-hover:text-green-500 transition-colors">
                     {project.title}
@@ -263,7 +371,7 @@ const Projects = () => {
                   <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
                     {project.description}
                   </p>
-                  
+
                   {/* Technologies */}
                   <div className="flex flex-wrap gap-2">
                     {project.technologies.slice(0, 3).map((tech, techIndex) => (
@@ -286,117 +394,167 @@ const Projects = () => {
           </motion.div>
         </motion.div>
 
-        {/* Other Projects */}
+        {/* Other Projects - Carousel */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.6 }}
           viewport={{ once: true }}
         >
-          <div className="flex items-center gap-2 mb-8">
-            <Eye className="text-blue-500" size={24} />
-            <h3 className="text-2xl font-bold text-gray-900 dark:text-white">More Projects</h3>
-          </div>
-          
-          <motion.div
-            variants={container}
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true }}
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-          >
-            {otherProjects.map((project, index) => (
-              <motion.div
-                key={project.id}
-                variants={item}
-                className="group"
-                onMouseEnter={() => setHoveredId(project.id)}
-                onMouseLeave={() => setHoveredId(null)}
+          <div className="flex items-center justify-between mb-8">
+            <div className="flex items-center gap-2">
+              <Eye className="text-blue-500" size={24} />
+              <h3 className="text-2xl font-bold text-gray-900 dark:text-white">More Projects</h3>
+            </div>
+
+            {/* Carousel Navigation */}
+            <div className="flex items-center gap-2">
+              <button
+                onClick={prevSlide}
+                className="p-2 rounded-full bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
+                disabled={totalSlides <= 1}
               >
-                <motion.div
-                  className="relative h-48 overflow-hidden rounded-xl bg-gray-200 dark:bg-gray-700"
-                  whileHover={{ scale: 1.02 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  <img
-                    src={project.image}
-                    alt={project.title}
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                  />
-                  
-                  {/* Overlay */}
+                <ChevronLeft size={20} className="text-gray-600 dark:text-gray-300" />
+              </button>
+              <button
+                onClick={nextSlide}
+                className="p-2 rounded-full bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
+                disabled={totalSlides <= 1}
+              >
+                <ChevronRight size={20} className="text-gray-600 dark:text-gray-300" />
+              </button>
+            </div>
+          </div>
+
+          {/* Carousel Container */}
+          <div className="relative overflow-hidden">
+            <motion.div
+              className="flex transition-transform duration-500 ease-in-out"
+              animate={{ x: `-${currentSlide * 100}%` }}
+            >
+              {Array.from({ length: totalSlides }).map((_, slideIndex) => (
+                <div key={slideIndex} className="w-full flex-shrink-0">
                   <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{
-                      opacity: hoveredId === project.id ? 1 : 0,
-                    }}
-                    className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent flex items-end"
+                    variants={container}
+                    initial="hidden"
+                    whileInView="show"
+                    viewport={{ once: true }}
+                    className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
                   >
-                    <div className="p-4 w-full">
-                      <div className="flex gap-2 justify-center">
-                        <motion.a
-                          href={project.github}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="p-2 bg-white/20 backdrop-blur-sm rounded-full text-white hover:bg-gray-800 transition-all-300"
-                          whileHover={{ scale: 1.1, rotate: 5 }}
-                          whileTap={{ scale: 0.9 }}
-                          title="View Code"
+                    {otherProjects
+                      .slice(slideIndex * itemsPerSlide, (slideIndex + 1) * itemsPerSlide)
+                      .map((project, index) => (
+                        <motion.div
+                          key={project.id}
+                          variants={item}
+                          className="group"
+                          onMouseEnter={() => setHoveredId(project.id)}
+                          onMouseLeave={() => setHoveredId(null)}
                         >
-                          <Github size={16} />
-                        </motion.a>
-                        <motion.a
-                          href={project.demo}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="p-2 bg-white/20 backdrop-blur-sm rounded-full text-white hover:bg-green-500 transition-all-300"
-                          whileHover={{ scale: 1.1, rotate: 5 }}
-                          whileTap={{ scale: 0.9 }}
-                          title="Live Demo"
-                        >
-                          <ExternalLink size={16} />
-                        </motion.a>
-                      </div>
-                    </div>
+                          <motion.div
+                            className="relative h-48 overflow-hidden rounded-xl bg-gray-200 dark:bg-gray-700"
+                            whileHover={{ scale: 1.02 }}
+                            transition={{ duration: 0.3 }}
+                          >
+                            <img
+                              src={project.image}
+                              alt={project.title}
+                              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                            />
+
+                            {/* Overlay */}
+                            <motion.div
+                              initial={{ opacity: 0 }}
+                              animate={{
+                                opacity: hoveredId === project.id ? 1 : 0,
+                              }}
+                              className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent flex items-end"
+                            >
+                              <div className="p-4 w-full">
+                                <div className="flex gap-2 justify-center">
+                                  <motion.a
+                                    href={project.github}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="p-2 bg-white/20 backdrop-blur-sm rounded-full text-white hover:bg-gray-800 transition-all-300"
+                                    whileHover={{ scale: 1.1, rotate: 5 }}
+                                    whileTap={{ scale: 0.9 }}
+                                    title="View Code"
+                                  >
+                                    <Github size={16} />
+                                  </motion.a>
+                                  <motion.a
+                                    href={project.demo}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="p-2 bg-white/20 backdrop-blur-sm rounded-full text-white hover:bg-green-500 transition-all-300"
+                                    whileHover={{ scale: 1.1, rotate: 5 }}
+                                    whileTap={{ scale: 0.9 }}
+                                    title="Live Demo"
+                                  >
+                                    <ExternalLink size={16} />
+                                  </motion.a>
+                                </div>
+                              </div>
+                            </motion.div>
+
+                            {/* Category Badge */}
+                            <div className="absolute top-3 left-3">
+                              <div className="flex items-center gap-1 px-2 py-1 bg-white/20 backdrop-blur-sm rounded-full text-white text-xs font-medium">
+                                {getCategoryIcon(project.category)}
+                                {project.category}
+                              </div>
+                            </div>
+                          </motion.div>
+
+                          <div className="mt-3 space-y-2">
+                            <h3 className="text-lg font-bold text-gray-900 dark:text-white group-hover:text-green-500 transition-colors">
+                              {project.title}
+                            </h3>
+                            <p className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
+                              {project.description}
+                            </p>
+
+                            {/* Technologies */}
+                            <div className="flex flex-wrap gap-1">
+                              {project.technologies.slice(0, 2).map((tech, techIndex) => (
+                                <span
+                                  key={techIndex}
+                                  className="px-2 py-1 bg-green-500/10 border border-green-500/20 text-green-600 dark:text-green-400 rounded text-xs font-medium"
+                                >
+                                  {tech}
+                                </span>
+                              ))}
+                              {project.technologies.length > 2 && (
+                                <span className="px-2 py-1 bg-gray-500/10 border border-gray-500/20 text-gray-600 dark:text-gray-400 rounded text-xs font-medium">
+                                  +{project.technologies.length - 2} more
+                                </span>
+                              )}
+                            </div>
+                          </div>
+                        </motion.div>
+                      ))}
                   </motion.div>
-                  
-                  {/* Category Badge */}
-                  <div className="absolute top-3 left-3">
-                    <div className="flex items-center gap-1 px-2 py-1 bg-white/20 backdrop-blur-sm rounded-full text-white text-xs font-medium">
-                      {getCategoryIcon(project.category)}
-                      {project.category}
-                    </div>
-                  </div>
-                </motion.div>
-                
-                <div className="mt-3 space-y-2">
-                  <h3 className="text-lg font-bold text-gray-900 dark:text-white group-hover:text-green-500 transition-colors">
-                    {project.title}
-                  </h3>
-                  <p className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
-                    {project.description}
-                  </p>
-                  
-                  {/* Technologies */}
-                  <div className="flex flex-wrap gap-1">
-                    {project.technologies.slice(0, 2).map((tech, techIndex) => (
-                      <span
-                        key={techIndex}
-                        className="px-2 py-1 bg-green-500/10 border border-green-500/20 text-green-600 dark:text-green-400 rounded text-xs font-medium"
-                      >
-                        {tech}
-                      </span>
-                    ))}
-                    {project.technologies.length > 2 && (
-                      <span className="px-2 py-1 bg-gray-500/10 border border-gray-500/20 text-gray-600 dark:text-gray-400 rounded text-xs font-medium">
-                        +{project.technologies.length - 2} more
-                      </span>
-                    )}
-                  </div>
                 </div>
-              </motion.div>
-            ))}
-          </motion.div>
+              ))}
+            </motion.div>
+          </div>
+
+          {/* Carousel Indicators */}
+          {totalSlides > 1 && (
+            <div className="flex justify-center gap-2 mt-8">
+              {Array.from({ length: totalSlides }).map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => setCurrentSlide(index)}
+                  className={`w-3 h-3 rounded-full transition-colors ${index === currentSlide
+                      ? "bg-green-500"
+                      : "bg-gray-300 dark:bg-gray-600 hover:bg-gray-400 dark:hover:bg-gray-500"
+                    }`}
+                />
+              ))}
+            </div>
+          )}
         </motion.div>
 
         {/* Call to Action */}
