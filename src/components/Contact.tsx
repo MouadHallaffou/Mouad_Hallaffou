@@ -5,6 +5,8 @@ import {
   CheckCircle, Clock, User, Send, Sparkles
 } from "lucide-react";
 import { useState } from "react";
+import emailjs from '@emailjs/browser';
+import { EMAILJS_CONFIG } from '../config/emailjs';
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -66,15 +68,65 @@ const Contact = () => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // Simulate form submission
-    setTimeout(() => {
+    try {
+      // Vérifier si les clés EmailJS sont configurées
+      console.log('EmailJS Config:', EMAILJS_CONFIG); // Debug temporaire
+
+      if (EMAILJS_CONFIG.serviceId.includes('nixspnn') ||
+        EMAILJS_CONFIG.serviceId === '' ||
+        EMAILJS_CONFIG.templateId === '' ||
+        EMAILJS_CONFIG.publicKey === '') {
+        console.log('Configuration manquante:', {
+          serviceId: EMAILJS_CONFIG.serviceId,
+          templateId: EMAILJS_CONFIG.templateId,
+          publicKey: EMAILJS_CONFIG.publicKey
+        });
+        throw new Error('EmailJS keys not configured. Please follow the setup guide.');
+      } const templateParams = {
+        from_name: formData.name,
+        from_email: formData.email,
+        subject: formData.subject,
+        message: formData.message,
+        to_name: 'Mouad Hallaffou',
+      };
+
+      const result = await emailjs.send(
+        EMAILJS_CONFIG.serviceId,
+        EMAILJS_CONFIG.templateId,
+        templateParams,
+        EMAILJS_CONFIG.publicKey
+      );
+
+      console.log('Email sent successfully:', result);
+
       setStatus({
         type: "success",
         message: "Thank you! Your message has been sent successfully. I'll get back to you soon!"
       });
       setFormData({ name: "", email: "", subject: "", message: "" });
+
+    } catch (error) {
+      console.error('Email sending failed:', error);
+
+      let errorMessage = "Sorry, there was an error sending your message. Please try again or contact me directly.";
+
+      if (error instanceof Error) {
+        if (error.message.includes('EmailJS keys not configured')) {
+          errorMessage = "Email service not configured yet. Please contact me directly at mouadhallaffou@gmail.com";
+        } else if (error.message.includes('Invalid template ID')) {
+          errorMessage = "Email template configuration error. Please contact me directly.";
+        } else if (error.message.includes('Invalid service ID')) {
+          errorMessage = "Email service configuration error. Please contact me directly.";
+        }
+      }
+
+      setStatus({
+        type: "error",
+        message: errorMessage
+      });
+    } finally {
       setIsSubmitting(false);
-    }, 2000);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -306,8 +358,8 @@ const Contact = () => {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -10 }}
                     className={`mt-4 p-4 rounded-lg flex items-center gap-3 ${status.type === "success"
-                        ? "bg-green-500/20 border border-green-500/30 text-green-400"
-                        : "bg-red-500/20 border border-red-500/30 text-red-400"
+                      ? "bg-green-500/20 border border-green-500/30 text-green-400"
+                      : "bg-red-500/20 border border-red-500/30 text-red-400"
                       }`}
                   >
                     {status.type === "success" ? (
