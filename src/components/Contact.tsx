@@ -1,8 +1,8 @@
 
 import { motion, AnimatePresence } from "framer-motion";
-import { 
-  MessageSquare, Mail, Phone, MapPin, Github, Linkedin, 
-  CheckCircle, Clock, User, Send, Sparkles 
+import {
+  MessageSquare, Mail, Phone, MapPin, Github, Linkedin,
+  CheckCircle, Clock, User, Send, Sparkles
 } from "lucide-react";
 import { useState } from "react";
 
@@ -45,26 +45,27 @@ const Contact = () => {
       icon: <Github size={20} />,
       href: "https://github.com/MouadHallaffou",
       label: "GitHub",
-      color: "hover:bg-gray-800 hover:text-white"
+      color: "hover:bg-gray-800 hover:text-white dark:hover:bg-gray-100 dark:hover:text-gray-900"
     },
     {
       icon: <Linkedin size={20} />,
       href: "https://linkedin.com/in/hallaffou-mouad",
       label: "LinkedIn",
-      color: "hover:bg-blue-600 hover:text-white"
+      color: "hover:bg-blue-600 hover:text-white dark:hover:bg-blue-600 dark:hover:text-white"
     },
     {
       icon: <Mail size={20} />,
       href: "mailto:mouadhallaffou@gmail.com",
       label: "Email",
-      color: "hover:bg-green-600 hover:text-white"
+      color: "hover:bg-green-600 hover:text-white dark:hover:bg-green-600 dark:hover:text-white"
     }
   ];
+
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
+
     // Simulate form submission
     setTimeout(() => {
       setStatus({
@@ -96,14 +97,14 @@ const Contact = () => {
   };
 
   return (
-    <section 
-      id="contact" 
-      className="section-padding bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 relative overflow-hidden"
+    <section
+      id="contact"
+      className="section-padding bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 relative overflow-hidden"
     >
       {/* Background patterns */}
-      <div className="absolute inset-0 tech-pattern opacity-10"></div>
-      <div className="absolute inset-0 tech-grid opacity-5"></div>
-      
+      <div className="absolute inset-0 tech-pattern opacity-5 dark:opacity-10"></div>
+      <div className="absolute inset-0 tech-grid opacity-3 dark:opacity-5"></div>
+
       <div className="container mx-auto px-4 relative z-10">
         {/* Section Header */}
         <motion.div
@@ -123,15 +124,15 @@ const Contact = () => {
             <Sparkles size={16} />
             Get In Touch
           </motion.div>
-          
-          <h2 className="text-4xl md:text-5xl font-bold mb-6 text-white">
+
+          <h2 className="text-4xl md:text-5xl font-bold mb-6 text-gray-900 dark:text-white">
             Let's Work
             <span className="gradient-text"> Together</span>
           </h2>
-          
+
           <div className="w-24 h-1 bg-gradient-to-r from-green-500 to-emerald-500 mx-auto mb-8"></div>
-          
-          <p className="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
+
+          <p className="text-xl text-gray-700 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed">
             I'm always interested in new opportunities and exciting projects.
             Whether you have a question or just want to say hi, feel free to reach out!
           </p>
@@ -147,7 +148,7 @@ const Contact = () => {
             className="space-y-8"
           >
             <div>
-              <h3 className="text-2xl font-bold text-white mb-6">Contact Information</h3>
+              <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">Contact Information</h3>
               <div className="space-y-6">
                 {contactInfo.map((info, index) => (
                   <motion.div
@@ -164,9 +165,9 @@ const Contact = () => {
                         {info.icon}
                       </div>
                       <div className="flex-1">
-                        <h4 className="text-lg font-semibold text-white mb-1">{info.title}</h4>
-                        <p className="text-green-400 font-medium mb-1">{info.details}</p>
-                        <p className="text-gray-400 text-sm">{info.description}</p>
+                        <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-1">{info.title}</h4>
+                        <p className="text-green-600 dark:text-green-400 font-medium mb-1">{info.details}</p>
+                        <p className="text-gray-600 dark:text-gray-400 text-sm">{info.description}</p>
                       </div>
                     </div>
                   </motion.div>
@@ -176,7 +177,7 @@ const Contact = () => {
 
             {/* Connect With Me */}
             <div>
-              <h3 className="text-2xl font-bold text-white mb-6">Connect With Me</h3>
+              <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">Connect With Me</h3>
               <div className="flex gap-4">
                 {socialLinks.map((link, index) => (
                   <motion.a
@@ -184,8 +185,8 @@ const Contact = () => {
                     href={link.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className={`p-4 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full text-white transition-all-300 ${link.color}`}
-                    whileHover={{ scale: 1.1, rotate: 5 }}
+                    className={`p-4 bg-gray-100/80 dark:bg-white/10 backdrop-blur-sm border border-gray-200/60 dark:border-white/20 rounded-full text-gray-900 dark:text-white transition-all-300 ${link.color}`}
+                    whileHover={{ scale: 1.1, rotate: 360 }}
                     whileTap={{ scale: 0.9 }}
                     title={link.label}
                     initial={{ opacity: 0, scale: 0 }}
@@ -208,12 +209,12 @@ const Contact = () => {
             viewport={{ once: true }}
           >
             <div className="card-modern p-8">
-              <h3 className="text-2xl font-bold text-white mb-6">Send Me a Message</h3>
-              
+              <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">Send Me a Message</h3>
+
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
-                    <label htmlFor="name" className="block text-sm font-medium text-gray-300 mb-2">
+                    <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                       Name
                     </label>
                     <input
@@ -223,12 +224,12 @@ const Contact = () => {
                       value={formData.name}
                       onChange={handleChange}
                       required
-                      className="w-full px-4 py-3 bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all-300"
+                      className="w-full px-4 py-3 bg-gray-100/80 dark:bg-white/10 backdrop-blur-sm border border-gray-200/60 dark:border-white/20 rounded-lg text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all-300"
                       placeholder="Your name"
                     />
                   </div>
                   <div>
-                    <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">
+                    <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                       Email
                     </label>
                     <input
@@ -238,14 +239,14 @@ const Contact = () => {
                       value={formData.email}
                       onChange={handleChange}
                       required
-                      className="w-full px-4 py-3 bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all-300"
+                      className="w-full px-4 py-3 bg-gray-100/80 dark:bg-white/10 backdrop-blur-sm border border-gray-200/60 dark:border-white/20 rounded-lg text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all-300"
                       placeholder="your.email@example.com"
                     />
                   </div>
                 </div>
-                
+
                 <div>
-                  <label htmlFor="subject" className="block text-sm font-medium text-gray-300 mb-2">
+                  <label htmlFor="subject" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                     Subject
                   </label>
                   <input
@@ -255,13 +256,13 @@ const Contact = () => {
                     value={formData.subject}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-3 bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all-300"
+                    className="w-full px-4 py-3 bg-gray-100/80 dark:bg-white/10 backdrop-blur-sm border border-gray-200/60 dark:border-white/20 rounded-lg text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all-300"
                     placeholder="What's this about?"
                   />
                 </div>
-                
+
                 <div>
-                  <label htmlFor="message" className="block text-sm font-medium text-gray-300 mb-2">
+                  <label htmlFor="message" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                     Message
                   </label>
                   <textarea
@@ -271,11 +272,11 @@ const Contact = () => {
                     onChange={handleChange}
                     required
                     rows={5}
-                    className="w-full px-4 py-3 bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all-300 resize-none"
+                    className="w-full px-4 py-3 bg-gray-100/80 dark:bg-white/10 backdrop-blur-sm border border-gray-200/60 dark:border-white/20 rounded-lg text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all-300 resize-none"
                     placeholder="Tell me about your project..."
                   />
                 </div>
-                
+
                 <motion.button
                   type="submit"
                   disabled={isSubmitting}
@@ -304,11 +305,10 @@ const Contact = () => {
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -10 }}
-                    className={`mt-4 p-4 rounded-lg flex items-center gap-3 ${
-                      status.type === "success"
+                    className={`mt-4 p-4 rounded-lg flex items-center gap-3 ${status.type === "success"
                         ? "bg-green-500/20 border border-green-500/30 text-green-400"
                         : "bg-red-500/20 border border-red-500/30 text-red-400"
-                    }`}
+                      }`}
                   >
                     {status.type === "success" ? (
                       <CheckCircle size={20} />
@@ -332,10 +332,10 @@ const Contact = () => {
           className="mt-16 text-center"
         >
           <div className="card-modern p-8 max-w-2xl mx-auto group hover:scale-105 transition-transform duration-300">
-            <h3 className="text-2xl font-bold text-white mb-4">
+            <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
               Let's Build Something Amazing
             </h3>
-            <p className="text-gray-300 leading-relaxed">
+            <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
               I'm passionate about creating innovative solutions and bringing ideas to life.
               Whether you need a full-stack application, a modern website, or technical consultation,
               I'm here to help you achieve your goals.

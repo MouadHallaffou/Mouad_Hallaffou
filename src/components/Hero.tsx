@@ -35,19 +35,19 @@ const Hero = () => {
       icon: <Github size={20} />,
       href: "https://github.com/MouadHallaffou",
       label: "GitHub",
-      color: "hover:bg-gray-700 dark:hover:bg-gray-700 hover:text-white"
+      color: "hover:bg-gray-800 hover:text-white dark:hover:bg-gray-100 dark:hover:text-gray-900"
     },
     {
       icon: <Linkedin size={20} />,
       href: "https://linkedin.com/in/hallaffou-mouad",
       label: "LinkedIn",
-      color: "hover:bg-blue-600 hover:text-white"
+      color: "hover:bg-blue-600 hover:text-white dark:hover:bg-blue-600 dark:hover:text-white"
     },
     {
       icon: <Mail size={20} />,
       href: "mailto:mouadhallaffou@gmail.com",
       label: "Email",
-      color: "hover:bg-green-600 hover:text-white"
+      color: "hover:bg-green-600 hover:text-white dark:hover:bg-green-600 dark:hover:text-white"
     }
   ];
 
@@ -236,8 +236,8 @@ const Hero = () => {
                   href={link.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={`p-3 bg-gray-100/80 dark:bg-white/10 backdrop-blur-sm border border-gray-200/50 dark:border-white/20 rounded-full text-gray-600 dark:text-white transition-all duration-300 ${link.color}`}
-                  whileHover={{ scale: 1.1, rotate: 5 }}
+                  className={`p-3 bg-gray-100/80 dark:bg-white/10 backdrop-blur-sm border border-gray-200/50 dark:border-white/20 rounded-full text-gray-600 dark:text-white transition-all ${link.color}`}
+                  whileHover={{ scale: 1.1, rotate: 360, transition: { duration: 0.1, ease: "easeInOut" } }}
                   whileTap={{ scale: 0.9 }}
                   title={link.label}
                   initial={{ opacity: 0, scale: 0 }}

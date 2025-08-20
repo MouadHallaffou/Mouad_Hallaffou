@@ -9,17 +9,20 @@ const Footer = () => {
     {
       icon: <Github size={20} />,
       href: "https://github.com/MouadHallaffou",
-      label: "GitHub"
+      label: "GitHub",
+      color: "hover:bg-gray-800 hover:text-white dark:hover:bg-gray-100 dark:hover:text-gray-900"
     },
     {
       icon: <Linkedin size={20} />,
       href: "https://linkedin.com/in/hallaffou-mouad",
-      label: "LinkedIn"
+      label: "LinkedIn",
+      color: "hover:bg-blue-600 hover:text-white dark:hover:bg-blue-600 dark:hover:text-white"
     },
     {
       icon: <Mail size={20} />,
       href: "mailto:mouadhallaffou@gmail.com",
-      label: "Email"
+      label: "Email",
+      color: "hover:bg-green-600 hover:text-white dark:hover:bg-green-600 dark:hover:text-white"
     }
   ];
 
@@ -60,7 +63,7 @@ const Footer = () => {
                 href={link.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-3 bg-gray-100/80 dark:bg-white/10 backdrop-blur-sm border border-gray-200/50 dark:border-white/20 rounded-full text-gray-600 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 hover:bg-gray-200/80 dark:hover:bg-white/20 transition-all-300"
+                className={`p-3 bg-gray-100/80 dark:bg-white/10 backdrop-blur-sm border border-gray-200/50 dark:border-white/20 rounded-full text-gray-600 dark:text-gray-300 dark:hover:text-green-400  dark:hover:bg-white/20 transition-all-300 ${link.color}`}
                 whileHover={{ scale: 1.1, rotate: 360 }}
                 whileTap={{ scale: 0.9 }}
                 title={link.label}
