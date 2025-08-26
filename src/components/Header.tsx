@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
@@ -54,7 +53,10 @@ const Header = () => {
               <span className="font-semibold text-sm text-gray-600 dark:text-gray-300">Hallaffou</span>
             </motion.div>
           </Link>
-          <NavigationButtons />
+          {/* NavigationButtons visible uniquement sur desktop ou si le menu mobile est fermé */}
+          <div className={`hidden md:block ${isMobileMenuOpen ? "hidden" : ""}`}>
+            <NavigationButtons />
+          </div>
         </div>
 
         <div className="flex items-center gap-4">

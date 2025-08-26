@@ -15,7 +15,7 @@ const Hero = () => {
   });
 
   const y = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
-  const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
+  const opacity = useTransform(scrollYProgress, [0, 0.8], [1, 0.2]);
 
   useEffect(() => {
     if (isTyping && currentIndex < fullText.length) {
@@ -62,7 +62,7 @@ const Hero = () => {
     <section
       ref={containerRef}
       id="home"
-      className="min-h-screen flex items-center justify-center relative overflow-hidden bg-gradient-to-br from-gray-50 via-white to-gray-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900"
+      className="min-h-screen flex items-center justify-center relative overflow-hidden bg-gradient-to-br from-gray-50 via-white to-gray-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 pb-24 sm:pb-32"
     >
       {/* Animated background */}
       <motion.div
@@ -255,10 +255,14 @@ const Hero = () => {
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 1, delay: 0.5 }}
-            className="lg:w-1/2 flex justify-end"
+            className="lg:w-1/2 flex justify-end relative"
           >
+            {/* Fond sombre derrière la carte profil sur mobile */}
+            <div className="absolute inset-0 lg:hidden z-0 pointer-events-none">
+              <div className="w-full h-full rounded-3xl bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 opacity-80"></div>
+            </div>
             <motion.div
-              className="relative"
+              className="relative z-10"
               animate={{ y: [0, -10, 0] }}
               transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
             >
