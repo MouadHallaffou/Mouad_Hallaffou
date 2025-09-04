@@ -1,6 +1,6 @@
 ## Informations de contact
 - **Email**: [mouadhallaffou@gmail.com](mailto:mouadhallaffou@gmail.com)
-- **LinkedIn**: [LinkedIn Profile](https://www.linkedin.com/in/hallaffou-mouad-763409200/)
+- **LinkedIn**: [LinkedIn Profile](https://www.linkedin.com/in/hallaffou-mouad/)
 - **GitHub**: [GitHub Profile](https://github.com/MouadHallaffou)
 
 ## Résumé
