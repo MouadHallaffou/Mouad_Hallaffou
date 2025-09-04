@@ -343,7 +343,7 @@ const Hero = () => {
                       animate={{ opacity: 1 }}
                       transition={{ duration: 0.6, delay: 1.4 }}
                     >
-                      MERN Stack | PHP/Laravel | TypeScript
+                      Java/Angular | PHP/Laravel | NodeJs/Express
                     </motion.p>
                   </motion.div>
 
@@ -364,12 +364,12 @@ const Hero = () => {
                     </motion.p>
                     <div className="flex flex-wrap justify-center gap-2">
                       {[
-                        // { name: 'MongoDB', color: 'from-green-500 to-emerald-600' },
                         { name: 'Laravel', color: 'from-red-500 to-pink-600' },
-                        { name: 'Express.js', color: 'from-gray-500 to-gray-700' },
+                        { name: 'Spring-Boot', color: 'from-green-500 to-green-600' },
                         { name: 'React', color: 'from-blue-500 to-cyan-600' },
-                        { name: 'Node.js', color: 'from-green-600 to-green-800' },
-                        { name: 'PHP', color: 'from-purple-500 to-indigo-600' },
+                        { name: 'TypeScript', color: 'from-blue-600 to-blue-800' },
+                        { name: 'PostgreSQL', color: 'from-blue-700 to-blue-900' },
+                        { name: 'Next.js', color: 'from-gray-500 to-gray-700' },
                       ].map((tech, index) => (
                         <motion.span
                           key={tech.name}
