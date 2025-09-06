@@ -70,17 +70,22 @@ const Contact = () => {
 
     try {
       // Vérifier si les clés EmailJS sont configurées
-      console.log('EmailJS Config:', EMAILJS_CONFIG); // Debug temporaire
+      // console.log('EmailJS Config:', EMAILJS_CONFIG); // Debug temporaire
+      // console.log('Environment check:', {
+      //   serviceId: import.meta.env.VITE_EMAILJS_SERVICE_ID,
+      //   templateId: import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+      //   publicKey: import.meta.env.VITE_EMAILJS_PUBLIC_KEY
+      // });
 
       if (EMAILJS_CONFIG.serviceId.includes('nixspnn') ||
         EMAILJS_CONFIG.serviceId === '' ||
         EMAILJS_CONFIG.templateId === '' ||
         EMAILJS_CONFIG.publicKey === '') {
-        console.log('Configuration manquante:', {
-          serviceId: EMAILJS_CONFIG.serviceId,
-          templateId: EMAILJS_CONFIG.templateId,
-          publicKey: EMAILJS_CONFIG.publicKey
-        });
+        // console.log('Configuration manquante:', {
+        //   serviceId: EMAILJS_CONFIG.serviceId,
+        //   templateId: EMAILJS_CONFIG.templateId,
+        //   publicKey: EMAILJS_CONFIG.publicKey
+        // });
         throw new Error('EmailJS keys not configured. Please follow the setup guide.');
       } const templateParams = {
         from_name: formData.name,
@@ -97,7 +102,7 @@ const Contact = () => {
         EMAILJS_CONFIG.publicKey
       );
 
-      console.log('Email sent successfully:', result);
+      // console.log('Email sent successfully:', result);
 
       setStatus({
         type: "success",
@@ -106,7 +111,7 @@ const Contact = () => {
       setFormData({ name: "", email: "", subject: "", message: "" });
 
     } catch (error) {
-      console.error('Email sending failed:', error);
+      // console.error('Email sending failed:', error);
 
       let errorMessage = "Sorry, there was an error sending your message. Please try again or contact me directly.";
 
