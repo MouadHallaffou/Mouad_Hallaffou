@@ -19,61 +19,73 @@ const Skills = () => {
   const y = useTransform(scrollYProgress, [0, 1], [100, -100]);
   const opacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0, 1, 1, 0]);
 
-  const skillCategories = [
+   const skillCategories = [
     {
       id: 0,
-      title: "Frontend Development",
+      title: "Programming Languages",
       icon: <Code size={24} />,
-      description: "Modern web technologies and frameworks",
+      description: "Core programming languages and markup technologies",
       skills: [
-        { name: "React", level: 90, icon: <Command size={20} />, color: "from-blue-500 to-cyan-500" },
+        { name: "JavaScript", level: 90, icon: <Zap size={20} />, color: "from-yellow-500 to-orange-500" },
+        { name: "PHP", level: 88, icon: <Server size={20} />, color: "from-purple-500 to-indigo-500" },
+        { name: "Java", level: 80, icon: <FileCode size={20} />, color: "from-red-500 to-pink-500" },
         { name: "TypeScript", level: 85, icon: <FileCode size={20} />, color: "from-blue-600 to-blue-700" },
-        { name: "Vue.js", level: 75, icon: <LayoutGrid size={20} />, color: "from-green-500 to-emerald-500" },
-        { name: "TailwindCSS", level: 95, icon: <Palette size={20} />, color: "from-cyan-500 to-blue-500" },
-        { name: "HTML/CSS", level: 95, icon: <Layers size={20} />, color: "from-orange-500 to-red-500" },
-        { name: "JavaScript", level: 90, icon: <Zap size={20} />, color: "from-yellow-500 to-orange-500" }
+        { name: "Python", level: 75, icon: <BrainCircuit size={20} />, color: "from-green-500 to-blue-500" },
+        { name: "C", level: 70, icon: <Cpu size={20} />, color: "from-gray-600 to-gray-800" },
+        { name: "HTML5", level: 95, icon: <FileCode size={20} />, color: "from-orange-500 to-red-500" },
+        { name: "CSS3", level: 95, icon: <Palette size={20} />, color: "from-blue-500 to-cyan-500" },
       ],
     },
     {
       id: 1,
-      title: "Backend Development",
-      icon: <Server size={24} />,
-      description: "Server-side technologies and databases",
+      title: "Frameworks & Libraries",
+      icon: <LayoutGrid size={24} />,
+      description: "Modern frameworks and development libraries",
       skills: [
-        { name: "PHP/Laravel", level: 88, icon: <FileCode size={20} />, color: "from-red-500 to-pink-500" },
-        { name: "Node.js", level: 75, icon: <Server size={20} />, color: "from-green-600 to-green-700" },
-        { name: "MySQL", level: 85, icon: <Database size={20} />, color: "from-blue-500 to-blue-600" },
-        { name: "PostgreSQL", level: 70, icon: <Database size={20} />, color: "from-blue-600 to-blue-800" },
-        { name: "REST APIs", level: 90, icon: <Globe size={20} />, color: "from-purple-500 to-pink-500" },
-        { name: "GraphQL", level: 65, icon: <BrainCircuit size={20} />, color: "from-pink-500 to-purple-500" }
+        { name: "React", level: 90, icon: <Command size={20} />, color: "from-blue-500 to-cyan-500" },
+        { name: "Laravel", level: 88, icon: <FileCode size={20} />, color: "from-red-500 to-pink-500" },
+        { name: "Angular", level: 75, icon: <LayoutGrid size={20} />, color: "from-red-500 to-pink-500" },
+        { name: "Spring Boot", level: 80, icon: <Server size={20} />, color: "from-green-600 to-green-700" },
+        { name: "Express.js", level: 75, icon: <Server size={20} />, color: "from-green-600 to-green-700" },
+        { name: "Symfony", level: 70, icon: <FileCode size={20} />, color: "from-purple-500 to-indigo-500" },
+        { name: "Vue.js", level: 75, icon: <LayoutGrid size={20} />, color: "from-green-500 to-emerald-500" },
+        { name: "JEE", level: 75, icon: <Server size={20} />, color: "from-red-500 to-pink-500" },
+        { name: "Inertia.js", level: 70, icon: <FileCode size={20} />, color: "from-purple-500 to-indigo-500" },
+        { name: "Bootstrap", level: 85, icon: <Layers size={20} />, color: "from-purple-500 to-pink-500" },
+        { name: "TailwindCSS", level: 95, icon: <Palette size={20} />, color: "from-cyan-500 to-blue-500" },
+        { name: "jQuery", level: 80, icon: <Zap size={20} />, color: "from-blue-500 to-blue-600" }
       ],
     },
     {
       id: 2,
-      title: "DevOps & Tools",
-      icon: <Cloud size={24} />,
-      description: "Development tools and deployment",
+      title: "Databases",
+      icon: <Database size={24} />,
+      description: "Database management systems and data storage",
       skills: [
-        { name: "Git", level: 90, icon: <GitBranch size={20} />, color: "from-orange-500 to-red-500" },
-        { name: "Docker", level: 70, icon: <Cloud size={20} />, color: "from-blue-500 to-blue-600" },
-        { name: "CI/CD", level: 75, icon: <Zap size={20} />, color: "from-green-500 to-emerald-500" },
-        { name: "AWS", level: 60, icon: <Cloud size={20} />, color: "from-orange-500 to-yellow-500" },
-        { name: "Linux", level: 80, icon: <Cpu size={20} />, color: "from-gray-600 to-gray-800" },
-        { name: "Nginx", level: 70, icon: <Server size={20} />, color: "from-green-600 to-green-700" }
+        { name: "MySQL", level: 85, icon: <Database size={20} />, color: "from-blue-500 to-blue-600" },
+        { name: "PostgreSQL", level: 80, icon: <Database size={20} />, color: "from-blue-600 to-indigo-600" },
+        { name: "SQLite", level: 75, icon: <Database size={20} />, color: "from-gray-600 to-gray-800" },
+        { name: "Firebase", level: 70, icon: <Database size={20} />, color: "from-yellow-500 to-orange-500" },
+        { name: "Cassandra", level: 65, icon: <Database size={20} />, color: "from-blue-500 to-blue-600" },
+        { name: "MongoDB", level: 75, icon: <Database size={20} />, color: "from-green-500 to-emerald-500" }
       ],
     },
     {
       id: 3,
-      title: "Design & UX",
-      icon: <Brush size={24} />,
-      description: "User experience and design tools",
+      title: "Tools & Technologies",
+      icon: <Cloud size={24} />,
+      description: "Development tools, deployment and system administration",
       skills: [
+        { name: "Git/GitHub", level: 90, icon: <GitBranch size={20} />, color: "from-orange-500 to-red-500" },
         { name: "Figma", level: 80, icon: <Figma size={20} />, color: "from-purple-500 to-pink-500" },
-        { name: "Adobe XD", level: 70, icon: <Brush size={20} />, color: "from-pink-500 to-purple-500" },
-        { name: "Responsive Design", level: 95, icon: <Smartphone size={20} />, color: "from-green-500 to-emerald-500" },
-        { name: "UI/UX Principles", level: 85, icon: <Users size={20} />, color: "from-blue-500 to-cyan-500" },
-        { name: "Prototyping", level: 75, icon: <Monitor size={20} />, color: "from-indigo-500 to-purple-500" },
-        { name: "Design Systems", level: 70, icon: <Layers size={20} />, color: "from-gray-500 to-gray-700" }
+        { name: "Postman", level: 85, icon: <Globe size={20} />, color: "from-orange-500 to-red-500" },
+        { name: "REST API", level: 90, icon: <Globe size={20} />, color: "from-purple-500 to-pink-500" },
+        { name: "GraphQL", level: 65, icon: <BrainCircuit size={20} />, color: "from-pink-500 to-purple-500" },
+        { name: "Linux", level: 80, icon: <Cpu size={20} />, color: "from-gray-600 to-gray-800" },
+        { name: "Bash", level: 75, icon: <Command size={20} />, color: "from-green-500 to-emerald-500" },
+        { name: "Docker", level: 70, icon: <Cloud size={20} />, color: "from-blue-500 to-blue-600" },
+        { name: "Nginx", level: 70, icon: <Server size={20} />, color: "from-green-600 to-green-700" },
+        { name: "Ansible", level: 60, icon: <Cloud size={20} />, color: "from-red-500 to-pink-500" }
       ],
     }
   ];
