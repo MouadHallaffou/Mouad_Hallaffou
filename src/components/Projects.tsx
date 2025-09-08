@@ -29,7 +29,7 @@ const Projects = () => {
       image: "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=800&q=80",
       github: "https://github.com/web_chat_application",
       demo: "https://web-chat-application-get.vercel.app/",
-      category: "B2B Platform",
+      category: "Messaging App",
       featured: true,
       technologies: ["Express.js", "MongoDB", "React", "TypeScript", "Socket.io"]
     },
