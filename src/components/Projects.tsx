@@ -28,10 +28,10 @@ const Projects = () => {
       description: "A real-time web chat application inspired by Messenger and Discord, offering smooth, modern interaction with authentication, media sharing, and calling capabilities.",
       image: "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=800&q=80",
       github: "https://github.com/web_chat_application",
-      demo: "https://web-chat-application-get.vercel.app/login",
+      demo: "https://web-chat-application-get.vercel.app/",
       category: "B2B Platform",
       featured: true,
-      technologies: ["Express.js", "React", "TypeScript", "Socket.io", "MongoDB"]
+      technologies: ["Express.js", "MongoDB", "React", "TypeScript", "Socket.io"]
     },
     {
       id: 2,
@@ -42,7 +42,7 @@ const Projects = () => {
       demo: "https://v1.thefoodeshow.com/en/login",
       category: "B2B Platform",
       featured: true,
-      technologies: ["Symfony", "JavaScript", "MySQL", "CSS"]
+      technologies: ["Symfony", "JavaScript", "MySQL", "Sass"]
     },
     {
       id: 3,
@@ -53,7 +53,7 @@ const Projects = () => {
       demo: "https://github.com/MouadHallaffou/EasyPrint",
       category: "E-commerce",
       featured: true,
-      technologies: ["JavaScript", "Laravel", "MySQL", "Tailwind"]
+      technologies: ["Laravel", "JavaScript", "MySQL", "Tailwind", "Auth2"]
     },
     {
       id: 4,
@@ -64,7 +64,7 @@ const Projects = () => {
       demo: "https://plateforme-mentorat.vercel.app/",
       category: "Education",
       featured: true,
-      technologies: ["React", "Laravel", "REST API"]
+      technologies: ["Laravel", "React", "REST API", "Mysql"]
     },
     {
       id: 5,
@@ -75,7 +75,7 @@ const Projects = () => {
       demo: "https://github.com/MouadHallaffou/Human-Resource-Management-System",
       category: "Enterprise",
       featured: false,
-      technologies: ["Laravel", "JavaScript", "PostgreSQL"]
+      technologies: ["Laravel", "JavaScript", "PostgreSQL", "Tailwind"]
     },
     {
       id: 6,
@@ -108,7 +108,7 @@ const Projects = () => {
       demo: "https://mouadhallaffou.github.io/Calculator/",
       category: "Utility",
       featured: false,
-      technologies: ["JavaScript", "Tailwind"]
+      technologies: ["JavaScript", "Tailwind", "HTML"]
     },
     {
       id: 9,
@@ -130,7 +130,7 @@ const Projects = () => {
       demo: "https://github.com/MouadHallaffou/Dev.to_Blogging_Plateform",
       category: "Blog",
       featured: false,
-      technologies: ["PHP", "Bootstrap", "MySQL"]
+      technologies: ["PHP", "Bootstrap", "MySQL", "Javascript"]
     },
     {
       id: 11,
