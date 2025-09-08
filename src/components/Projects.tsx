@@ -23,18 +23,29 @@ const Projects = () => {
 
   const projects = [
     {
-      id: 0,
-      title: "thefoodeshow",
+      id: 1,
+      title: "ChatBot Platform",
+      description: "A real-time web chat application inspired by Messenger and Discord, offering smooth, modern interaction with authentication, media sharing, and calling capabilities.",
+      image: "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=800&q=80",
+      github: "https://github.com/web_chat_application",
+      demo: "https://web-chat-application-get.vercel.app/login",
+      category: "B2B Platform",
+      featured: true,
+      technologies: ["Express.js", "React", "TypeScript", "Socket.io", "MongoDB"]
+    },
+    {
+      id: 2,
+      title: "TheFoodeshow",
       description: "B2B benchmarking platform for food industry professionals with comprehensive analytics and market insights.",
       image: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=800&q=80",
       github: "https://github.com/Foodeshow/V1update",
-      demo: "https://github.com/Foodeshow/V1update",
+      demo: "https://v1.thefoodeshow.com/en/login",
       category: "B2B Platform",
       featured: true,
-      technologies: ["Symfony", "Javascript", "MySQL", "CSS"]
+      technologies: ["Symfony", "JavaScript", "MySQL", "CSS"]
     },
     {
-      id: 1,
+      id: 3,
       title: "EasyPrint",
       description: "Comprehensive bookstore platform for managing inventory, sales, and customer relationships with modern UI.",
       image: "https://images.unsplash.com/photo-1481627834876-b7833e8f5570?auto=format&fit=crop&w=800&q=80",
@@ -42,32 +53,32 @@ const Projects = () => {
       demo: "https://github.com/MouadHallaffou/EasyPrint",
       category: "E-commerce",
       featured: true,
-      technologies: ["Javascript", "Laravel", "MySQL", "Tailwind"]
+      technologies: ["JavaScript", "Laravel", "MySQL", "Tailwind"]
     },
     {
-      id: 2,
+      id: 4,
       title: "eLearning Platform",
       description: "Advanced mentorship and collaborative learning platform with real-time communication features.",
       image: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=800&q=80",
       github: "https://github.com/MouadHallaffou/plateforme_mentorat",
-      demo: "https://github.com/MouadHallaffou/plateforme_mentorat",
+      demo: "https://plateforme-mentorat.vercel.app/",
       category: "Education",
       featured: true,
       technologies: ["React", "Laravel", "REST API"]
     },
     {
-      id: 3,
+      id: 5,
       title: "HR Management System",
       description: "Complete human resources management solution for employee lifecycle, payroll, and department organization.",
       image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=800&q=80",
       github: "https://github.com/MouadHallaffou/Human-Resource-Management-System",
       demo: "https://github.com/MouadHallaffou/Human-Resource-Management-System",
       category: "Enterprise",
-      featured: true,
-      technologies: ["Laravel", "Javascript", "PostgreSQL"]
+      featured: false,
+      technologies: ["Laravel", "JavaScript", "PostgreSQL"]
     },
     {
-      id: 4,
+      id: 6,
       title: "The Weekly",
       description: "Dynamic platform for company announcements, news sharing, and team collaboration with comment system.",
       image: "https://images.unsplash.com/photo-1504711434969-e33886168f5c?auto=format&fit=crop&w=800&q=80",
@@ -78,7 +89,7 @@ const Projects = () => {
       technologies: ["Laravel", "MySQL", "Tailwind"]
     },
     {
-      id: 5,
+      id: 7,
       title: "StruoCV",
       description: "Interactive professional CV builder with customizable templates and instant PDF download functionality.",
       image: "https://images.unsplash.com/photo-1586281380349-632531db7ed4?auto=format&fit=crop&w=800&q=80",
@@ -86,21 +97,21 @@ const Projects = () => {
       demo: "https://mouadhallaffou.github.io/Resume_Builder_StruoCV/",
       category: "Productivity",
       featured: false,
-      technologies: ["Javascript", "Laravel", "Mysql"]
+      technologies: ["HTML", "CSS", "JavaScript", "jsPDF"]
     },
     {
-      id: 6,
+      id: 8,
       title: "Calculator App",
-      description: "Modern scientific calculator application with advanced mathematical functions and clean interface.",
+      description: "Modern scientific calculator with advanced mathematical functions and clean interface.",
       image: "https://images.unsplash.com/photo-1587145820266-a5951ee6f620?auto=format&fit=crop&w=800&q=80",
       github: "https://mouadhallaffou.github.io/Calculator/",
       demo: "https://mouadhallaffou.github.io/Calculator/",
       category: "Utility",
       featured: false,
-      technologies: ["Javascript", "Tailwind"]
+      technologies: ["JavaScript", "Tailwind"]
     },
     {
-      id: 7,
+      id: 9,
       title: "Youdemy Platform",
       description: "Comprehensive e-learning platform with course management, student progress tracking, and instructor tools.",
       image: "https://images.unsplash.com/photo-1516321497487-e288fb19713f?auto=format&fit=crop&w=800&q=80",
@@ -108,10 +119,10 @@ const Projects = () => {
       demo: "https://github.com/MouadHallaffou/Youdemy_plateform",
       category: "Education",
       featured: false,
-      technologies: ["PHP", "Javascript", "MySQL", "Tailwind"]
+      technologies: ["PHP", "JavaScript", "MySQL", "Tailwind"]
     },
     {
-      id: 8,
+      id: 10,
       title: "Dev.to Blog",
       description: "Technical blogging platform for developers with article creation, commenting, and community features.",
       image: "https://images.unsplash.com/photo-1499750310107-5fef28a66643?auto=format&fit=crop&w=800&q=80",
@@ -122,7 +133,7 @@ const Projects = () => {
       technologies: ["PHP", "Bootstrap", "MySQL"]
     },
     {
-      id: 9,
+      id: 11,
       title: "ScrumBoard",
       description: "Agile project management tool with Kanban boards, sprint planning, and team collaboration features.",
       image: "https://images.unsplash.com/photo-1507925921958-8a62f3d1a50d?auto=format&fit=crop&w=800&q=80",
@@ -130,31 +141,31 @@ const Projects = () => {
       demo: "https://mouadhallaffou.github.io/YoucodeScrum-Board/",
       category: "Productivity",
       featured: false,
-      technologies: ["Javascript", "Bootstrap", "HTML"]
+      technologies: ["JavaScript", "Bootstrap", "HTML"]
     },
     {
-      id: 10,
+      id: 12,
       title: "FUT Champions",
       description: "Football team management application with player statistics, formation builder, and match analytics.",
       image: "https://images.unsplash.com/photo-1579952363873-27f3bade9f55?auto=format&fit=crop&w=800&q=80",
       github: "https://github.com/MouadHallaffou/FUT-Champions-Web-App-Ultimate-Team",
-      demo: "https://github.com/MouadHallaffou/FUT-Champions-Web-App-Ultimate-Team",
+      demo: "https://mouadhallaffou.github.io/FUT-Champions-Web-App-Ultimate-Team/",
       category: "Gaming",
       featured: false,
-      technologies: ["Javascript", "CSS", "HTML"]
+      technologies: ["JavaScript", "CSS", "HTML"]
     },
     {
-      id: 11,
+      id: 13,
       title: "Weather App",
       description: "Real-time weather application with location-based forecasts, interactive maps, and detailed meteorological data.",
       image: "https://images.unsplash.com/photo-1601134467661-3d775b999c8b?auto=format&fit=crop&w=800&q=80",
       github: "https://github.com/MouadHallaffou/Weather_App",
-      demo: "https://github.com/MouadHallaffou/Weather_App",
+      demo: "https://mouadhallaffou.github.io/Weather_App/",
       category: "Utility",
       featured: false,
-      technologies: ["Javascript", "Tailwind", "Weather API"]
+      technologies: ["JavaScript", "Tailwind", "Weather API"]
     }
-  ];
+  ] as const;
 
   const featuredProjects = projects.filter(project => project.featured);
   const otherProjects = projects.filter(project => !project.featured);
