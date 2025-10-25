@@ -6,10 +6,14 @@ import {
   LayoutGrid, Command, FileCode, BrainCircuit, Globe, Cloud,
   Brush, Zap, Shield, Cpu, Smartphone, Monitor, Layers, Sparkles
 } from "lucide-react";
+import { useSkills } from "../hooks/useApi";
 
 const Skills = () => {
   const [activeCategory, setActiveCategory] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
+  
+  // Fetch skills from API
+  const { data: skills, loading: skillsLoading } = useSkills();
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -19,64 +23,74 @@ const Skills = () => {
   const y = useTransform(scrollYProgress, [0, 1], [100, -100]);
   const opacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0, 1, 1, 0]);
 
-  const skillCategories = [
-    {
-      id: 0,
-      title: "Frontend Development",
-      icon: <Code size={24} />,
-      description: "Modern web technologies and frameworks",
-      skills: [
-        { name: "React", level: 90, icon: <Command size={20} />, color: "from-blue-500 to-cyan-500" },
-        { name: "TypeScript", level: 85, icon: <FileCode size={20} />, color: "from-blue-600 to-blue-700" },
-        { name: "Vue.js", level: 75, icon: <LayoutGrid size={20} />, color: "from-green-500 to-emerald-500" },
-        { name: "TailwindCSS", level: 95, icon: <Palette size={20} />, color: "from-cyan-500 to-blue-500" },
-        { name: "HTML/CSS", level: 95, icon: <Layers size={20} />, color: "from-orange-500 to-red-500" },
-        { name: "JavaScript", level: 90, icon: <Zap size={20} />, color: "from-yellow-500 to-orange-500" }
-      ],
-    },
-    {
-      id: 1,
-      title: "Backend Development",
-      icon: <Server size={24} />,
-      description: "Server-side technologies and databases",
-      skills: [
-        { name: "PHP/Laravel", level: 88, icon: <FileCode size={20} />, color: "from-red-500 to-pink-500" },
-        { name: "Node.js", level: 75, icon: <Server size={20} />, color: "from-green-600 to-green-700" },
-        { name: "MySQL", level: 85, icon: <Database size={20} />, color: "from-blue-500 to-blue-600" },
-        { name: "PostgreSQL", level: 70, icon: <Database size={20} />, color: "from-blue-600 to-blue-800" },
-        { name: "REST APIs", level: 90, icon: <Globe size={20} />, color: "from-purple-500 to-pink-500" },
-        { name: "GraphQL", level: 65, icon: <BrainCircuit size={20} />, color: "from-pink-500 to-purple-500" }
-      ],
-    },
-    {
-      id: 2,
-      title: "DevOps & Tools",
-      icon: <Cloud size={24} />,
-      description: "Development tools and deployment",
-      skills: [
-        { name: "Git", level: 90, icon: <GitBranch size={20} />, color: "from-orange-500 to-red-500" },
-        { name: "Docker", level: 70, icon: <Cloud size={20} />, color: "from-blue-500 to-blue-600" },
-        { name: "CI/CD", level: 75, icon: <Zap size={20} />, color: "from-green-500 to-emerald-500" },
-        { name: "AWS", level: 60, icon: <Cloud size={20} />, color: "from-orange-500 to-yellow-500" },
-        { name: "Linux", level: 80, icon: <Cpu size={20} />, color: "from-gray-600 to-gray-800" },
-        { name: "Nginx", level: 70, icon: <Server size={20} />, color: "from-green-600 to-green-700" }
-      ],
-    },
-    {
-      id: 3,
-      title: "Design & UX",
-      icon: <Brush size={24} />,
-      description: "User experience and design tools",
-      skills: [
-        { name: "Figma", level: 80, icon: <Figma size={20} />, color: "from-purple-500 to-pink-500" },
-        { name: "Adobe XD", level: 70, icon: <Brush size={20} />, color: "from-pink-500 to-purple-500" },
-        { name: "Responsive Design", level: 95, icon: <Smartphone size={20} />, color: "from-green-500 to-emerald-500" },
-        { name: "UI/UX Principles", level: 85, icon: <Users size={20} />, color: "from-blue-500 to-cyan-500" },
-        { name: "Prototyping", level: 75, icon: <Monitor size={20} />, color: "from-indigo-500 to-purple-500" },
-        { name: "Design Systems", level: 70, icon: <Layers size={20} />, color: "from-gray-500 to-gray-700" }
-      ],
+  // Get unique categories from API data
+  const categories = skills ? [...new Set(skills.map(skill => skill.category))] : [];
+  
+  // Group skills by category
+  const skillCategories = categories.map((category, index) => {
+    const categorySkills = skills?.filter(skill => skill.category === category) || [];
+    
+    return {
+      id: index,
+      title: category,
+      icon: getCategoryIcon(category),
+      description: getCategoryDescription(category),
+      skills: categorySkills.map(skill => ({
+        name: skill.name,
+        level: skill.level,
+        icon: getSkillIcon(skill.icon),
+        color: skill.color
+      }))
+    };
+  });
+
+  // Helper functions
+  function getCategoryIcon(category: string) {
+    switch (category) {
+      case "Frontend Development": return <Code size={24} />;
+      case "Backend Development": return <Server size={24} />;
+      case "DevOps & Tools": return <Cloud size={24} />;
+      case "Design & UX": return <Brush size={24} />;
+      case "Mobile Development": return <Smartphone size={24} />;
+      default: return <Code size={24} />;
     }
-  ];
+  }
+
+  function getCategoryDescription(category: string) {
+    switch (category) {
+      case "Frontend Development": return "Modern web technologies and frameworks";
+      case "Backend Development": return "Server-side technologies and databases";
+      case "DevOps & Tools": return "Development tools and deployment";
+      case "Design & UX": return "User experience and design tools";
+      case "Mobile Development": return "Mobile app development technologies";
+      default: return "Technical skills and expertise";
+    }
+  }
+
+  function getSkillIcon(iconName: string) {
+    const iconMap: { [key: string]: React.ReactNode } = {
+      'Code': <Code size={20} />,
+      'Command': <Command size={20} />,
+      'FileCode': <FileCode size={20} />,
+      'LayoutGrid': <LayoutGrid size={20} />,
+      'Palette': <Palette size={20} />,
+      'Layers': <Layers size={20} />,
+      'Zap': <Zap size={20} />,
+      'Server': <Server size={20} />,
+      'Database': <Database size={20} />,
+      'Globe': <Globe size={20} />,
+      'BrainCircuit': <BrainCircuit size={20} />,
+      'GitBranch': <GitBranch size={20} />,
+      'Cloud': <Cloud size={20} />,
+      'Cpu': <Cpu size={20} />,
+      'Figma': <Figma size={20} />,
+      'Brush': <Brush size={20} />,
+      'Smartphone': <Smartphone size={20} />,
+      'Users': <Users size={20} />,
+      'Monitor': <Monitor size={20} />
+    };
+    return iconMap[iconName] || <Code size={20} />;
+  }
 
   const container = {
     hidden: { opacity: 0 },
@@ -189,29 +203,40 @@ const Skills = () => {
           transition={{ duration: 0.6 }}
           className="max-w-4xl mx-auto"
         >
-          {/* Category Info */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-center mb-12"
-          >
-            <h3 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">
-              {skillCategories[activeCategory].title}
-            </h3>
-            <p className="text-gray-600 dark:text-gray-300 text-lg">
-              {skillCategories[activeCategory].description}
-            </p>
-          </motion.div>
+          {skillsLoading ? (
+            <div className="text-center py-12">
+              <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-green-500"></div>
+              <p className="text-gray-600 dark:text-gray-300 mt-4">Loading skills...</p>
+            </div>
+          ) : skillCategories.length === 0 ? (
+            <div className="text-center py-12">
+              <p className="text-gray-600 dark:text-gray-300">No skills available at the moment.</p>
+            </div>
+          ) : (
+            <>
+              {/* Category Info */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+                className="text-center mb-12"
+              >
+                <h3 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">
+                  {skillCategories[activeCategory]?.title}
+                </h3>
+                <p className="text-gray-600 dark:text-gray-300 text-lg">
+                  {skillCategories[activeCategory]?.description}
+                </p>
+              </motion.div>
 
-          {/* Skills Grid */}
-          <motion.div
-            variants={container}
-            initial="hidden"
-            animate="show"
-            className="grid grid-cols-1 md:grid-cols-2 gap-6"
-          >
-            {skillCategories[activeCategory].skills.map((skill, index) => (
+              {/* Skills Grid */}
+              <motion.div
+                variants={container}
+                initial="hidden"
+                animate="show"
+                className="grid grid-cols-1 md:grid-cols-2 gap-6"
+              >
+                {skillCategories[activeCategory]?.skills.map((skill, index) => (
               <motion.div
                 key={index}
                 variants={item}
@@ -250,8 +275,10 @@ const Skills = () => {
                   <span>Expert</span>
                 </div>
               </motion.div>
-            ))}
-          </motion.div>
+                ))}
+              </motion.div>
+            </>
+          )}
         </motion.div>
 
         {/* Additional Info */}
