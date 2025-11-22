@@ -60,14 +60,14 @@ const SkillsManager: React.FC<SkillsManagerProps> = ({ onClose }) => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     try {
       if (editingSkill) {
         await updateSkill('PUT', formData, `/skills/${editingSkill._id}`);
       } else {
         await createSkill('POST', formData);
       }
-      
+
       setShowForm(false);
       setEditingSkill(null);
       setFormData({
@@ -177,7 +177,7 @@ const SkillsManager: React.FC<SkillsManagerProps> = ({ onClose }) => {
           <h4 className="text-lg font-semibold text-white mb-4">
             {editingSkill ? 'Edit Skill' : 'Add New Skill'}
           </h4>
-          
+
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
@@ -193,7 +193,7 @@ const SkillsManager: React.FC<SkillsManagerProps> = ({ onClose }) => {
                   required
                 />
               </div>
-              
+
               <div>
                 <label className="block text-sm font-medium text-gray-300 mb-2">
                   Category
@@ -226,7 +226,7 @@ const SkillsManager: React.FC<SkillsManagerProps> = ({ onClose }) => {
                   className="w-full"
                 />
               </div>
-              
+
               <div>
                 <label className="block text-sm font-medium text-gray-300 mb-2">
                   Color
@@ -237,9 +237,8 @@ const SkillsManager: React.FC<SkillsManagerProps> = ({ onClose }) => {
                       key={color}
                       type="button"
                       onClick={() => setFormData({ ...formData, color })}
-                      className={`w-8 h-8 rounded-lg bg-gradient-to-r ${color} ${
-                        formData.color === color ? 'ring-2 ring-white' : ''
-                      }`}
+                      className={`w-8 h-8 rounded-lg bg-gradient-to-r ${color} ${formData.color === color ? 'ring-2 ring-white' : ''
+                        }`}
                     />
                   ))}
                 </div>
@@ -319,7 +318,7 @@ const SkillsManager: React.FC<SkillsManagerProps> = ({ onClose }) => {
                           <p className="text-gray-400 text-sm">{skill.level}%</p>
                         </div>
                       </div>
-                      
+
                       <div className="flex items-center gap-2">
                         <button
                           onClick={() => handleMoveUp(skill)}
@@ -337,9 +336,8 @@ const SkillsManager: React.FC<SkillsManagerProps> = ({ onClose }) => {
                         </button>
                         <button
                           onClick={() => handleToggleActive(skill._id, skill.isActive)}
-                          className={`p-2 transition-colors ${
-                            skill.isActive ? 'text-green-400 hover:text-green-300' : 'text-gray-400 hover:text-gray-300'
-                          }`}
+                          className={`p-2 transition-colors ${skill.isActive ? 'text-green-400 hover:text-green-300' : 'text-gray-400 hover:text-gray-300'
+                            }`}
                           title={skill.isActive ? 'Hide skill' : 'Show skill'}
                         >
                           {skill.isActive ? <Eye className="w-4 h-4" /> : <EyeOff className="w-4 h-4" />}

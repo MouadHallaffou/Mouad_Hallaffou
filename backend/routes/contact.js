@@ -14,7 +14,7 @@ router.get('/', async (req, res) => {
     if (!contact) {
       contact = new Contact({
         email: 'mouadhallaffou@gmail.com',
-        phone: '+212 6 12 34 56 78',
+        phone: '+212 6 78 63 42 85',
         location: 'Morocco',
         bio: 'Passionate Full Stack Web Developer currently training at YOUCODE Maroc.',
         socialLinks: {

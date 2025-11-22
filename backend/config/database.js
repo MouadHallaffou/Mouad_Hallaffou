@@ -5,7 +5,7 @@ dotenv.config();
 
 const connectDB = async () => {
   try {
-    const mongoURI = process.env.MONGODB_URI || 'mongodb://localhost:27017/portfolio_db';
+    const mongoURI = process.env.MONGODB_URI;
     
     const options = {
       useNewUrlParser: true,

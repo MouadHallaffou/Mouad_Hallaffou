@@ -62,13 +62,12 @@ router.post('/login', async (req, res) => {
       });
     }
 
-    // Find user
-    const user = await User.findOne({ email });
+    // Find user (normalize email)
+    const emailNorm = String(email).toLowerCase().trim();
+    const user = await User.findOne({ email: emailNorm });
     if (!user) {
-      return res.status(401).json({
-        success: false,
-        message: 'Invalid credentials'
-      });
+      const msg = process.env.NODE_ENV !== 'production' ? 'User not found' : 'Invalid credentials';
+      return res.status(401).json({ success: false, message: msg });
     }
 
     // Check if user is active
@@ -82,10 +81,8 @@ router.post('/login', async (req, res) => {
     // Verify password
     const isMatch = await user.comparePassword(password);
     if (!isMatch) {
-      return res.status(401).json({
-        success: false,
-        message: 'Invalid credentials'
-      });
+      const msg = process.env.NODE_ENV !== 'production' ? 'Incorrect password' : 'Invalid credentials';
+      return res.status(401).json({ success: false, message: msg });
     }
 
     // Update last login
@@ -93,6 +90,13 @@ router.post('/login', async (req, res) => {
     await user.save();
 
     // Generate JWT token
+    if (!process.env.JWT_SECRET) {
+      return res.status(500).json({
+        success: false,
+        message: 'Server configuration error: JWT_SECRET is missing'
+      });
+    }
+
     const token = jwt.sign(
       { id: user._id, email: user.email, role: user.role },
       process.env.JWT_SECRET,

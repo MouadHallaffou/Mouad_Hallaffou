@@ -6,6 +6,7 @@ import rateLimit from 'express-rate-limit';
 import dotenv from 'dotenv';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import User from './models/User.js';
 
 // Import routes
 import authRoutes from './routes/auth.js';
@@ -18,15 +19,49 @@ import messageRoutes from './routes/messages.js';
 // Load environment variables
 dotenv.config();
 
+if (!process.env.JWT_SECRET && process.env.NODE_ENV !== 'production') {
+  process.env.JWT_SECRET = 'dev-secret-change-me';
+  process.env.JWT_EXPIRE = process.env.JWT_EXPIRE || '7d';
+}
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 
+// Behind proxies (Render) to get correct req.ip
+app.set('trust proxy', 1);
+
 // Security middleware
 app.use(helmet({
   crossOriginResourcePolicy: { policy: "cross-origin" }
+}));
+
+// CORS configuration (place before rate limiting and routes)
+const normalizeOrigin = (o) => (o || '').replace(/\/$/, '').trim();
+const allowedOrigins = (process.env.FRONTEND_URL || 'http://localhost:5173')
+  .split(',')
+  .map(o => normalizeOrigin(o));
+
+app.use(cors({
+  origin: (origin, callback) => {
+    const incoming = normalizeOrigin(origin);
+    const isAllowed = 
+      !incoming ||
+      allowedOrigins.includes(incoming) ||
+      (process.env.NODE_ENV !== 'production' && /^https?:\/\/(localhost|127\.0\.0\.1)(:\\d+)?$/.test(incoming));
+
+    if (isAllowed) {
+      callback(null, true);
+    } else {
+      callback(null, false);
+    }
+  },
+  credentials: true,
+  methods: ['GET','POST','PUT','PATCH','DELETE','OPTIONS'],
+  allowedHeaders: ['Content-Type','Authorization'],
+  optionsSuccessStatus: 200
 }));
 
 // Rate limiting
@@ -37,12 +72,6 @@ const limiter = rateLimit({
 });
 app.use('/api/', limiter);
 
-// CORS configuration
-app.use(cors({
-  origin: process.env.FRONTEND_URL || 'http://localhost:5173',
-  credentials: true
-}));
-
 // Body parsing middleware
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
@@ -51,16 +80,42 @@ app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // Database connection
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/portfolio_db', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-})
-.then(() => {
-  console.log('Connected to MongoDB');
-})
-.catch((error) => {
-  console.error('MongoDB connection error:', error);
-  process.exit(1);
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/portfolio_db')
+  .then(async () => {
+    console.log('Connected to MongoDB');
+
+    const forceUpdate = (process.env.SEED_FORCE_UPDATE || 'false').toLowerCase() === 'true';
+    if (process.env.NODE_ENV !== 'production' || forceUpdate) {
+      const seedEmail = process.env.SEED_ADMIN_EMAIL;
+      const seedPassword = process.env.SEED_ADMIN_PASSWORD;
+      if (seedEmail && seedPassword) {
+        const emailNorm = String(seedEmail).toLowerCase().trim();
+        const existing = await User.findOne({ email: emailNorm });
+        if (!existing) {
+          const admin = new User({
+            name: 'Admin',
+            email: emailNorm,
+            password: seedPassword,
+            role: 'admin',
+            isActive: true,
+          });
+          await admin.save();
+          console.log('Seeded admin user:', emailNorm);
+        } else if (forceUpdate) {
+          existing.password = seedPassword;
+          await existing.save();
+          console.log('Updated admin password for:', emailNorm);
+        }
+      }
+    }
+  })
+  .catch((error) => {
+    console.error('MongoDB connection error:', error);
+    process.exit(1);
+  });
+
+mongoose.connection.on('error', (err) => {
+  console.error('Mongoose connection error:', err);
 });
 
 // Routes

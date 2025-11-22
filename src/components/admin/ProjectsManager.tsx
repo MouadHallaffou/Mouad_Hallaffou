@@ -71,14 +71,14 @@ const ProjectsManager: React.FC<ProjectsManagerProps> = ({ onClose }) => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     try {
       if (editingProject) {
         await updateProject('PUT', formData, `/projects/${editingProject._id}`);
       } else {
         await createProject('POST', formData);
       }
-      
+
       setShowForm(false);
       setEditingProject(null);
       resetForm();
@@ -217,7 +217,7 @@ const ProjectsManager: React.FC<ProjectsManagerProps> = ({ onClose }) => {
           <h4 className="text-lg font-semibold text-white mb-4">
             {editingProject ? 'Edit Project' : 'Add New Project'}
           </h4>
-          
+
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
@@ -233,7 +233,7 @@ const ProjectsManager: React.FC<ProjectsManagerProps> = ({ onClose }) => {
                   required
                 />
               </div>
-              
+
               <div>
                 <label className="block text-sm font-medium text-gray-300 mb-2">
                   Category
@@ -293,7 +293,7 @@ const ProjectsManager: React.FC<ProjectsManagerProps> = ({ onClose }) => {
                   required
                 />
               </div>
-              
+
               <div>
                 <label className="block text-sm font-medium text-gray-300 mb-2">
                   Status
@@ -325,7 +325,7 @@ const ProjectsManager: React.FC<ProjectsManagerProps> = ({ onClose }) => {
                   placeholder="https://github.com/username/repo"
                 />
               </div>
-              
+
               <div>
                 <label className="block text-sm font-medium text-gray-300 mb-2">
                   Demo URL
@@ -452,7 +452,7 @@ const ProjectsManager: React.FC<ProjectsManagerProps> = ({ onClose }) => {
                       </div>
                     </div>
                   </div>
-                  
+
                   <div className="flex items-center gap-2">
                     {project.github && (
                       <a
@@ -553,7 +553,7 @@ const ProjectsManager: React.FC<ProjectsManagerProps> = ({ onClose }) => {
                       </div>
                     </div>
                   </div>
-                  
+
                   <div className="flex items-center gap-2">
                     {project.github && (
                       <a
