@@ -15,6 +15,13 @@ import skillRoutes from './routes/skills.js';
 import projectRoutes from './routes/projects.js';
 import contactRoutes from './routes/contact.js';
 import messageRoutes from './routes/messages.js';
+import personalInfoRoutes from './routes/personalInfo.js';
+import educationRoutes from './routes/education.js';
+import experienceRoutes from './routes/experience.js';
+import certificationRoutes from './routes/certifications.js';
+import technologyRoutes from './routes/technologies.js';
+import socialLinkRoutes from './routes/socialLinks.js';
+import resumeRoutes from './routes/resume.js';
 
 // Load environment variables
 dotenv.config();
@@ -125,6 +132,13 @@ app.use('/api/skills', skillRoutes);
 app.use('/api/projects', projectRoutes);
 app.use('/api/contact', contactRoutes);
 app.use('/api/messages', messageRoutes);
+app.use('/api/personalInfo', personalInfoRoutes);
+app.use('/api/education', educationRoutes);
+app.use('/api/experience', experienceRoutes);
+app.use('/api/certifications', certificationRoutes);
+app.use('/api/technologies', technologyRoutes);
+app.use('/api/socialLinks', socialLinkRoutes);
+app.use('/api/resume', resumeRoutes);
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {

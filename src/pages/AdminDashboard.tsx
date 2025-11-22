@@ -17,12 +17,23 @@ import {
   Eye,
   TrendingUp,
   Calendar,
-  Star
+  Star,
+  GraduationCap,
+  Award,
+  Code2,
+  Link as LinkIcon,
+  UserCircle
 } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 import { useApi } from '../hooks/useApi';
 import SkillsManager from '../components/admin/SkillsManager';
 import ProjectsManager from '../components/admin/ProjectsManager';
+import PersonalInfoManager from '../components/admin/PersonalInfoManager';
+import EducationManager from '../components/admin/EducationManager';
+import ExperienceManager from '../components/admin/ExperienceManager';
+import CertificationManager from '../components/admin/CertificationManager';
+import TechnologyManager from '../components/admin/TechnologyManager';
+import SocialLinksManager from '../components/admin/SocialLinksManager';
 
 interface DashboardStats {
   totalUsers: number;
@@ -45,7 +56,7 @@ interface MessageStats {
 const AdminDashboard: React.FC = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [activeTab, setActiveTab] = useState('overview');
-  
+
   const { user, logout, isAuthenticated, isAdmin } = useAuth();
   const navigate = useNavigate();
 
@@ -68,8 +79,14 @@ const AdminDashboard: React.FC = () => {
 
   const menuItems = [
     { id: 'overview', label: 'Overview', icon: Home },
+    { id: 'personalInfo', label: 'Personal Info', icon: UserCircle },
+    { id: 'education', label: 'Education', icon: GraduationCap },
+    { id: 'experience', label: 'Experience', icon: Briefcase },
+    { id: 'certifications', label: 'Certifications', icon: Award },
+    { id: 'technologies', label: 'Technologies', icon: Code2 },
     { id: 'skills', label: 'Skills', icon: Code },
     { id: 'projects', label: 'Projects', icon: Briefcase },
+    { id: 'socialLinks', label: 'Social Links', icon: LinkIcon },
     { id: 'messages', label: 'Messages', icon: MessageSquare },
     { id: 'users', label: 'Users', icon: Users },
     { id: 'settings', label: 'Settings', icon: Settings },
@@ -193,7 +210,7 @@ const AdminDashboard: React.FC = () => {
           </button>
         </div>
       </div>
-      
+
       <div className="bg-white/10 backdrop-blur-lg rounded-xl p-6 border border-white/20">
         <p className="text-gray-300">Messages management interface will be implemented here.</p>
         <p className="text-gray-400 text-sm mt-2">New messages: {messageStats?.new || 0}</p>
@@ -209,7 +226,7 @@ const AdminDashboard: React.FC = () => {
           Add User
         </button>
       </div>
-      
+
       <div className="bg-white/10 backdrop-blur-lg rounded-xl p-6 border border-white/20">
         <p className="text-gray-300">Users management interface will be implemented here.</p>
         <p className="text-gray-400 text-sm mt-2">Total users: {userStats?.totalUsers || 0}</p>
@@ -220,7 +237,7 @@ const AdminDashboard: React.FC = () => {
   const SettingsTab = () => (
     <div className="space-y-6">
       <h3 className="text-xl font-bold text-white">Settings</h3>
-      
+
       <div className="bg-white/10 backdrop-blur-lg rounded-xl p-6 border border-white/20">
         <p className="text-gray-300">Settings interface will be implemented here.</p>
       </div>
@@ -231,10 +248,22 @@ const AdminDashboard: React.FC = () => {
     switch (activeTab) {
       case 'overview':
         return <OverviewTab />;
+      case 'personalInfo':
+        return <PersonalInfoManager />;
+      case 'education':
+        return <EducationManager />;
+      case 'experience':
+        return <ExperienceManager />;
+      case 'certifications':
+        return <CertificationManager />;
+      case 'technologies':
+        return <TechnologyManager />;
       case 'skills':
         return <SkillsTab />;
       case 'projects':
         return <ProjectsTab />;
+      case 'socialLinks':
+        return <SocialLinksManager />;
       case 'messages':
         return <MessagesTab />;
       case 'users':
@@ -303,11 +332,10 @@ const AdminDashboard: React.FC = () => {
                     setActiveTab(item.id);
                     setSidebarOpen(false);
                   }}
-                  className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${
-                    activeTab === item.id
+                  className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${activeTab === item.id
                       ? 'bg-blue-500/20 text-blue-300 border border-blue-500/30'
                       : 'text-gray-300 hover:bg-white/10 hover:text-white'
-                  }`}
+                    }`}
                 >
                   <Icon className="w-5 h-5" />
                   {item.label}
@@ -343,7 +371,7 @@ const AdminDashboard: React.FC = () => {
                 {menuItems.find(item => item.id === activeTab)?.label}
               </h2>
             </div>
-            
+
             <div className="flex items-center gap-4">
               <div className="text-right">
                 <p className="text-white font-medium">{user?.name}</p>
