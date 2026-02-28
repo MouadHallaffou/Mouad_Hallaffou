@@ -1,15 +1,18 @@
 
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect, useMemo } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
-import {
-  Code, Database, GitBranch, Figma, Server, Palette, Users,
-  LayoutGrid, Command, FileCode, BrainCircuit, Globe, Cloud,
-  Brush, Zap, Shield, Cpu, Smartphone, Monitor, Layers, Sparkles
-} from "lucide-react";
+import * as Icons from "lucide-react";
+import { Sparkles, Zap, Code, Server, Cloud, Brush, Globe } from "lucide-react";
+import { api } from "@/lib/api";
 
 const Skills = () => {
   const [activeCategory, setActiveCategory] = useState(0);
+  const [skillsList, setSkillsList] = useState<any[]>([]);
   const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    api.get("/skills").then(res => setSkillsList(res.data)).catch(console.error);
+  }, []);
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -19,64 +22,55 @@ const Skills = () => {
   const y = useTransform(scrollYProgress, [0, 1], [100, -100]);
   const opacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0, 1, 1, 0]);
 
-  const skillCategories = [
-    {
-      id: 0,
-      title: "Frontend Development",
-      icon: <Code size={24} />,
-      description: "Modern web technologies and frameworks",
-      skills: [
-        { name: "React", level: 90, icon: <Command size={20} />, color: "from-blue-500 to-cyan-500" },
-        { name: "TypeScript", level: 85, icon: <FileCode size={20} />, color: "from-blue-600 to-blue-700" },
-        { name: "Vue.js", level: 75, icon: <LayoutGrid size={20} />, color: "from-green-500 to-emerald-500" },
-        { name: "TailwindCSS", level: 95, icon: <Palette size={20} />, color: "from-cyan-500 to-blue-500" },
-        { name: "HTML/CSS", level: 95, icon: <Layers size={20} />, color: "from-orange-500 to-red-500" },
-        { name: "JavaScript", level: 90, icon: <Zap size={20} />, color: "from-yellow-500 to-orange-500" }
-      ],
-    },
-    {
-      id: 1,
-      title: "Backend Development",
-      icon: <Server size={24} />,
-      description: "Server-side technologies and databases",
-      skills: [
-        { name: "PHP/Laravel", level: 88, icon: <FileCode size={20} />, color: "from-red-500 to-pink-500" },
-        { name: "Node.js", level: 75, icon: <Server size={20} />, color: "from-green-600 to-green-700" },
-        { name: "MySQL", level: 85, icon: <Database size={20} />, color: "from-blue-500 to-blue-600" },
-        { name: "PostgreSQL", level: 70, icon: <Database size={20} />, color: "from-blue-600 to-blue-800" },
-        { name: "REST APIs", level: 90, icon: <Globe size={20} />, color: "from-purple-500 to-pink-500" },
-        { name: "GraphQL", level: 65, icon: <BrainCircuit size={20} />, color: "from-pink-500 to-purple-500" }
-      ],
-    },
-    {
-      id: 2,
-      title: "DevOps & Tools",
-      icon: <Cloud size={24} />,
-      description: "Development tools and deployment",
-      skills: [
-        { name: "Git", level: 90, icon: <GitBranch size={20} />, color: "from-orange-500 to-red-500" },
-        { name: "Docker", level: 70, icon: <Cloud size={20} />, color: "from-blue-500 to-blue-600" },
-        { name: "CI/CD", level: 75, icon: <Zap size={20} />, color: "from-green-500 to-emerald-500" },
-        { name: "AWS", level: 60, icon: <Cloud size={20} />, color: "from-orange-500 to-yellow-500" },
-        { name: "Linux", level: 80, icon: <Cpu size={20} />, color: "from-gray-600 to-gray-800" },
-        { name: "Nginx", level: 70, icon: <Server size={20} />, color: "from-green-600 to-green-700" }
-      ],
-    },
-    {
-      id: 3,
-      title: "Design & UX",
-      icon: <Brush size={24} />,
-      description: "User experience and design tools",
-      skills: [
-        { name: "Figma", level: 80, icon: <Figma size={20} />, color: "from-purple-500 to-pink-500" },
-        { name: "Adobe XD", level: 70, icon: <Brush size={20} />, color: "from-pink-500 to-purple-500" },
-        { name: "Responsive Design", level: 95, icon: <Smartphone size={20} />, color: "from-green-500 to-emerald-500" },
-        { name: "UI/UX Principles", level: 85, icon: <Users size={20} />, color: "from-blue-500 to-cyan-500" },
-        { name: "Prototyping", level: 75, icon: <Monitor size={20} />, color: "from-indigo-500 to-purple-500" },
-        { name: "Design Systems", level: 70, icon: <Layers size={20} />, color: "from-gray-500 to-gray-700" }
-      ],
+  const getCategoryIcon = (category: string) => {
+    const cat = category.toLowerCase();
+    if (cat.includes("front")) return <Code size={24} />;
+    if (cat.includes("back") || cat.includes("data")) return <Server size={24} />;
+    if (cat.includes("devops") || cat.includes("cloud")) return <Cloud size={24} />;
+    if (cat.includes("design") || cat.includes("ui")) return <Brush size={24} />;
+    return <Globe size={24} />;
+  };
+
+  const renderIcon = (iconName: string) => {
+    const Icon = (Icons as any)[iconName] || Icons.Code;
+    return <Icon size={20} />;
+  };
+
+  const skillCategories = useMemo(() => {
+    const categoriesMap = new Map<string, any[]>();
+    skillsList.forEach(s => {
+      const cat = s.category || "Other";
+      if (!categoriesMap.has(cat)) categoriesMap.set(cat, []);
+      categoriesMap.get(cat)!.push(s);
+    });
+
+    if (categoriesMap.size === 0) {
+      return [{
+        id: 0,
+        title: "Loading...",
+        icon: <Code size={24} />,
+        description: "Fetching skills...",
+        skills: []
+      }];
     }
-  ];
+
+    return Array.from(categoriesMap.entries()).map(([cat, skills], index) => {
+      return {
+        id: index,
+        title: cat,
+        icon: getCategoryIcon(cat),
+        description: `Expertise in ${cat}`,
+        skills: skills.map(s => ({
+          name: s.name,
+          level: s.level,
+          icon: renderIcon(s.icon),
+          color: s.color || "from-green-500 to-emerald-500"
+        }))
+      };
+    });
+  }, [skillsList]);
+
+
 
   const container = {
     hidden: { opacity: 0 },
@@ -165,8 +159,8 @@ const Skills = () => {
               key={category.id}
               onClick={() => setActiveCategory(index)}
               className={`px-6 py-3 rounded-lg font-medium transition-all-300 flex items-center gap-2 ${activeCategory === index
-                  ? 'bg-green-500 text-white shadow-lg scale-105'
-                  : 'bg-gray-100/80 dark:bg-white/10 text-gray-600 dark:text-gray-300 hover:bg-gray-200/80 dark:hover:bg-white/20 border border-gray-200/50 dark:border-white/20'
+                ? 'bg-green-500 text-white shadow-lg scale-105'
+                : 'bg-gray-100/80 dark:bg-white/10 text-gray-600 dark:text-gray-300 hover:bg-gray-200/80 dark:hover:bg-white/20 border border-gray-200/50 dark:border-white/20'
                 }`}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
@@ -197,10 +191,10 @@ const Skills = () => {
             className="text-center mb-12"
           >
             <h3 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">
-              {skillCategories[activeCategory].title}
+              {skillCategories[Math.min(activeCategory, skillCategories.length - 1)]?.title}
             </h3>
             <p className="text-gray-600 dark:text-gray-300 text-lg">
-              {skillCategories[activeCategory].description}
+              {skillCategories[Math.min(activeCategory, skillCategories.length - 1)]?.description}
             </p>
           </motion.div>
 
@@ -211,7 +205,7 @@ const Skills = () => {
             animate="show"
             className="grid grid-cols-1 md:grid-cols-2 gap-6"
           >
-            {skillCategories[activeCategory].skills.map((skill, index) => (
+            {skillCategories[Math.min(activeCategory, skillCategories.length - 1)]?.skills.map((skill: any, index: number) => (
               <motion.div
                 key={index}
                 variants={item}

@@ -1,16 +1,22 @@
 
 import { motion, useScroll, useTransform } from "framer-motion";
 import { BookOpen, Code, Briefcase, Users, Award, Clock, Zap, Heart, Sparkles } from "lucide-react";
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
+import { api } from "@/lib/api";
 
 const About = () => {
   const containerRef = useRef<HTMLDivElement>(null);
-  
+  const [profile, setProfile] = useState<any>(null);
+
+  useEffect(() => {
+    api.get("/profile").then(res => setProfile(res.data)).catch(console.error);
+  }, []);
+
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start end", "end start"]
   });
-  
+
   const y = useTransform(scrollYProgress, [0, 1], [100, -100]);
   const opacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0, 1, 1, 0]);
 
@@ -60,8 +66,8 @@ const About = () => {
 
   const item = {
     hidden: { opacity: 0, y: 20 },
-    show: { 
-      opacity: 1, 
+    show: {
+      opacity: 1,
       y: 0,
       transition: {
         type: "spring",
@@ -71,18 +77,18 @@ const About = () => {
   };
 
   return (
-    <section 
+    <section
       ref={containerRef}
-      id="about" 
+      id="about"
       className="section-padding bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 relative overflow-hidden"
     >
       {/* Background patterns */}
-      <motion.div 
+      <motion.div
         className="absolute inset-0 tech-dots opacity-5"
         style={{ y }}
       />
-      
-      <motion.div 
+
+      <motion.div
         className="container mx-auto px-4 relative z-10"
         style={{ opacity }}
       >
@@ -104,18 +110,18 @@ const About = () => {
             <Sparkles size={16} />
             About Me
           </motion.div>
-          
+
           <h2 className="text-4xl md:text-5xl font-bold mb-6 text-gray-900 dark:text-white">
             Crafting Digital
             <span className="gradient-text"> Experiences</span>
           </h2>
-          
+
           <div className="w-24 h-1 bg-gradient-to-r from-green-500 to-emerald-500 mx-auto mb-8"></div>
-          
+
           <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed">
-            I'm a passionate Full Stack Web Developer currently training at YOUCODE Maroc.
+            {profile?.bio || `I'm a passionate Full Stack Web Developer currently training at YOUCODE Maroc.
             With a background in Economics and Management, I bring analytical thinking and
-            problem-solving skills to create efficient, user-friendly applications.
+            problem-solving skills to create efficient, user-friendly applications.`}
           </p>
         </motion.div>
 
@@ -133,7 +139,7 @@ const About = () => {
               variants={item}
               className="text-center p-6 card-modern group hover:scale-105 transition-transform duration-300"
             >
-              <motion.div 
+              <motion.div
                 className={`w-12 h-12 rounded-lg bg-gradient-to-r ${stat.color} flex items-center justify-center text-white mx-auto mb-3 group-hover:scale-110 transition-transform duration-300`}
                 whileHover={{ rotate: 5 }}
               >
@@ -161,13 +167,13 @@ const About = () => {
             <motion.div
               key={index}
               variants={item}
-              whileHover={{ 
+              whileHover={{
                 scale: 1.05,
                 transition: { type: "spring", stiffness: 400 }
               }}
               className="card-modern p-6 group"
             >
-              <motion.div 
+              <motion.div
                 className={`w-12 h-12 rounded-lg bg-gradient-to-r ${card.color} flex items-center justify-center text-white mb-4 group-hover:scale-110 transition-transform duration-300`}
                 whileHover={{ rotate: 5 }}
               >
@@ -200,7 +206,7 @@ const About = () => {
             className="card-modern p-8 group hover:scale-105 transition-transform duration-300"
           >
             <div className="flex items-center gap-3 mb-6">
-              <motion.div 
+              <motion.div
                 className="w-10 h-10 rounded-lg bg-gradient-to-r from-green-500 to-emerald-600 flex items-center justify-center"
                 whileHover={{ rotate: 360 }}
                 transition={{ duration: 0.6 }}
@@ -211,17 +217,14 @@ const About = () => {
                 My Journey
               </h3>
             </div>
-            
-            <div className="space-y-4 text-gray-600 dark:text-gray-300 leading-relaxed">
+
+            <div className="space-y-4 text-gray-600 dark:text-gray-300 leading-relaxed whitespace-pre-line">
               <p>
-                With a solid foundation in Economics and Management from FSJES Meknès,
+                {profile?.bio || `With a solid foundation in Economics and Management from FSJES Meknès,
                 I've transitioned into the world of web development, combining analytical thinking
-                with technical skills to create efficient, user-friendly applications.
-              </p>
-              <p>
-                I'm dedicated to continuous learning and staying updated with the latest
+                with technical skills to create efficient, user-friendly applications.\n\nI'm dedicated to continuous learning and staying updated with the latest
                 technologies and best practices in web development, always seeking to improve
-                my craft and deliver exceptional results.
+                my craft and deliver exceptional results.`}
               </p>
             </div>
           </motion.div>
@@ -235,7 +238,7 @@ const About = () => {
             className="card-modern p-8 group hover:scale-105 transition-transform duration-300"
           >
             <div className="flex items-center gap-3 mb-6">
-              <motion.div 
+              <motion.div
                 className="w-10 h-10 rounded-lg bg-gradient-to-r from-blue-500 to-cyan-600 flex items-center justify-center"
                 whileHover={{ rotate: 360 }}
                 transition={{ duration: 0.6 }}
@@ -246,7 +249,7 @@ const About = () => {
                 Personal Traits
               </h3>
             </div>
-            
+
             <div className="space-y-4">
               {[
                 "Problem solver with attention to detail",
@@ -264,7 +267,7 @@ const About = () => {
                   viewport={{ once: true }}
                   className="flex items-center gap-3 group/trait"
                 >
-                  <motion.div 
+                  <motion.div
                     className="w-2 h-2 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full"
                     whileHover={{ scale: 1.5 }}
                   />

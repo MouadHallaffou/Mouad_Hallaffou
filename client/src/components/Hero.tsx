@@ -1,13 +1,25 @@
 import { motion, useScroll, useTransform } from "framer-motion";
-import { ArrowDown, Terminal, Download, Github, Linkedin, Mail, Sparkles, ExternalLink } from "lucide-react";
+import * as Icons from "lucide-react";
 import { useEffect, useState, useRef } from "react";
+import { api } from "@/lib/api";
 
 const Hero = () => {
+  const [profile, setProfile] = useState<any>(null);
+  const [socials, setSocials] = useState<any[]>([]);
   const [text, setText] = useState("");
-  const [isTyping, setIsTyping] = useState(true);
+  const [isTyping, setIsTyping] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const fullText = "Hello, I'm Mouad Hallaffou";
+
   const containerRef = useRef<HTMLDivElement>(null);
+  const fullText = profile?.fullName ? `Hello, I'm ${profile.fullName}` : "Hello";
+
+  useEffect(() => {
+    api.get("/profile").then(res => {
+      setProfile(res.data);
+      setIsTyping(true);
+    }).catch(console.error);
+    api.get("/social-links").then(res => setSocials(res.data)).catch(console.error);
+  }, []);
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -30,26 +42,10 @@ const Hero = () => {
     }
   }, [currentIndex, isTyping, fullText]);
 
-  const socialLinks = [
-    {
-      icon: <Github size={20} />,
-      href: "https://github.com/MouadHallaffou",
-      label: "GitHub",
-      color: "hover:bg-gray-800 hover:text-white dark:hover:bg-gray-100 dark:hover:text-gray-900"
-    },
-    {
-      icon: <Linkedin size={20} />,
-      href: "https://linkedin.com/in/hallaffou-mouad",
-      label: "LinkedIn",
-      color: "hover:bg-blue-600 hover:text-white dark:hover:bg-blue-600 dark:hover:text-white"
-    },
-    {
-      icon: <Mail size={20} />,
-      href: "mailto:mouadhallaffou@gmail.com",
-      label: "Email",
-      color: "hover:bg-green-600 hover:text-white dark:hover:bg-green-600 dark:hover:text-white"
-    }
-  ];
+  const renderIcon = (iconName: string) => {
+    const Icon = (Icons as any)[iconName] || Icons.Link;
+    return <Icon size={20} />;
+  };
 
   const scrollToNext = () => {
     const aboutSection = document.getElementById('about');
@@ -191,8 +187,7 @@ const Hero = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 1.2 }}
               >
-                Crafting digital experiences with modern technologies and clean code.
-                Passionate about building scalable, user-friendly applications.
+                {profile?.bio || "Crafting digital experiences with modern technologies and clean code."}
               </motion.p>
             </motion.div>
 
@@ -209,7 +204,7 @@ const Hero = () => {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
-                <Terminal size={18} />
+                <Icons.Terminal size={18} />
                 Hire Me
               </motion.a>
               <motion.a
@@ -218,7 +213,7 @@ const Hero = () => {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
-                <ExternalLink size={18} />
+                <Icons.ExternalLink size={18} />
                 View Projects
               </motion.a>
             </motion.div>
@@ -230,21 +225,21 @@ const Hero = () => {
               transition={{ duration: 0.6, delay: 1.6 }}
               className="flex gap-4"
             >
-              {socialLinks.map((link, index) => (
+              {socials.map((link, index) => (
                 <motion.a
                   key={index}
-                  href={link.href}
+                  href={link.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={`p-3 bg-gray-100/80 dark:bg-white/10 backdrop-blur-sm border border-gray-200/50 dark:border-white/20 rounded-full text-gray-600 dark:text-white transition-all ${link.color}`}
+                  className="p-3 bg-gray-100/80 dark:bg-white/10 backdrop-blur-sm border border-gray-200/50 dark:border-white/20 rounded-full text-gray-600 dark:text-white transition-all hover:bg-gray-800 hover:text-white dark:hover:bg-gray-100 dark:hover:text-gray-900"
                   whileHover={{ scale: 1.1, rotate: 360, transition: { duration: 0.1, ease: "easeInOut" } }}
                   whileTap={{ scale: 0.9 }}
-                  title={link.label}
+                  title={link.platform}
                   initial={{ opacity: 0, scale: 0 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ delay: 1.8 + index * 0.1 }}
                 >
-                  {link.icon}
+                  {renderIcon(link.icon)}
                 </motion.a>
               ))}
             </motion.div>
@@ -306,8 +301,8 @@ const Hero = () => {
                       />
                       <div className="relative w-full h-full rounded-full overflow-hidden border-4 border-green-500/50 shadow-2xl">
                         <motion.img
-                          src="me.png"
-                          alt="Mouad Hallaffou"
+                          src={profile?.profilePictureUrl || "me.png"}
+                          alt={profile?.fullName || "Mouad Hallaffou"}
                           className="w-full h-full object-cover"
                           whileHover={{ scale: 1.1 }}
                           transition={{ duration: 0.3 }}
@@ -328,14 +323,14 @@ const Hero = () => {
                       whileHover={{ scale: 1.05 }}
                       transition={{ type: "spring", stiffness: 300 }}
                     >
-                      Mouad Hallaffou
+                      {profile?.fullName || "Mouad Hallaffou"}
                     </motion.h3>
                     <motion.p
                       className="text-green-600 dark:text-green-400 font-semibold text-lg"
                       whileHover={{ color: "#059669" }}
                       transition={{ duration: 0.3 }}
                     >
-                      Full Stack Developer
+                      {profile?.jobTitle || "Full Stack Developer"}
                     </motion.p>
                     <motion.p
                       className="text-gray-500 dark:text-gray-400 text-sm"
@@ -343,7 +338,7 @@ const Hero = () => {
                       animate={{ opacity: 1 }}
                       transition={{ duration: 0.6, delay: 1.4 }}
                     >
-                      Java/Angular | PHP/Laravel | NodeJs/Express
+                      {profile?.email || ""}
                     </motion.p>
                   </motion.div>
 
@@ -427,7 +422,7 @@ const Hero = () => {
             animate={{ y: [0, 8, 0] }}
             transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
           >
-            <ArrowDown className="text-green-600 dark:text-green-400" size={20} />
+            <Icons.ArrowDown className="text-green-600 dark:text-green-400" size={20} />
           </motion.div>
         </motion.div>
       </motion.div>

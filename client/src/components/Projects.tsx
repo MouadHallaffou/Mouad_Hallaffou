@@ -6,7 +6,8 @@ import {
   Briefcase, Book, Users, FileText, Calculator, MessageSquare,
   KanbanSquare, Award, CloudSun, ChevronLeft, ChevronRight
 } from "lucide-react";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
+import { api } from "@/lib/api";
 
 const Projects = () => {
   const [hoveredId, setHoveredId] = useState<number | null>(null);
@@ -21,151 +22,11 @@ const Projects = () => {
   const y = useTransform(scrollYProgress, [0, 1], [100, -100]);
   const opacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0, 1, 1, 0]);
 
-  const projects = [
-    {
-      id: 1,
-      title: "ChatBot Platform",
-      description: "A real-time web chat application inspired by Messenger and Discord, offering smooth, modern interaction with authentication, media sharing, and calling capabilities.",
-      image: "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=800&q=80",
-      github: "https://github.com/MouadHallaffou/web_chat_application",
-      demo: "https://web-chat-application-get.vercel.app/",
-      category: "Messaging App",
-      featured: true,
-      technologies: ["Express.js", "MongoDB", "React", "TypeScript", "Socket.io"]
-    },
-    {
-      id: 2,
-      title: "TheFoodeshow",
-      description: "B2B benchmarking platform for food industry professionals with comprehensive analytics and market insights.",
-      image: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=800&q=80",
-      github: "https://github.com/MouadHallaffou/thefoodeshow-v1update",
-      demo: "https://v1.thefoodeshow.com/en/login",
-      category: "B2B Platform",
-      featured: true,
-      technologies: ["Symfony", "JavaScript", "MySQL", "Sass"]
-    },
-    {
-      id: 3,
-      title: "EasyPrint",
-      description: "Comprehensive bookstore platform for managing inventory, sales, and customer relationships with modern UI.",
-      image: "https://images.unsplash.com/photo-1481627834876-b7833e8f5570?auto=format&fit=crop&w=800&q=80",
-      github: "https://github.com/MouadHallaffou/EasyPrint",
-      demo: "https://github.com/MouadHallaffou/EasyPrint",
-      category: "E-commerce",
-      featured: true,
-      technologies: ["Laravel", "JavaScript", "MySQL", "Tailwind", "Auth2"]
-    },
-    {
-      id: 4,
-      title: "eLearning Platform",
-      description: "Advanced mentorship and collaborative learning platform with real-time communication features.",
-      image: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=800&q=80",
-      github: "https://github.com/MouadHallaffou/plateforme_mentorat",
-      demo: "https://plateforme-mentorat.vercel.app/",
-      category: "Education",
-      featured: true,
-      technologies: ["Laravel", "React", "REST API", "Mysql"]
-    },
-    {
-      id: 5,
-      title: "HR Management System",
-      description: "Complete human resources management solution for employee lifecycle, payroll, and department organization.",
-      image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=800&q=80",
-      github: "https://github.com/MouadHallaffou/Human-Resource-Management-System",
-      demo: "https://github.com/MouadHallaffou/Human-Resource-Management-System",
-      category: "Enterprise",
-      featured: false,
-      technologies: ["Laravel", "JavaScript", "PostgreSQL", "Tailwind"]
-    },
-    {
-      id: 6,
-      title: "The Weekly",
-      description: "Dynamic platform for company announcements, news sharing, and team collaboration with comment system.",
-      image: "https://images.unsplash.com/photo-1504711434969-e33886168f5c?auto=format&fit=crop&w=800&q=80",
-      github: "https://github.com/MouadHallaffou/The_Weekly",
-      demo: "https://github.com/MouadHallaffou/The_Weekly",
-      category: "Communication",
-      featured: false,
-      technologies: ["Laravel", "MySQL", "Tailwind"]
-    },
-    {
-      id: 7,
-      title: "StruoCV",
-      description: "Interactive professional CV builder with customizable templates and instant PDF download functionality.",
-      image: "https://images.unsplash.com/photo-1586281380349-632531db7ed4?auto=format&fit=crop&w=800&q=80",
-      github: "https://mouadhallaffou.github.io/Resume_Builder_StruoCV/",
-      demo: "https://mouadhallaffou.github.io/Resume_Builder_StruoCV/",
-      category: "Productivity",
-      featured: false,
-      technologies: ["HTML", "CSS", "JavaScript", "jsPDF"]
-    },
-    {
-      id: 8,
-      title: "Calculator App",
-      description: "Modern scientific calculator with advanced mathematical functions and clean interface.",
-      image: "https://images.unsplash.com/photo-1587145820266-a5951ee6f620?auto=format&fit=crop&w=800&q=80",
-      github: "https://mouadhallaffou.github.io/Calculator/",
-      demo: "https://mouadhallaffou.github.io/Calculator/",
-      category: "Utility",
-      featured: false,
-      technologies: ["JavaScript", "Tailwind", "HTML"]
-    },
-    {
-      id: 9,
-      title: "Youdemy Platform",
-      description: "Comprehensive e-learning platform with course management, student progress tracking, and instructor tools.",
-      image: "https://images.unsplash.com/photo-1516321497487-e288fb19713f?auto=format&fit=crop&w=800&q=80",
-      github: "https://github.com/MouadHallaffou/Youdemy_plateform",
-      demo: "https://github.com/MouadHallaffou/Youdemy_plateform",
-      category: "Education",
-      featured: false,
-      technologies: ["PHP", "JavaScript", "MySQL", "Tailwind"]
-    },
-    {
-      id: 10,
-      title: "Dev.to Blog",
-      description: "Technical blogging platform for developers with article creation, commenting, and community features.",
-      image: "https://images.unsplash.com/photo-1499750310107-5fef28a66643?auto=format&fit=crop&w=800&q=80",
-      github: "https://github.com/MouadHallaffou/Dev.to_Blogging_Plateform",
-      demo: "https://github.com/MouadHallaffou/Dev.to_Blogging_Plateform",
-      category: "Blog",
-      featured: false,
-      technologies: ["PHP", "Bootstrap", "MySQL", "Javascript"]
-    },
-    {
-      id: 11,
-      title: "ScrumBoard",
-      description: "Agile project management tool with Kanban boards, sprint planning, and team collaboration features.",
-      image: "https://images.unsplash.com/photo-1507925921958-8a62f3d1a50d?auto=format&fit=crop&w=800&q=80",
-      github: "https://mouadhallaffou.github.io/YoucodeScrum-Board/",
-      demo: "https://mouadhallaffou.github.io/YoucodeScrum-Board/",
-      category: "Productivity",
-      featured: false,
-      technologies: ["JavaScript", "Bootstrap", "HTML"]
-    },
-    {
-      id: 12,
-      title: "FUT Champions",
-      description: "Football team management application with player statistics, formation builder, and match analytics.",
-      image: "https://images.unsplash.com/photo-1579952363873-27f3bade9f55?auto=format&fit=crop&w=800&q=80",
-      github: "https://github.com/MouadHallaffou/FUT-Champions-Web-App-Ultimate-Team",
-      demo: "https://mouadhallaffou.github.io/FUT-Champions-Web-App-Ultimate-Team/",
-      category: "Gaming",
-      featured: false,
-      technologies: ["JavaScript", "CSS", "HTML"]
-    },
-    {
-      id: 13,
-      title: "Weather App",
-      description: "Real-time weather application with location-based forecasts, interactive maps, and detailed meteorological data.",
-      image: "https://images.unsplash.com/photo-1601134467661-3d775b999c8b?auto=format&fit=crop&w=800&q=80",
-      github: "https://github.com/MouadHallaffou/Weather_App",
-      demo: "https://mouadhallaffou.github.io/Weather_App/",
-      category: "Utility",
-      featured: false,
-      technologies: ["JavaScript", "Tailwind", "Weather API"]
-    }
-  ] as const;
+  const [projects, setProjects] = useState<any[]>([]);
+
+  useEffect(() => {
+    api.get("/projects").then(res => setProjects(res.data)).catch(console.error);
+  }, []);
 
   const featuredProjects = projects.filter(project => project.featured);
   const otherProjects = projects.filter(project => !project.featured);
@@ -341,7 +202,7 @@ const Projects = () => {
                     <div className="p-6 w-full">
                       <div className="flex gap-3 justify-center">
                         <motion.a
-                          href={project.github}
+                          href={project.githubUrl}
                           target="_blank"
                           rel="noopener noreferrer"
                           className="p-3 bg-white/20 backdrop-blur-sm rounded-full text-white hover:bg-gray-800/80 dark:hover:bg-gray-700/80 transition-all duration-300"
@@ -352,7 +213,7 @@ const Projects = () => {
                           <Github size={20} />
                         </motion.a>
                         <motion.a
-                          href={project.demo}
+                          href={project.liveUrl}
                           target="_blank"
                           rel="noopener noreferrer"
                           className="p-3 bg-white/20 backdrop-blur-sm rounded-full text-white hover:bg-green-500/90 transition-all duration-300"
@@ -385,7 +246,7 @@ const Projects = () => {
 
                   {/* Technologies */}
                   <div className="flex flex-wrap gap-2">
-                    {project.technologies.slice(0, 3).map((tech, techIndex) => (
+                    {project.technologies?.slice(0, 3).map((tech: string, techIndex: number) => (
                       <span
                         key={techIndex}
                         className="px-2 py-1 bg-green-500/10 border border-green-500/20 text-green-600 dark:text-green-400 rounded text-xs font-medium"
@@ -393,7 +254,7 @@ const Projects = () => {
                         {tech}
                       </span>
                     ))}
-                    {project.technologies.length > 3 && (
+                    {project.technologies?.length > 3 && (
                       <span className="px-2 py-1 bg-gray-500/10 border border-gray-500/20 text-gray-600 dark:text-gray-400 rounded text-xs font-medium">
                         +{project.technologies.length - 3} more
                       </span>
@@ -423,32 +284,32 @@ const Projects = () => {
               <button
                 onClick={prevSlide}
                 className={`p-2 rounded-full transition-colors ${totalSlides <= 1
-                    ? 'bg-gray-100 dark:bg-gray-800 cursor-not-allowed opacity-50'
-                    : 'bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600'
+                  ? 'bg-gray-100 dark:bg-gray-800 cursor-not-allowed opacity-50'
+                  : 'bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600'
                   }`}
                 disabled={totalSlides <= 1}
               >
                 <ChevronLeft
                   size={20}
                   className={`${totalSlides <= 1
-                      ? 'text-gray-400 dark:text-gray-600'
-                      : 'text-gray-600 dark:text-gray-300'
+                    ? 'text-gray-400 dark:text-gray-600'
+                    : 'text-gray-600 dark:text-gray-300'
                     }`}
                 />
               </button>
               <button
                 onClick={nextSlide}
                 className={`p-2 rounded-full transition-colors ${totalSlides <= 1
-                    ? 'bg-gray-100 dark:bg-gray-800 cursor-not-allowed opacity-50'
-                    : 'bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600'
+                  ? 'bg-gray-100 dark:bg-gray-800 cursor-not-allowed opacity-50'
+                  : 'bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600'
                   }`}
                 disabled={totalSlides <= 1}
               >
                 <ChevronRight
                   size={20}
                   className={`${totalSlides <= 1
-                      ? 'text-gray-400 dark:text-gray-600'
-                      : 'text-gray-600 dark:text-gray-300'
+                    ? 'text-gray-400 dark:text-gray-600'
+                    : 'text-gray-600 dark:text-gray-300'
                     }`}
                 />
               </button>
@@ -502,7 +363,7 @@ const Projects = () => {
                               <div className="p-4 w-full">
                                 <div className="flex gap-2 justify-center">
                                   <motion.a
-                                    href={project.github}
+                                    href={project.githubUrl}
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="p-2 bg-white/20 backdrop-blur-sm rounded-full text-white hover:bg-gray-800/80 dark:hover:bg-gray-700/80 transition-all duration-300"
@@ -513,7 +374,7 @@ const Projects = () => {
                                     <Github size={16} />
                                   </motion.a>
                                   <motion.a
-                                    href={project.demo}
+                                    href={project.liveUrl}
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="p-2 bg-white/20 backdrop-blur-sm rounded-full text-white hover:bg-green-500/90 transition-all duration-300"
@@ -546,7 +407,7 @@ const Projects = () => {
 
                             {/* Technologies */}
                             <div className="flex flex-wrap gap-1">
-                              {project.technologies.slice(0, 2).map((tech, techIndex) => (
+                              {project.technologies?.slice(0, 2).map((tech: string, techIndex: number) => (
                                 <span
                                   key={techIndex}
                                   className="px-2 py-1 bg-green-500/10 border border-green-500/20 text-green-600 dark:text-green-400 rounded text-xs font-medium"
@@ -554,7 +415,7 @@ const Projects = () => {
                                   {tech}
                                 </span>
                               ))}
-                              {project.technologies.length > 2 && (
+                              {project.technologies?.length > 2 && (
                                 <span className="px-2 py-1 bg-gray-500/10 border border-gray-500/20 text-gray-600 dark:text-gray-400 rounded text-xs font-medium">
                                   +{project.technologies.length - 2} more
                                 </span>

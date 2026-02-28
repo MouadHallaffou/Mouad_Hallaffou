@@ -12,7 +12,7 @@ interface LayoutProps {
 
 const Layout = ({ children }: LayoutProps) => {
   const [isLoading, setIsLoading] = useState(true);
-  
+
   useEffect(() => {
     // Simulate loading time
     const timer = setTimeout(() => {
@@ -23,15 +23,15 @@ const Layout = ({ children }: LayoutProps) => {
   }, []);
 
   return (
-    <div className="min-h-screen flex flex-col bg-background text-foreground">
+    <div className="min-h-screen flex flex-col bg-background text-foreground font-sans public-layout">
       <CustomCursor />
-      
+
       <AnimatePresence mode="wait">
         {isLoading && <LoadingScreen isLoading={isLoading} />}
       </AnimatePresence>
-      
+
       <Header />
-      
+
       <AnimatePresence mode="wait">
         {!isLoading && (
           <motion.main
@@ -45,7 +45,7 @@ const Layout = ({ children }: LayoutProps) => {
           </motion.main>
         )}
       </AnimatePresence>
-      
+
       <Footer />
     </div>
   );
