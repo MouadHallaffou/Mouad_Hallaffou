@@ -27,3 +27,5 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+public/cv_v2/*.pdf
+/public/cv_v2/*.pdf
