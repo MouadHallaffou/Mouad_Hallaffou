@@ -20,7 +20,8 @@ public class Project {
     private String title;
     private String description;
     private String imageUrl;
-    private String repoUrl;
-    private String liveUrl;
-    private List<String> tags;
+    private List<String> technologies;
+    private String githubLink;
+    private String liveLink;
+    private boolean featured;
 }

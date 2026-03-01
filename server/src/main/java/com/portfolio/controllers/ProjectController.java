@@ -3,6 +3,7 @@ package com.portfolio.controllers;
 import com.portfolio.models.Project;
 import com.portfolio.services.ProjectService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,7 +12,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/projects")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "*")
 public class ProjectController {
 
     private final ProjectService projectService;
@@ -30,13 +30,12 @@ public class ProjectController {
 
     @PostMapping
     public ResponseEntity<Project> createProject(@RequestBody Project project) {
-        return ResponseEntity.ok(projectService.saveProject(project));
+        return new ResponseEntity<>(projectService.saveProject(project), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<Project> updateProject(@PathVariable String id, @RequestBody Project project) {
-        project.setId(id);
-        return ResponseEntity.ok(projectService.saveProject(project));
+        return ResponseEntity.ok(projectService.updateProject(id, project));
     }
 
     @DeleteMapping("/{id}")

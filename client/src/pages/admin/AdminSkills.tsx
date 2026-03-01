@@ -10,7 +10,9 @@ interface Skill {
     id: string;
     name: string;
     category: string;
+    proficiency: number;
     icon?: string;
+    order: number;
 }
 
 export default function AdminSkills() {
@@ -73,6 +75,14 @@ export default function AdminSkills() {
                         <label className="block text-sm font-medium mb-1">Icon Name/URL</label>
                         <Input {...register("icon")} placeholder="Optional" />
                     </div>
+                    <div>
+                        <label className="block text-sm font-medium mb-1">Proficiency %</label>
+                        <Input {...register("proficiency", { valueAsNumber: true })} type="number" min="0" max="100" placeholder="90" required />
+                    </div>
+                    <div>
+                        <label className="block text-sm font-medium mb-1">Display Order</label>
+                        <Input {...register("order", { valueAsNumber: true })} type="number" placeholder="1" required />
+                    </div>
                 </div>
                 <Button type="submit">Add Skill</Button>
             </form>
@@ -83,13 +93,13 @@ export default function AdminSkills() {
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                     {skills.map((skill) => (
-                        <div key={skill.id} className="flex justify-between items-start bg-background p-4 border rounded-md shadow-sm">
-                            <div>
-                                <p className="font-semibold">{skill.name}</p>
-                                <p className="text-xs text-muted-foreground">{skill.category}</p>
+                        <div key={skill.id} className="flex flex-col bg-background p-4 border rounded-md shadow-sm relative">
+                            <div className="pr-8">
+                                <p className="font-semibold">{skill.name} <span className="text-xs text-muted-foreground">({skill.proficiency}%)</span></p>
+                                <p className="text-xs text-muted-foreground">{skill.category} • Order: {skill.order}</p>
                             </div>
-                            <Button variant="destructive" size="sm" onClick={() => deleteSkill(skill.id)}>
-                                <Trash2 className="w-4 h-4" />
+                            <Button variant="destructive" size="sm" onClick={() => deleteSkill(skill.id)} className="absolute top-4 right-4 h-6 w-6 p-0">
+                                <Trash2 className="w-3 h-3" />
                             </Button>
                         </div>
                     ))}

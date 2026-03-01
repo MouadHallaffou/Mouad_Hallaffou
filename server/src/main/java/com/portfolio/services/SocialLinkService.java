@@ -1,31 +1,17 @@
 package com.portfolio.services;
 
 import com.portfolio.models.SocialLink;
-import com.portfolio.repositories.SocialLinkRepository;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Optional;
 
-@Service
-@RequiredArgsConstructor
-public class SocialLinkService {
-    private final SocialLinkRepository socialLinkRepository;
+public interface SocialLinkService {
+    SocialLink saveSocialLink(SocialLink socialLink);
 
-    public List<SocialLink> getAllSocialLinks() {
-        return socialLinkRepository.findAll();
-    }
+    List<SocialLink> getAllSocialLinks();
 
-    public Optional<SocialLink> getSocialLinkById(String id) {
-        return socialLinkRepository.findById(id);
-    }
+    Optional<SocialLink> getSocialLinkById(String id);
 
-    public SocialLink saveSocialLink(SocialLink socialLink) {
-        return socialLinkRepository.save(socialLink);
-    }
+    SocialLink updateSocialLink(String id, SocialLink socialLinkDetails);
 
-    public void deleteSocialLink(String id) {
-        socialLinkRepository.deleteById(id);
-    }
+    void deleteSocialLink(String id);
 }

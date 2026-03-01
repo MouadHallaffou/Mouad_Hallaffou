@@ -1,31 +1,17 @@
 package com.portfolio.services;
 
 import com.portfolio.models.Skill;
-import com.portfolio.repositories.SkillRepository;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Optional;
 
-@Service
-@RequiredArgsConstructor
-public class SkillService {
-    private final SkillRepository skillRepository;
+public interface SkillService {
+    Skill saveSkill(Skill skill);
 
-    public List<Skill> getAllSkills() {
-        return skillRepository.findAll();
-    }
+    List<Skill> getAllSkills();
 
-    public Optional<Skill> getSkillById(String id) {
-        return skillRepository.findById(id);
-    }
+    Optional<Skill> getSkillById(String id);
 
-    public Skill saveSkill(Skill skill) {
-        return skillRepository.save(skill);
-    }
+    Skill updateSkill(String id, Skill skillDetails);
 
-    public void deleteSkill(String id) {
-        skillRepository.deleteById(id);
-    }
+    void deleteSkill(String id);
 }

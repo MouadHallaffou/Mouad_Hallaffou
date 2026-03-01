@@ -11,20 +11,12 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Document(collection = "experiences")
-public class Experience {
+@Document(collection = "certifications")
+public class Certification {
     @Id
     private String id;
-    private ExperienceType type; // ACADEMIC or PROFESSIONAL
     private String title;
-    private String companyOrSchool;
-    private String startDate;
-    private String endDate;
+    private String issuer;
+    private String year;
     private String description;
-
-    public enum ExperienceType {
-        ACADEMIC,
-        PROFESSIONAL,
-        CERTIFICATION
-    }
 }

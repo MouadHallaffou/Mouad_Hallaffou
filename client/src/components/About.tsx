@@ -47,12 +47,20 @@ const About = () => {
     },
   ];
 
-  const stats = [
+  const defaultStats = [
     { icon: <Award size={20} />, label: "Projects Completed", value: "10+", color: "from-yellow-500 to-orange-500" },
     { icon: <Clock size={20} />, label: "Hours of Coding", value: "1000+", color: "from-blue-500 to-cyan-500" },
     { icon: <Zap size={20} />, label: "Technologies", value: "15+", color: "from-purple-500 to-pink-500" },
     { icon: <Heart size={20} />, label: "Passion Level", value: "100%", color: "from-red-500 to-pink-500" },
   ];
+
+  const stats = profile?.stats?.length > 0
+    ? profile.stats.map((s: any, i: number) => ({
+      ...defaultStats[i % defaultStats.length],
+      label: s.label,
+      value: s.value
+    }))
+    : defaultStats;
 
   const container = {
     hidden: { opacity: 0 },
@@ -118,8 +126,8 @@ const About = () => {
 
           <div className="w-24 h-1 bg-gradient-to-r from-green-500 to-emerald-500 mx-auto mb-8"></div>
 
-          <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed">
-            {profile?.bio || `I'm a passionate Full Stack Web Developer currently training at YOUCODE Maroc.
+          <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed whitespace-pre-line">
+            {profile?.shortBio || `I'm a passionate Full Stack Web Developer currently training at YOUCODE Maroc.
             With a background in Economics and Management, I bring analytical thinking and
             problem-solving skills to create efficient, user-friendly applications.`}
           </p>
@@ -220,7 +228,7 @@ const About = () => {
 
             <div className="space-y-4 text-gray-600 dark:text-gray-300 leading-relaxed whitespace-pre-line">
               <p>
-                {profile?.bio || `With a solid foundation in Economics and Management from FSJES Meknès,
+                {profile?.longBio || `With a solid foundation in Economics and Management from FSJES Meknès,
                 I've transitioned into the world of web development, combining analytical thinking
                 with technical skills to create efficient, user-friendly applications.\n\nI'm dedicated to continuous learning and staying updated with the latest
                 technologies and best practices in web development, always seeking to improve
@@ -251,14 +259,14 @@ const About = () => {
             </div>
 
             <div className="space-y-4">
-              {[
+              {(profile?.personalTraits?.length ? profile.personalTraits : [
                 "Problem solver with attention to detail",
                 "Excellent communication and teamwork skills",
                 "Time management and organization",
                 "Adaptability and quick learning",
                 "Passion for clean, maintainable code",
                 "User-focused development approach"
-              ].map((trait, index) => (
+              ]).map((trait: string, index: number) => (
                 <motion.div
                   key={index}
                   initial={{ opacity: 0, x: -20 }}

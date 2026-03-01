@@ -12,9 +12,10 @@ interface Project {
     title: string;
     description: string;
     imageUrl?: string;
-    repoUrl?: string;
-    liveUrl?: string;
-    tags?: string[];
+    githubLink?: string;
+    liveLink?: string;
+    technologies?: string[];
+    featured: boolean;
 }
 
 export default function AdminProjects() {
@@ -36,14 +37,16 @@ export default function AdminProjects() {
 
     const onSubmit = async (data: Project) => {
         try {
-            // Convert tags comma separated string to array if needed.
-            // Assuming user inputs tags like "react, node, typescript"
-            const tagsString = (data.tags as any) as string;
-            const tagsArray = tagsString ? tagsString.split(",").map((t) => t.trim()) : [];
+            const techString = (data.technologies as any) as string;
+            const techArray = techString ? techString.split(",").map((t) => t.trim()) : [];
+
+            // convert featured string/checkbox to boolean
+            const isFeatured = String(data.featured) === "true";
 
             const projectPayload = {
                 ...data,
-                tags: tagsArray
+                technologies: techArray,
+                featured: isFeatured
             };
 
             await api.post("/projects", projectPayload);
@@ -85,12 +88,12 @@ export default function AdminProjects() {
                         <Input {...register("imageUrl")} placeholder="https://..." />
                     </div>
                     <div>
-                        <label className="block text-sm font-medium mb-1">Repo URL</label>
-                        <Input {...register("repoUrl")} placeholder="https://github.com/..." />
+                        <label className="block text-sm font-medium mb-1">GitHub Link</label>
+                        <Input {...register("githubLink")} placeholder="https://github.com/..." />
                     </div>
                     <div>
-                        <label className="block text-sm font-medium mb-1">Live URL</label>
-                        <Input {...register("liveUrl")} placeholder="https://..." />
+                        <label className="block text-sm font-medium mb-1">Live Link</label>
+                        <Input {...register("liveLink")} placeholder="https://..." />
                     </div>
                 </div>
 
@@ -99,9 +102,17 @@ export default function AdminProjects() {
                     <Textarea {...register("description")} placeholder="Project details..." rows={4} required />
                 </div>
 
-                <div>
-                    <label className="block text-sm font-medium mb-1">Tags (comma-separated)</label>
-                    <Input {...register("tags" as any)} placeholder="React, Spring Boot, MySQL" />
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label className="block text-sm font-medium mb-1">Technologies (comma-separated)</label>
+                        <Input {...register("technologies" as any)} placeholder="React, Spring Boot, MySQL" />
+                    </div>
+                    <div className="flex items-end pb-2">
+                        <label className="flex items-center gap-2 cursor-pointer">
+                            <input {...register("featured")} type="checkbox" className="w-4 h-4" />
+                            <span className="text-sm font-medium">Featured Project</span>
+                        </label>
+                    </div>
                 </div>
 
                 <Button type="submit">Add Project</Button>
@@ -116,23 +127,23 @@ export default function AdminProjects() {
                         <div key={proj.id} className="bg-background p-5 border rounded-md shadow-sm flex flex-col justify-between">
                             <div>
                                 <div className="flex justify-between items-start mb-2">
-                                    <h3 className="font-bold text-lg">{proj.title}</h3>
+                                    <h3 className="font-bold text-lg">{proj.title} {proj.featured && <span className="ml-2 text-xs bg-yellow-100 text-yellow-800 px-2 py-0.5 rounded">Featured</span>}</h3>
                                     <Button variant="destructive" size="sm" onClick={() => deleteProject(proj.id)}>
                                         <Trash2 className="w-4 h-4" />
                                     </Button>
                                 </div>
                                 <p className="text-sm text-muted-foreground mb-4 line-clamp-3">{proj.description}</p>
                                 <div className="flex flex-wrap gap-2 mb-4">
-                                    {proj.tags?.map((tag, i) => (
+                                    {proj.technologies?.map((tech, i) => (
                                         <span key={i} className="bg-secondary text-secondary-foreground text-xs px-2 py-1 rounded-md">
-                                            {tag}
+                                            {tech}
                                         </span>
                                     ))}
                                 </div>
                             </div>
                             <div className="flex gap-4 text-sm text-blue-500">
-                                {proj.repoUrl && <a href={proj.repoUrl} target="_blank" rel="noreferrer" className="hover:underline">Repository</a>}
-                                {proj.liveUrl && <a href={proj.liveUrl} target="_blank" rel="noreferrer" className="hover:underline">Live Site</a>}
+                                {proj.githubLink && <a href={proj.githubLink} target="_blank" rel="noreferrer" className="hover:underline">GitHub</a>}
+                                {proj.liveLink && <a href={proj.liveLink} target="_blank" rel="noreferrer" className="hover:underline">Live Site</a>}
                             </div>
                         </div>
                     ))}

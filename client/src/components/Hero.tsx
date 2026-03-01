@@ -11,14 +11,16 @@ const Hero = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const containerRef = useRef<HTMLDivElement>(null);
-  const fullText = profile?.fullName ? `Hello, I'm ${profile.fullName}` : "Hello";
+  const fullText = profile?.name ? `Hello, I'm ${profile.name}` : "Hello";
 
   useEffect(() => {
     api.get("/profile").then(res => {
       setProfile(res.data);
+      if (res.data?.contact?.socialLinks) {
+        setSocials(res.data.contact.socialLinks);
+      }
       setIsTyping(true);
     }).catch(console.error);
-    api.get("/social-links").then(res => setSocials(res.data)).catch(console.error);
   }, []);
 
   const { scrollYProgress } = useScroll({
@@ -187,7 +189,7 @@ const Hero = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 1.2 }}
               >
-                {profile?.bio || "Crafting digital experiences with modern technologies and clean code."}
+                {profile?.shortBio || "Crafting digital experiences with modern technologies and clean code."}
               </motion.p>
             </motion.div>
 
@@ -301,8 +303,8 @@ const Hero = () => {
                       />
                       <div className="relative w-full h-full rounded-full overflow-hidden border-4 border-green-500/50 shadow-2xl">
                         <motion.img
-                          src={profile?.profilePictureUrl || "me.png"}
-                          alt={profile?.fullName || "Mouad Hallaffou"}
+                          src={profile?.avatarUrl || "me.png"}
+                          alt={profile?.name || "Mouad Hallaffou"}
                           className="w-full h-full object-cover"
                           whileHover={{ scale: 1.1 }}
                           transition={{ duration: 0.3 }}
@@ -323,14 +325,14 @@ const Hero = () => {
                       whileHover={{ scale: 1.05 }}
                       transition={{ type: "spring", stiffness: 300 }}
                     >
-                      {profile?.fullName || "Mouad Hallaffou"}
+                      {profile?.name || "Mouad Hallaffou"}
                     </motion.h3>
                     <motion.p
                       className="text-green-600 dark:text-green-400 font-semibold text-lg"
                       whileHover={{ color: "#059669" }}
                       transition={{ duration: 0.3 }}
                     >
-                      {profile?.jobTitle || "Full Stack Developer"}
+                      {profile?.title || "Full Stack Developer"}
                     </motion.p>
                     <motion.p
                       className="text-gray-500 dark:text-gray-400 text-sm"
@@ -338,7 +340,7 @@ const Hero = () => {
                       animate={{ opacity: 1 }}
                       transition={{ duration: 0.6, delay: 1.4 }}
                     >
-                      {profile?.email || ""}
+                      {profile?.contact?.email || ""}
                     </motion.p>
                   </motion.div>
 
@@ -358,29 +360,39 @@ const Hero = () => {
                       Tech Stack
                     </motion.p>
                     <div className="flex flex-wrap justify-center gap-2">
-                      {[
-                        { name: 'Laravel', color: 'from-red-500 to-pink-600' },
-                        { name: 'Spring-Boot', color: 'from-green-500 to-green-600' },
-                        { name: 'React', color: 'from-blue-500 to-cyan-600' },
-                        { name: 'TypeScript', color: 'from-blue-600 to-blue-800' },
-                        { name: 'PostgreSQL', color: 'from-blue-700 to-blue-900' },
-                        { name: 'Next.js', color: 'from-gray-500 to-gray-700' },
-                      ].map((tech, index) => (
-                        <motion.span
-                          key={tech.name}
-                          initial={{ opacity: 0, scale: 0.8, y: 20 }}
-                          animate={{ opacity: 1, scale: 1, y: 0 }}
-                          transition={{ delay: 2 + index * 0.1, type: "spring", stiffness: 200 }}
-                          whileHover={{
-                            scale: 1.1,
-                            y: -5,
-                            boxShadow: "0 10px 25px rgba(0,0,0,0.3)"
-                          }}
-                          className={`px-3 py-1.5 bg-gradient-to-r ${tech.color} text-white rounded-full text-xs font-semibold shadow-lg border border-white/20 backdrop-blur-sm`}
-                        >
-                          {tech.name}
-                        </motion.span>
-                      ))}
+                      {(profile?.techStack?.length ? profile.techStack : [
+                        { name: 'Laravel' },
+                        { name: 'Spring-Boot' },
+                        { name: 'React' },
+                        { name: 'TypeScript' },
+                        { name: 'PostgreSQL' },
+                        { name: 'Next.js' },
+                      ]).map((tech: any, index: number) => {
+                        const colors = [
+                          'from-red-500 to-pink-600',
+                          'from-green-500 to-green-600',
+                          'from-blue-500 to-cyan-600',
+                          'from-blue-600 to-blue-800',
+                          'from-gray-500 to-gray-700'
+                        ];
+                        const color = colors[index % colors.length];
+                        return (
+                          <motion.span
+                            key={tech.name}
+                            initial={{ opacity: 0, scale: 0.8, y: 20 }}
+                            animate={{ opacity: 1, scale: 1, y: 0 }}
+                            transition={{ delay: 2 + index * 0.1, type: "spring", stiffness: 200 }}
+                            whileHover={{
+                              scale: 1.1,
+                              y: -5,
+                              boxShadow: "0 10px 25px rgba(0,0,0,0.3)"
+                            }}
+                            className={`px-3 py-1.5 bg-gradient-to-r ${color} text-white rounded-full text-xs font-semibold shadow-lg border border-white/20 backdrop-blur-sm`}
+                          >
+                            {tech.name}
+                          </motion.span>
+                        )
+                      })}
                     </div>
                   </motion.div>
 
@@ -400,7 +412,7 @@ const Hero = () => {
                         }}
                         transition={{ duration: 2, repeat: Infinity }}
                       />
-                      <span>Available for new opportunities</span>
+                      <span>{profile?.availability || "Available for new opportunities"}</span>
                     </div>
                   </motion.div>
                 </div>

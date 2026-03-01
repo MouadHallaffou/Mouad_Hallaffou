@@ -2,14 +2,10 @@ package com.portfolio.controllers;
 
 import com.portfolio.services.FileStorageService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.core.io.Resource;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import jakarta.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -24,36 +20,40 @@ public class FileStorageController {
 
     @PostMapping("/upload")
     public ResponseEntity<Map<String, String>> uploadFile(@RequestParam("file") MultipartFile file) {
-        String cloudinaryUrl = fileStorageService.storeFile(file);
-
-        Map<String, String> response = new HashMap<>();
-        response.put("fileName", file.getOriginalFilename());
-        response.put("fileDownloadUri", cloudinaryUrl); // Using the direct Cloudinary URL
-        response.put("fileType", file.getContentType());
-        response.put("size", String.valueOf(file.getSize()));
-
-        return ResponseEntity.ok(response);
+        try {
+            String cloudinaryUrl = fileStorageService.uploadFile(file, "general");
+            return buildResponse(file, cloudinaryUrl);
+        } catch (IOException e) {
+            return ResponseEntity.internalServerError().build();
+        }
     }
 
-    @GetMapping("/download/{fileName:.+}")
-    public ResponseEntity<Resource> downloadFile(@PathVariable String fileName, HttpServletRequest request) {
-        Resource resource = fileStorageService.loadFileAsResource(fileName);
-
-        // Try to determine file's content type
-        String contentType = null;
+    @PostMapping("/upload/resume")
+    public ResponseEntity<Map<String, String>> uploadResume(@RequestParam("file") MultipartFile file) {
         try {
-            contentType = request.getServletContext().getMimeType(resource.getFile().getAbsolutePath());
-        } catch (IOException ex) {
-            // Default content type
+            String cloudinaryUrl = fileStorageService.uploadResume(file);
+            return buildResponse(file, cloudinaryUrl);
+        } catch (IOException e) {
+            return ResponseEntity.internalServerError().build();
         }
+    }
 
-        if (contentType == null) {
-            contentType = "application/octet-stream";
+    @PostMapping("/upload/profile")
+    public ResponseEntity<Map<String, String>> uploadProfilePicture(@RequestParam("file") MultipartFile file) {
+        try {
+            String cloudinaryUrl = fileStorageService.uploadProfilePicture(file);
+            return buildResponse(file, cloudinaryUrl);
+        } catch (IOException e) {
+            return ResponseEntity.internalServerError().build();
         }
+    }
 
-        return ResponseEntity.ok()
-                .contentType(MediaType.parseMediaType(contentType))
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
-                .body(resource);
+    private ResponseEntity<Map<String, String>> buildResponse(MultipartFile file, String url) {
+        Map<String, String> response = new HashMap<>();
+        response.put("fileName", file.getOriginalFilename());
+        response.put("fileDownloadUri", url); // Cloudinary URL
+        response.put("fileType", file.getContentType());
+        response.put("size", String.valueOf(file.getSize()));
+        return ResponseEntity.ok(response);
     }
 }

@@ -1,31 +1,17 @@
 package com.portfolio.services;
 
 import com.portfolio.models.Project;
-import com.portfolio.repositories.ProjectRepository;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Optional;
 
-@Service
-@RequiredArgsConstructor
-public class ProjectService {
-    private final ProjectRepository projectRepository;
+public interface ProjectService {
+    Project saveProject(Project project);
 
-    public List<Project> getAllProjects() {
-        return projectRepository.findAll();
-    }
+    List<Project> getAllProjects();
 
-    public Optional<Project> getProjectById(String id) {
-        return projectRepository.findById(id);
-    }
+    Optional<Project> getProjectById(String id);
 
-    public Project saveProject(Project project) {
-        return projectRepository.save(project);
-    }
+    Project updateProject(String id, Project projectDetails);
 
-    public void deleteProject(String id) {
-        projectRepository.deleteById(id);
-    }
+    void deleteProject(String id);
 }

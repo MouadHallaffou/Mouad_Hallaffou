@@ -3,6 +3,7 @@ package com.portfolio.controllers;
 import com.portfolio.models.Skill;
 import com.portfolio.services.SkillService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,7 +12,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/skills")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "*")
 public class SkillController {
 
     private final SkillService skillService;
@@ -30,13 +30,12 @@ public class SkillController {
 
     @PostMapping
     public ResponseEntity<Skill> createSkill(@RequestBody Skill skill) {
-        return ResponseEntity.ok(skillService.saveSkill(skill));
+        return new ResponseEntity<>(skillService.saveSkill(skill), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<Skill> updateSkill(@PathVariable String id, @RequestBody Skill skill) {
-        skill.setId(id);
-        return ResponseEntity.ok(skillService.saveSkill(skill));
+        return ResponseEntity.ok(skillService.updateSkill(id, skill));
     }
 
     @DeleteMapping("/{id}")

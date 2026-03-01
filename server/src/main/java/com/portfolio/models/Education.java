@@ -11,13 +11,12 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Document(collection = "skills")
-public class Skill {
+@Document(collection = "education")
+public class Education {
     @Id
     private String id;
-    private String name;
-    private String category;
-    private int proficiency;
-    private String icon;
-    private int order;
+    private String title;
+    private String institution;
+    private String date; // E.g., "2024 - present"
+    private String description;
 }

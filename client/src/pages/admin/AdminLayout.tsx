@@ -4,9 +4,9 @@ import { User, Briefcase, FileText, Settings, LogOut, Code, Award } from "lucide
 const navItems = [
     { icon: User, label: "Profile", href: "/admin/profile" },
     { icon: Briefcase, label: "Projects", href: "/admin/projects" },
-    { icon: FileText, label: "Experience & Certs", href: "/admin/experience" },
+    { icon: FileText, label: "Education", href: "/admin/education" },
+    { icon: Award, label: "Certifications", href: "/admin/certifications" },
     { icon: Code, label: "Skills", href: "/admin/skills" },
-    { icon: Award, label: "Social", href: "/admin/social" },
 ];
 
 export default function AdminLayout() {

@@ -186,7 +186,7 @@ const Projects = () => {
                   transition={{ duration: 0.3 }}
                 >
                   <img
-                    src={project.image}
+                    src={project.imageUrl}
                     alt={project.title}
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                   />
@@ -202,7 +202,7 @@ const Projects = () => {
                     <div className="p-6 w-full">
                       <div className="flex gap-3 justify-center">
                         <motion.a
-                          href={project.githubUrl}
+                          href={project.githubLink}
                           target="_blank"
                           rel="noopener noreferrer"
                           className="p-3 bg-white/20 backdrop-blur-sm rounded-full text-white hover:bg-gray-800/80 dark:hover:bg-gray-700/80 transition-all duration-300"
@@ -213,7 +213,7 @@ const Projects = () => {
                           <Github size={20} />
                         </motion.a>
                         <motion.a
-                          href={project.liveUrl}
+                          href={project.liveLink}
                           target="_blank"
                           rel="noopener noreferrer"
                           className="p-3 bg-white/20 backdrop-blur-sm rounded-full text-white hover:bg-green-500/90 transition-all duration-300"
@@ -227,13 +227,7 @@ const Projects = () => {
                     </div>
                   </motion.div>
 
-                  {/* Category Badge */}
-                  <div className="absolute top-4 left-4">
-                    <div className="flex items-center gap-2 px-3 py-1 bg-white/20 backdrop-blur-sm rounded-full text-white text-sm font-medium">
-                      {getCategoryIcon(project.category)}
-                      {project.category}
-                    </div>
-                  </div>
+
                 </motion.div>
 
                 <div className="mt-4 space-y-3">
@@ -347,7 +341,7 @@ const Projects = () => {
                             transition={{ duration: 0.3 }}
                           >
                             <img
-                              src={project.image}
+                              src={project.imageUrl}
                               alt={project.title}
                               className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                             />
@@ -363,7 +357,7 @@ const Projects = () => {
                               <div className="p-4 w-full">
                                 <div className="flex gap-2 justify-center">
                                   <motion.a
-                                    href={project.githubUrl}
+                                    href={project.githubLink}
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="p-2 bg-white/20 backdrop-blur-sm rounded-full text-white hover:bg-gray-800/80 dark:hover:bg-gray-700/80 transition-all duration-300"
@@ -374,7 +368,7 @@ const Projects = () => {
                                     <Github size={16} />
                                   </motion.a>
                                   <motion.a
-                                    href={project.liveUrl}
+                                    href={project.liveLink}
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="p-2 bg-white/20 backdrop-blur-sm rounded-full text-white hover:bg-green-500/90 transition-all duration-300"
@@ -388,13 +382,7 @@ const Projects = () => {
                               </div>
                             </motion.div>
 
-                            {/* Category Badge */}
-                            <div className="absolute top-3 left-3">
-                              <div className="flex items-center gap-1 px-2 py-1 bg-white/20 backdrop-blur-sm rounded-full text-white text-xs font-medium">
-                                {getCategoryIcon(project.category)}
-                                {project.category}
-                              </div>
-                            </div>
+
                           </motion.div>
 
                           <div className="mt-3 space-y-2">

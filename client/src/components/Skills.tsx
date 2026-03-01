@@ -62,7 +62,7 @@ const Skills = () => {
         description: `Expertise in ${cat}`,
         skills: skills.map(s => ({
           name: s.name,
-          level: s.level,
+          proficiency: s.proficiency,
           icon: renderIcon(s.icon),
           color: s.color || "from-green-500 to-emerald-500"
         }))
@@ -221,7 +221,7 @@ const Skills = () => {
                     </motion.div>
                     <div>
                       <h4 className="text-lg font-semibold text-gray-900 dark:text-white">{skill.name}</h4>
-                      <p className="text-sm text-gray-500 dark:text-gray-400">{skill.level}%</p>
+                      <p className="text-sm text-gray-500 dark:text-gray-400">{skill.proficiency}%</p>
                     </div>
                   </div>
                 </div>
@@ -231,7 +231,7 @@ const Skills = () => {
                   <motion.div
                     className={`h-2 rounded-full bg-gradient-to-r ${skill.color}`}
                     initial={{ width: 0 }}
-                    animate={{ width: `${skill.level}%` }}
+                    animate={{ width: `${skill.proficiency}%` }}
                     transition={{ duration: 1.5, delay: index * 0.1, ease: "easeOut" }}
                   />
                 </div>

@@ -1,31 +1,14 @@
 package com.portfolio.services;
 
 import com.portfolio.models.Profile;
-import com.portfolio.repositories.ProfileRepository;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
+import java.util.Optional;
 
-import java.util.List;
+public interface ProfileService {
+    Profile saveProfile(Profile profile);
 
-@Service
-@RequiredArgsConstructor
-public class ProfileService {
-    private final ProfileRepository profileRepository;
+    Optional<Profile> getProfile();
 
-    public Profile getProfile() {
-        List<Profile> profiles = profileRepository.findAll();
-        if (profiles.isEmpty()) {
-            return new Profile(); // Return empty if not found
-        }
-        return profiles.get(0); // Assuming only one profile exists
-    }
+    Profile updateProfile(String id, Profile profileDetails);
 
-    public Profile saveOrUpdateProfile(Profile profile) {
-        List<Profile> profiles = profileRepository.findAll();
-        if (!profiles.isEmpty()) {
-            Profile existingProfile = profiles.get(0);
-            profile.setId(existingProfile.getId()); // Update existing
-        }
-        return profileRepository.save(profile);
-    }
+    void deleteProfile(String id);
 }
