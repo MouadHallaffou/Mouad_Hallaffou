@@ -6,12 +6,15 @@ import {
   Briefcase, Book, Users, FileText, Calculator, MessageSquare,
   KanbanSquare, Award, CloudSun, ChevronLeft, ChevronRight
 } from "lucide-react";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
+import gsap from "gsap";
 
 const Projects = () => {
   const [hoveredId, setHoveredId] = useState<number | null>(null);
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [featuredIndex, setFeaturedIndex] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
+  const featuredTrackRef = useRef<HTMLDivElement>(null);
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -24,14 +27,15 @@ const Projects = () => {
   const projects = [
     {
       id: 1,
-      title: "ChatBot Platform",
-      description: "A real-time web chat application inspired by Messenger and Discord, offering smooth, modern interaction with authentication, media sharing, and calling capabilities.",
+      title: "SayHello – Chat Application",
+      description:
+        "Real-time chat platform with modern UI, secure authentication and an integrated AI chatbot to answer user questions and assist conversations.",
       image: "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=800&q=80",
       github: "https://github.com/MouadHallaffou/web_chat_application",
       demo: "https://web-chat-application-get.vercel.app/",
       category: "Messaging App",
       featured: true,
-      technologies: ["Express.js", "MongoDB", "React", "TypeScript", "Socket.io"]
+      technologies: ["Express.js", "MongoDB", "React", "TypeScript", "Socket.io", "Docker"]
     },
     {
       id: 2,
@@ -47,13 +51,14 @@ const Projects = () => {
     {
       id: 3,
       title: "EasyPrint",
-      description: "Comprehensive bookstore platform for managing inventory, sales, and customer relationships with modern UI.",
+      description:
+        "Full e‑commerce bookstore platform with responsive UI, smooth UX, social logins (Google, GitHub, LinkedIn) and secure payments powered by Stripe.",
       image: "https://images.unsplash.com/photo-1481627834876-b7833e8f5570?auto=format&fit=crop&w=800&q=80",
       github: "https://github.com/MouadHallaffou/EasyPrint",
       demo: "https://github.com/MouadHallaffou/EasyPrint",
       category: "E-commerce",
       featured: true,
-      technologies: ["Laravel", "JavaScript", "MySQL", "Tailwind", "Auth2"]
+      technologies: ["React", "Laravel", "MySQL", "Docker", "Stripe"]
     },
     {
       id: 4,
@@ -164,13 +169,68 @@ const Projects = () => {
       category: "Utility",
       featured: false,
       technologies: ["JavaScript", "Tailwind", "Weather API"]
+    },
+    {
+      id: 14,
+      title: "SupplyChainX",
+      description:
+        "End-to-end supply chain management system covering suppliers & raw materials, production orders, and client orders & deliveries with strong observability and CI/CD.",
+      image: "https://images.unsplash.com/photo-1529070538774-1843cb3265df?auto=format&fit=crop&w=800&q=80",
+      github: "https://github.com/MouadHallaffou/SupplyChainXApplication",
+      demo: "https://github.com/MouadHallaffou/SupplyChainXApplication",
+      category: "Enterprise",
+      featured: true,
+      technologies: ["Spring Boot", "Angular", "Keycloak", "PostgreSQL", "Docker"]
+    },
+    {
+      id: 15,
+      title: "Hôpital Numérique",
+      description:
+        "Digital hospital management system centralizing patient records, appointments, departments and staff workflows with strong data integrity.",
+      image: "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=800&q=80",
+      github: "https://github.com/MouadHallaffou/Hopital_Numerique",
+      demo: "https://github.com/MouadHallaffou/Hopital_Numerique",
+      category: "Enterprise",
+      featured: true,
+      technologies: ["Jakarta EE", "Hibernate", "TailwindCSS", "MySQL", "Docker"]
+    },
+    {
+      id: 16,
+      title: "SchoolSphere (En cours)",
+      description:
+        "Modern school management platform (in progress) for handling classes, timetables, grades and communication between teachers, students and parents.",
+      image: "https://images.unsplash.com/photo-1523580846011-d3a5bc25702b?auto=format&fit=crop&w=800&q=80",
+      github: "https://github.com/MouadHallaffou/Schoolsphere",
+      demo: "https://github.com/MouadHallaffou/Schoolsphere",
+      category: "Education",
+      featured: true,
+      technologies: ["microservices", "Spring Boot", "Angular", "Docker", "PostgreSQL", "mongodb", "keycloak", "S3"]
     }
   ] as const;
 
-  const featuredProjects = projects.filter(project => project.featured);
+  // Featured projects: newest and most advanced first
+  const FEATURED_ORDER = [
+    "SchoolSphere (En cours)",
+    "SupplyChainX",
+    "Hôpital Numérique",
+    "SayHello – Chat Application",
+    "EasyPrint",
+    "eLearning Platform",
+    "TheFoodeshow",
+  ];
+
+  const getFeaturedOrder = (title: string) => {
+    const index = FEATURED_ORDER.indexOf(title);
+    return index === -1 ? FEATURED_ORDER.length : index;
+  };
+
+  const featuredProjects = projects
+    .filter((project) => project.featured)
+    .sort((a, b) => getFeaturedOrder(a.title) - getFeaturedOrder(b.title));
+
   const otherProjects = projects.filter(project => !project.featured);
 
-  // Carousel logic
+  // Carousel logic (other projects)
   const itemsPerSlide = 3;
   const totalSlides = Math.ceil(otherProjects.length / itemsPerSlide);
 
@@ -186,6 +246,17 @@ const Projects = () => {
     const start = currentSlide * itemsPerSlide;
     const end = start + itemsPerSlide;
     return otherProjects.slice(start, end);
+  };
+
+  const featuredPerPage = 3;
+  const featuredPages = Math.ceil(featuredProjects.length / featuredPerPage);
+
+  const nextFeatured = () => {
+    setFeaturedIndex((prev) => (prev + 1) % featuredPages);
+  };
+
+  const prevFeatured = () => {
+    setFeaturedIndex((prev) => (prev - 1 + featuredPages) % featuredPages);
   };
 
   const container = {
@@ -204,11 +275,26 @@ const Projects = () => {
       opacity: 1,
       y: 0,
       transition: {
-        type: "spring",
+        type: "spring" as const,
         stiffness: 100
       }
     },
   };
+
+  // GSAP animation for featured swiper
+  useEffect(() => {
+    if (!featuredTrackRef.current) return;
+    gsap.set(featuredTrackRef.current, { xPercent: 0 });
+  }, []);
+
+  useEffect(() => {
+    if (!featuredTrackRef.current) return;
+    gsap.to(featuredTrackRef.current, {
+      xPercent: -featuredIndex * 100,
+      duration: 0.8,
+      ease: "power3.inOut",
+    });
+  }, [featuredIndex]);
 
   const getCategoryIcon = (category: string) => {
     switch (category) {
@@ -291,7 +377,7 @@ const Projects = () => {
           </p>
         </motion.div>
 
-        {/* Featured Projects */}
+        {/* Featured Projects - GSAP Swiper */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -299,110 +385,138 @@ const Projects = () => {
           viewport={{ once: true }}
           className="mb-16"
         >
-          <div className="flex items-center gap-2 mb-8">
-            <Star className="text-yellow-500" size={24} />
-            <h3 className="text-2xl font-bold text-gray-900 dark:text-white">Featured Projects</h3>
+          <div className="flex items-center justify-between gap-4 mb-6">
+            <div className="flex items-center gap-2">
+              <Star className="text-yellow-500" size={24} />
+              <h3 className="text-2xl font-bold text-gray-900 dark:text-white">Featured Projects</h3>
+            </div>
+
+            <div className="flex items-center gap-2">
+              <button
+                onClick={prevFeatured}
+                className="p-2 rounded-full bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
+              >
+                <ChevronLeft size={18} className="text-gray-700 dark:text-gray-200" />
+              </button>
+              <button
+                onClick={nextFeatured}
+                className="p-2 rounded-full bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
+              >
+                <ChevronRight size={18} className="text-gray-700 dark:text-gray-200" />
+              </button>
+            </div>
           </div>
 
-          <motion.div
-            variants={container}
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true }}
-            className="grid grid-cols-1 lg:grid-cols-2 gap-8"
-          >
-            {featuredProjects.map((project, index) => (
-              <motion.div
-                key={project.id}
-                variants={item}
-                className="group"
-                onMouseEnter={() => setHoveredId(project.id)}
-                onMouseLeave={() => setHoveredId(null)}
-              >
-                <motion.div
-                  className="relative h-64 overflow-hidden rounded-xl bg-gray-200 dark:bg-gray-700"
-                  whileHover={{ scale: 1.02 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  <img
-                    src={project.image}
-                    alt={project.title}
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                  />
-
-                  {/* Overlay */}
-                  <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{
-                      opacity: hoveredId === project.id ? 1 : 0,
-                    }}
-                    className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent flex items-end"
-                  >
-                    <div className="p-6 w-full">
-                      <div className="flex gap-3 justify-center">
-                        <motion.a
-                          href={project.github}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="p-3 bg-white/20 backdrop-blur-sm rounded-full text-white hover:bg-gray-800/80 dark:hover:bg-gray-700/80 transition-all duration-300"
-                          whileHover={{ scale: 1.1, rotate: 5 }}
-                          whileTap={{ scale: 0.9 }}
-                          title="View Code"
-                        >
-                          <Github size={20} />
-                        </motion.a>
-                        <motion.a
-                          href={project.demo}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="p-3 bg-white/20 backdrop-blur-sm rounded-full text-white hover:bg-green-500/90 transition-all duration-300"
-                          whileHover={{ scale: 1.1, rotate: 5 }}
-                          whileTap={{ scale: 0.9 }}
-                          title="Live Demo"
-                        >
-                          <ExternalLink size={20} />
-                        </motion.a>
-                      </div>
-                    </div>
-                  </motion.div>
-
-                  {/* Category Badge */}
-                  <div className="absolute top-4 left-4">
-                    <div className="flex items-center gap-2 px-3 py-1 bg-white/20 backdrop-blur-sm rounded-full text-white text-sm font-medium">
-                      {getCategoryIcon(project.category)}
-                      {project.category}
-                    </div>
-                  </div>
-                </motion.div>
-
-                <div className="mt-4 space-y-3">
-                  <h3 className="text-xl font-bold text-gray-900 dark:text-white group-hover:text-green-500 transition-colors">
-                    {project.title}
-                  </h3>
-                  <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
-                    {project.description}
-                  </p>
-
-                  {/* Technologies */}
-                  <div className="flex flex-wrap gap-2">
-                    {project.technologies.slice(0, 3).map((tech, techIndex) => (
-                      <span
-                        key={techIndex}
-                        className="px-2 py-1 bg-green-500/10 border border-green-500/20 text-green-600 dark:text-green-400 rounded text-xs font-medium"
+          <div className="relative overflow-hidden rounded-2xl">
+            <div
+              ref={featuredTrackRef}
+              className="flex w-full"
+              style={{ transform: `translateX(-${featuredIndex * 100}%)` }}
+            >
+              {Array.from({ length: featuredPages }, (_, pageIdx) => (
+                <div key={pageIdx} className="min-w-full flex gap-4 px-1">
+                  {featuredProjects.slice(pageIdx * featuredPerPage, pageIdx * featuredPerPage + featuredPerPage).map((project) => (
+                    <div key={project.id} className="flex-1 min-w-0">
+                      <motion.div
+                        className="group"
+                        onMouseEnter={() => setHoveredId(project.id)}
+                        onMouseLeave={() => setHoveredId(null)}
                       >
-                        {tech}
-                      </span>
-                    ))}
-                    {project.technologies.length > 3 && (
-                      <span className="px-2 py-1 bg-gray-500/10 border border-gray-500/20 text-gray-600 dark:text-gray-400 rounded text-xs font-medium">
-                        +{project.technologies.length - 3} more
-                      </span>
-                    )}
-                  </div>
+                        <motion.div
+                          className="relative h-64 overflow-hidden rounded-2xl bg-gray-200 dark:bg-gray-700"
+                          whileHover={{ scale: 1.02 }}
+                          transition={{ duration: 0.3 }}
+                        >
+                          <img
+                            src={project.image}
+                            alt={project.title}
+                            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                          />
+
+                          {/* Overlay */}
+                          <motion.div
+                            initial={{ opacity: 0 }}
+                            animate={{
+                              opacity: hoveredId === project.id ? 1 : 0,
+                            }}
+                            className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent flex items-end"
+                          >
+                            <div className="p-4 w-full flex flex-col gap-3">
+                              <div className="flex justify-between items-center">
+                                <div className="flex items-center gap-1 px-2 py-1 bg-white/10 backdrop-blur-sm rounded-full text-white text-xs font-medium">
+                                  {getCategoryIcon(project.category)}
+                                  <span>{project.category}</span>
+                                </div>
+                                <div className="flex gap-2">
+                                  <motion.a
+                                    href={project.github}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="p-1.5 bg-white/20 backdrop-blur-sm rounded-full text-white hover:bg-gray-800/80 dark:hover:bg-gray-700/80 transition-all duration-300"
+                                    whileHover={{ scale: 1.1, rotate: 5 }}
+                                    whileTap={{ scale: 0.9 }}
+                                    title="View Code"
+                                  >
+                                    <Github size={15} />
+                                  </motion.a>
+                                  <motion.a
+                                    href={project.demo}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="p-1.5 bg-white/20 backdrop-blur-sm rounded-full text-white hover:bg-green-500/90 transition-all duration-300"
+                                    whileHover={{ scale: 1.1, rotate: 5 }}
+                                    whileTap={{ scale: 0.9 }}
+                                    title="Live Demo"
+                                  >
+                                    <ExternalLink size={15} />
+                                  </motion.a>
+                                </div>
+                              </div>
+
+                              <div className="space-y-1">
+                                <h3 className="text-base font-bold text-white line-clamp-1">
+                                  {project.title}
+                                </h3>
+                                <p className="text-xs text-gray-200 leading-relaxed line-clamp-2">
+                                  {project.description}
+                                </p>
+                              </div>
+
+                              <div className="flex flex-wrap gap-1">
+                                {project.technologies.slice(0, 3).map((tech, techIndex) => (
+                                  <span
+                                    key={techIndex}
+                                    className="px-2 py-0.5 bg-green-500/20 border border-green-400/40 text-green-100 rounded text-[10px] font-medium"
+                                  >
+                                    {tech}
+                                  </span>
+                                ))}
+                              </div>
+                            </div>
+                          </motion.div>
+                        </motion.div>
+                      </motion.div>
+                    </div>
+                  ))}
                 </div>
-              </motion.div>
-            ))}
-          </motion.div>
+              ))}
+            </div>
+
+            {/* Swiper indicators */}
+            <div className="flex justify-center gap-2 mt-4">
+              {Array.from({ length: featuredPages }, (_, index) => (
+                <button
+                  key={index}
+                  onClick={() => setFeaturedIndex(index)}
+                  className={`h-2.5 rounded-full transition-all duration-300 ${index === featuredIndex
+                    ? "w-6 bg-green-500 shadow-lg shadow-green-500/30"
+                    : "w-2.5 bg-gray-300 dark:bg-gray-600 hover:bg-gray-400 dark:hover:bg-gray-500"
+                    }`}
+                  aria-label={`Go to page ${index + 1}`}
+                />
+              ))}
+            </div>
+          </div>
         </motion.div>
 
         {/* Other Projects - Carousel */}
@@ -423,32 +537,32 @@ const Projects = () => {
               <button
                 onClick={prevSlide}
                 className={`p-2 rounded-full transition-colors ${totalSlides <= 1
-                    ? 'bg-gray-100 dark:bg-gray-800 cursor-not-allowed opacity-50'
-                    : 'bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600'
+                  ? 'bg-gray-100 dark:bg-gray-800 cursor-not-allowed opacity-50'
+                  : 'bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600'
                   }`}
                 disabled={totalSlides <= 1}
               >
                 <ChevronLeft
                   size={20}
                   className={`${totalSlides <= 1
-                      ? 'text-gray-400 dark:text-gray-600'
-                      : 'text-gray-600 dark:text-gray-300'
+                    ? 'text-gray-400 dark:text-gray-600'
+                    : 'text-gray-600 dark:text-gray-300'
                     }`}
                 />
               </button>
               <button
                 onClick={nextSlide}
                 className={`p-2 rounded-full transition-colors ${totalSlides <= 1
-                    ? 'bg-gray-100 dark:bg-gray-800 cursor-not-allowed opacity-50'
-                    : 'bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600'
+                  ? 'bg-gray-100 dark:bg-gray-800 cursor-not-allowed opacity-50'
+                  : 'bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600'
                   }`}
                 disabled={totalSlides <= 1}
               >
                 <ChevronRight
                   size={20}
                   className={`${totalSlides <= 1
-                      ? 'text-gray-400 dark:text-gray-600'
-                      : 'text-gray-600 dark:text-gray-300'
+                    ? 'text-gray-400 dark:text-gray-600'
+                    : 'text-gray-600 dark:text-gray-300'
                     }`}
                 />
               </button>

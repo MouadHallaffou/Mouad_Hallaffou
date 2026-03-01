@@ -3,7 +3,7 @@ import { ReactNode, useState, useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import Header from "./Header";
 import Footer from "./Footer";
-import CustomCursor from "./CustomCursor";
+import SplashCursor from "./SplashCursor";
 import LoadingScreen from "./LoadingScreen";
 
 interface LayoutProps {
@@ -24,7 +24,7 @@ const Layout = ({ children }: LayoutProps) => {
 
   return (
     <div className="min-h-screen flex flex-col bg-background text-foreground">
-      <CustomCursor />
+      <SplashCursor />
       
       <AnimatePresence mode="wait">
         {isLoading && <LoadingScreen isLoading={isLoading} />}

@@ -6,6 +6,27 @@ import {
   LayoutGrid, Command, FileCode, BrainCircuit, Globe, Cloud,
   Brush, Zap, Shield, Cpu, Smartphone, Monitor, Layers, Sparkles
 } from "lucide-react";
+import {
+  SiReact,
+  SiTypescript,
+  SiVuedotjs,
+  SiTailwindcss,
+  SiHtml5,
+  SiCss3,
+  SiJavascript,
+  SiLaravel,
+  SiNodedotjs,
+  SiMysql,
+  SiPostgresql,
+  SiMongodb,
+  SiSymfony,
+  SiDocker,
+  SiLinux,
+  SiNginx,
+  SiOracle,
+  SiSpring,
+  SiSpringboot,
+} from "react-icons/si";
 
 const Skills = () => {
   const [activeCategory, setActiveCategory] = useState(0);
@@ -22,51 +43,67 @@ const Skills = () => {
   const skillCategories = [
     {
       id: 0,
-      title: "Frontend Development",
-      icon: <Code size={24} />,
-      description: "Modern web technologies and frameworks",
+      title: "Backend Development",
+      icon: <Server size={24} />,
+      description: "Server-side development, business logic and APIs",
       skills: [
-        { name: "React", level: 90, icon: <Command size={20} />, color: "from-blue-500 to-cyan-500" },
-        { name: "TypeScript", level: 85, icon: <FileCode size={20} />, color: "from-blue-600 to-blue-700" },
-        { name: "Vue.js", level: 75, icon: <LayoutGrid size={20} />, color: "from-green-500 to-emerald-500" },
-        { name: "TailwindCSS", level: 95, icon: <Palette size={20} />, color: "from-cyan-500 to-blue-500" },
-        { name: "HTML/CSS", level: 95, icon: <Layers size={20} />, color: "from-orange-500 to-red-500" },
-        { name: "JavaScript", level: 90, icon: <Zap size={20} />, color: "from-yellow-500 to-orange-500" }
+        { name: "Java / Spring Boot", level: 85, icon: <SiSpringboot size={20} />, color: "from-green-600 to-emerald-700" },
+        { name: "PHP / Laravel", level: 88, icon: <SiLaravel size={20} />, color: "from-red-500 to-pink-500" },
+        { name: "Symfony", level: 80, icon: <SiSymfony size={20} />, color: "from-slate-700 to-slate-900" },
+        { name: "Node.js / Express", level: 78, icon: <SiNodedotjs size={20} />, color: "from-green-600 to-green-700" },
+        { name: "REST APIs", level: 90, icon: <Globe size={20} />, color: "from-purple-500 to-pink-500" },
+        { name: "GraphQL", level: 70, icon: <BrainCircuit size={20} />, color: "from-pink-500 to-purple-500" },
+        { name: "MySQL / PostgreSQL", level: 85, icon: <Database size={20} />, color: "from-blue-500 to-blue-800" },
+        { name: "MongoDB", level: 75, icon: <SiMongodb size={20} />, color: "from-green-700 to-emerald-700" }
       ],
     },
     {
       id: 1,
-      title: "Backend Development",
-      icon: <Server size={24} />,
-      description: "Server-side technologies and databases",
+      title: "Frontend Development",
+      icon: <Code size={24} />,
+      description: "Modern web interfaces and user experience",
       skills: [
-        { name: "PHP/Laravel", level: 88, icon: <FileCode size={20} />, color: "from-red-500 to-pink-500" },
-        { name: "Node.js", level: 75, icon: <Server size={20} />, color: "from-green-600 to-green-700" },
-        { name: "MySQL", level: 85, icon: <Database size={20} />, color: "from-blue-500 to-blue-600" },
-        { name: "PostgreSQL", level: 70, icon: <Database size={20} />, color: "from-blue-600 to-blue-800" },
-        { name: "REST APIs", level: 90, icon: <Globe size={20} />, color: "from-purple-500 to-pink-500" },
-        { name: "GraphQL", level: 65, icon: <BrainCircuit size={20} />, color: "from-pink-500 to-purple-500" }
+        { name: "React", level: 90, icon: <SiReact size={20} />, color: "from-blue-500 to-cyan-500" },
+        { name: "Angular", level: 80, icon: <LayoutGrid size={20} />, color: "from-red-500 to-orange-500" },
+        { name: "Vue.js", level: 75, icon: <SiVuedotjs size={20} />, color: "from-green-500 to-emerald-500" },
+        { name: "TypeScript", level: 85, icon: <SiTypescript size={20} />, color: "from-blue-600 to-blue-700" },
+        {
+          name: "HTML / CSS",
+          level: 95,
+          icon: (
+            <span className="flex gap-1">
+              <SiHtml5 size={18} />
+              <SiCss3 size={18} />
+            </span>
+          ),
+          color: "from-orange-500 to-red-500"
+        },
+        { name: "JavaScript", level: 90, icon: <SiJavascript size={20} />, color: "from-yellow-500 to-orange-500" },
+        { name: "TailwindCSS", level: 95, icon: <SiTailwindcss size={20} />, color: "from-cyan-500 to-blue-500" },
+        { name: "Bootstrap", level: 80, icon: <Layers size={20} />, color: "from-indigo-500 to-purple-500" }
       ],
     },
     {
       id: 2,
       title: "DevOps & Tools",
       icon: <Cloud size={24} />,
-      description: "Development tools and deployment",
+      description: "Deployment, tooling and developer productivity",
       skills: [
-        { name: "Git", level: 90, icon: <GitBranch size={20} />, color: "from-orange-500 to-red-500" },
-        { name: "Docker", level: 70, icon: <Cloud size={20} />, color: "from-blue-500 to-blue-600" },
-        { name: "CI/CD", level: 75, icon: <Zap size={20} />, color: "from-green-500 to-emerald-500" },
-        { name: "AWS", level: 60, icon: <Cloud size={20} />, color: "from-orange-500 to-yellow-500" },
-        { name: "Linux", level: 80, icon: <Cpu size={20} />, color: "from-gray-600 to-gray-800" },
-        { name: "Nginx", level: 70, icon: <Server size={20} />, color: "from-green-600 to-green-700" }
+        { name: "Git & GitHub", level: 90, icon: <GitBranch size={20} />, color: "from-orange-500 to-red-500" },
+        { name: "Docker", level: 80, icon: <SiDocker size={20} />, color: "from-blue-500 to-blue-600" },
+        { name: "CI/CD & GitHub Actions", level: 75, icon: <Zap size={20} />, color: "from-green-500 to-emerald-500" },
+        { name: "Linux & Bash", level: 80, icon: <SiLinux size={20} />, color: "from-gray-600 to-gray-800" },
+        { name: "VS Code / IntelliJ", level: 85, icon: <Monitor size={20} />, color: "from-slate-500 to-slate-700" },
+        { name: "Postman & REST clients", level: 80, icon: <Shield size={20} />, color: "from-teal-500 to-emerald-500" },
+        { name: "Figma / Canva", level: 75, icon: <Figma size={20} />, color: "from-purple-500 to-pink-500" },
+        { name: "Jira & Project tracking", level: 70, icon: <Users size={20} />, color: "from-blue-500 to-cyan-500" }
       ],
     },
     {
       id: 3,
       title: "Design & UX",
       icon: <Brush size={24} />,
-      description: "User experience and design tools",
+      description: "User experience and design principles",
       skills: [
         { name: "Figma", level: 80, icon: <Figma size={20} />, color: "from-purple-500 to-pink-500" },
         { name: "Adobe XD", level: 70, icon: <Brush size={20} />, color: "from-pink-500 to-purple-500" },

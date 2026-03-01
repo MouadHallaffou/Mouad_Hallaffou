@@ -1,6 +1,7 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { ArrowDown, Terminal, Download, Github, Linkedin, Mail, Sparkles, ExternalLink } from "lucide-react";
 import { useEffect, useState, useRef } from "react";
+import gsap from "gsap";
 
 const Hero = () => {
   const [text, setText] = useState("");
@@ -8,6 +9,9 @@ const Hero = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const fullText = "Hello, I'm Mouad Hallaffou";
   const containerRef = useRef<HTMLDivElement>(null);
+  const headingRef = useRef<HTMLDivElement>(null);
+  const ctaRef = useRef<HTMLDivElement>(null);
+  const profileRef = useRef<HTMLDivElement>(null);
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -29,6 +33,64 @@ const Hero = () => {
       setIsTyping(false);
     }
   }, [currentIndex, isTyping, fullText]);
+
+  // Hero entrance animation with GSAP (complément à framer-motion)
+  useEffect(() => {
+    if (!containerRef.current) return;
+
+    const ctx = gsap.context(() => {
+      const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
+
+      tl.from(containerRef.current, {
+        opacity: 0,
+        y: 60,
+        duration: 0.9,
+      })
+        .from(
+          headingRef.current,
+          {
+            opacity: 0,
+            y: 40,
+            duration: 0.8,
+          },
+          "-=0.4"
+        )
+        .from(
+          ctaRef.current,
+          {
+            opacity: 0,
+            y: 30,
+            duration: 0.7,
+          },
+          "-=0.5"
+        )
+        .from(
+          profileRef.current,
+          {
+            opacity: 0,
+            x: 60,
+            scale: 0.9,
+            duration: 0.9,
+          },
+          "-=0.6"
+        );
+
+      // léger mouvement perpétuel sur la carte profil pour un effet "React Bits"
+      if (profileRef.current) {
+        gsap.to(profileRef.current, {
+          y: -10,
+          duration: 4,
+          yoyo: true,
+          repeat: -1,
+          ease: "sine.inOut",
+        });
+      }
+    }, containerRef);
+
+    return () => {
+      ctx.revert();
+    };
+  }, []);
 
   const socialLinks = [
     {
@@ -123,11 +185,12 @@ const Hero = () => {
       >
         <div className="flex flex-col lg:flex-row gap-12 items-start">
           {/* Left Content */}
-          <motion.div
+            <motion.div
             initial={{ opacity: 0, x: -100 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 1, ease: "easeOut" }}
             className="lg:w-1/2 space-y-6"
+              ref={headingRef}
           >
 
 
@@ -202,6 +265,7 @@ const Hero = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 1.4 }}
               className="flex flex-wrap gap-4"
+              ref={ctaRef}
             >
               <motion.a
                 href="#contact"
@@ -256,6 +320,7 @@ const Hero = () => {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 1, delay: 0.5 }}
             className="lg:w-1/2 flex justify-end relative"
+            ref={profileRef}
           >
             {/* Fond sombre derrière la carte profil sur mobile */}
             <div className="absolute inset-0 lg:hidden z-0 pointer-events-none">
@@ -369,7 +434,7 @@ const Hero = () => {
                         { name: 'React', color: 'from-blue-500 to-cyan-600' },
                         { name: 'TypeScript', color: 'from-blue-600 to-blue-800' },
                         { name: 'PostgreSQL', color: 'from-blue-700 to-blue-900' },
-                        { name: 'Next.js', color: 'from-gray-500 to-gray-700' },
+                        { name: 'Symfony', color: 'from-gray-500 to-gray-700' },
                       ].map((tech, index) => (
                         <motion.span
                           key={tech.name}
